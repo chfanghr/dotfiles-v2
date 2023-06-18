@@ -7,11 +7,16 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    vscode-server = {
+      url = "github:nix-community/nixos-vscode-server";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {
     nixpkgs,
     home-manager,
+    vscode-server,
     ...
   }: let
     system = "x86_64-linux";
@@ -28,10 +33,12 @@
         modules = [
           ./hardware-configuration.nix
           ./configuration.nix
+          vscode-server.nixosModules.default
           {
             environment.systemPackages = [
               home-manager.packages."${system}".home-manager
             ];
+            services.vscode-server.enable = true;
           }
         ];
         specialArgs = {
