@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  blink = color: "${pkgs.openrgb}/bin/openrgb -d 0 -c ${color} -m blinking -b 100";
+  staticColor = color: "${pkgs.openrgb}/bin/openrgb -d 0 -c ${color} -m static -b 100";
 in {
   boot = {
     initrd = {
@@ -43,8 +43,8 @@ in {
           };
         };
       };
-      postDeviceCommands = blink "0000FF";
-      postMountCommands = blink "00FF00";
+      postDeviceCommands = staticColor "FF0000";
+      postMountCommands = staticColor "00FF00";
     };
     kernelModules = ["kvm-amd"];
   };
