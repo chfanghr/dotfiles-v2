@@ -1,8 +1,11 @@
 {
   config,
   lib,
+  pkgs,
   ...
-}: {
+}: let
+  blink = color: "${pkgs.openrgb}/bin/openrgb -d 0 -c ${color} -m blinking -b 100 ";
+in {
   boot = {
     initrd = {
       availableKernelModules = [
@@ -21,6 +24,8 @@
         "nls_iso8859-1"
         "usbhid"
         "r8169"
+        "i2c-dev"
+        "i2c-piix4"
       ];
       network.enable = true;
       luks = {
@@ -38,6 +43,8 @@
           };
         };
       };
+      postDeviceCommands = blink "0000FF";
+      postMountCommands = blink "00FF00";
     };
     kernelModules = ["kvm-amd"];
   };
