@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  blink = color: "${pkgs.openrgb}/bin/openrgb -d 0 -c ${color} -m blinking -b 100 ";
+  blink = color: "${pkgs.openrgb}/bin/openrgb -d 0 -c ${color} -m blinking -b 100";
 in {
   boot = {
     initrd = {

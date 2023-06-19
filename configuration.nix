@@ -87,6 +87,12 @@
     };
   };
 
+  systemd.services.successBootIndication = {
+    script = "${pkgs.openrgb}/bin/openrgb -d 0 -c 4169E1 -m static -b 50";
+    wantedBy = ["openrgb.service"];
+    serviceConfig.Type = "oneshot";
+  };
+
   environment.systemPackages = with pkgs; [
     curl
     btop
