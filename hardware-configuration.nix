@@ -28,6 +28,7 @@ in {
         "i2c-piix4"
       ];
       network.enable = true;
+      network.udhcpc.extraArgs = [ "-t" "20" ];
       luks = {
         yubikeySupport = true;
         devices = {
