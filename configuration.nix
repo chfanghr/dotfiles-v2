@@ -9,9 +9,9 @@
     networkmanager.enable = false;
     useNetworkd = true;
     proxy = {
-      default = "http://192.168.31.72:1086";
-      httpProxy = "http://192.168.31.72:1086";
-      httpsProxy = "http://192.168.31.72:1086";
+      default = "http://10.42.0.7:1086";
+      httpProxy = "http://10.42.0.7:1086";
+      httpsProxy = "http://10.42.0.7:1086";
     };
   };
 
@@ -116,6 +116,8 @@
       enable = true;
     };
   };
+
+  services.tailscale.enable = true;
 
   system.stateVersion = "23.11";
 }
