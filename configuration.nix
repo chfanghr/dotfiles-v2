@@ -9,9 +9,9 @@
     networkmanager.enable = false;
     useNetworkd = true;
     proxy = {
-      default = "http://10.42.0.7:1086";
-      httpProxy = "http://10.42.0.7:1086";
-      httpsProxy = "http://10.42.0.7:1086";
+      default = "http://10.42.0.1:1086";
+      httpProxy = "http://10.42.0.1:1086";
+      httpsProxy = "http://10.42.0.1:1086";
     };
   };
 
