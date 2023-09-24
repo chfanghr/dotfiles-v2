@@ -4,6 +4,11 @@
     efi.canTouchEfiVariables = true;
   };
 
+  boot.binfmt.emulatedSystems = [
+    "x86_64-windows"
+    "aarch64-linux"
+  ];
+  
   networking = {
     hostName = "Demeter";
     networkmanager.enable = false;
@@ -14,6 +19,8 @@
       httpsProxy = "http://10.42.0.1:1086";
     };
   };
+
+  systemd.network.wait-online.extraArgs = ["-i" "enp81s0"];
 
   time.timeZone = "Asia/Hong_Kong";
 
@@ -119,6 +126,8 @@
   };
 
   services.tailscale.enable = true;
+
+  services.vscode-server.enable = true;
 
   system.stateVersion = "23.11";
 }
