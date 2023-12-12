@@ -126,8 +126,15 @@
     };
   };
 
-  virtualisation.docker.enable = true;
-  virtualisation.docker.storageDriver = "btrfs";
+  # virtualisation.docker.enable = true;
+  # virtualisation.docker.storageDriver = "btrfs";
+  
+  virtualisation.podman = {
+    enable = true;
+    # networkSocket.enable = true;
+    dockerCompat = true;
+    defaultNetwork.settings = { dns_enabled = true; };
+  };
 
   services.tailscale.enable = true;
 
