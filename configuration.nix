@@ -18,6 +18,16 @@
       httpProxy = "http://10.42.0.1:1086";
       httpsProxy = "http://10.42.0.1:1086";
     };
+    firewall = {
+      enable = true;
+      allowedTCPPorts = [
+        27015
+        27050
+      ];
+      allowedUDPPorts = [
+        27015
+      ];
+    };
   };
 
   systemd.network.wait-online.extraArgs = ["-i" "enp81s0"];
@@ -137,6 +147,9 @@
   };
 
   services.tailscale.enable = true;
+
+  services.clamav.daemon.enable = true;
+  services.clamav.updater.enable = true;
 
   # services.vscode-server.enable = true;
 
