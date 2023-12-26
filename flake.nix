@@ -33,6 +33,7 @@
         modules = [
           ./hardware-configuration.nix
           ./configuration.nix
+          ./cs2.nix
           vscode-server.nixosModules.default
           {
             environment.systemPackages = [

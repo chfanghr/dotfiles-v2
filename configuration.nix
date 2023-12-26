@@ -20,13 +20,6 @@
     };
     firewall = {
       enable = true;
-      allowedTCPPorts = [
-        27015
-        27050
-      ];
-      allowedUDPPorts = [
-        27015
-      ];
     };
   };
 
@@ -138,12 +131,12 @@
 
   # virtualisation.docker.enable = true;
   # virtualisation.docker.storageDriver = "btrfs";
-  
+
   virtualisation.podman = {
     enable = true;
     # networkSocket.enable = true;
     dockerCompat = true;
-    defaultNetwork.settings = { dns_enabled = true; };
+    defaultNetwork.settings = {dns_enabled = true;};
   };
 
   services.tailscale.enable = true;
