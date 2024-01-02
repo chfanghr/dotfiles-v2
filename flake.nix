@@ -34,6 +34,7 @@
           ./hardware-configuration.nix
           ./configuration.nix
           ./cs2.nix
+          ./generate-nix-cache-key.nix
           vscode-server.nixosModules.default
           {
             environment.systemPackages = [
