@@ -57,11 +57,13 @@
         "fanghr"
       ];
       substituters = [
-        "https://cache.nixos.org/"
-        "https://iohk.cachix.org"
+        "https://cache.nixos.org?priority=1"
+        "https://nix-community.cachix.org?priority=2"
+        "https://iohk.cachix.org?priority=999"
       ];
       trusted-public-keys = [
         "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
         "iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo="
       ];
     };
