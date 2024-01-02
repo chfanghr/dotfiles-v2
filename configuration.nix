@@ -56,7 +56,7 @@
         "root"
       ];
       substituters = [
-        "https://cache.nixos.org?priority=1"
+        "https://cache.nixos.org"
         "https://nix-community.cachix.org?priority=2"
         "https://mlabs.cachix.org?priority=3"
         "https://iohk.cachix.org?priority=999"
