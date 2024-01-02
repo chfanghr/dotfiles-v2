@@ -54,7 +54,6 @@
     settings = {
       trusted-users = [
         "root"
-        "fanghr"
       ];
       substituters = [
         "https://cache.nixos.org?priority=1"
