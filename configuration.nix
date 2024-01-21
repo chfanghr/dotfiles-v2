@@ -147,6 +147,9 @@
   services.clamav.daemon.enable = true;
   services.clamav.updater.enable = true;
 
+  services.iperf3.enable = true;
+  services.iperf3.openFirewall = true;
+
   # services.vscode-server.enable = true;
 
   system.stateVersion = "23.11";
