@@ -7,7 +7,7 @@
       "27050:27050"
     ];
     image = "docker.io/joedwards32/cs2:latest";
-    extraOptions = [ "--network=host" ];
+    extraOptions = ["--network=host"];
     environment = {
       CS2_RCON_PORT = "27050";
       # CS2_LAN = "1";
@@ -18,7 +18,7 @@
       CS2_PW = "swatownang";
       CS2_RCONPW = "swatownang";
       CS2_SERVERNAME = "demeter";
-      SRCDS_TOKEN="980995869076ECC909EA014BDEAC8EFD";
+      SRCDS_TOKEN = "980995869076ECC909EA014BDEAC8EFD";
     };
     volumes = [
       "cs2-server:/home/steam/cs2-dedicated/"
