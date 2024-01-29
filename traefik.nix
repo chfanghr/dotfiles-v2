@@ -71,5 +71,7 @@ in {
 
   networking.firewall.allowedTCPPorts = [80 443];
 
+  systemd.services.traefik.wants = ["tailscaled.service"];
+
   services.tailscale.permitCertUid = config.systemd.services.traefik.serviceConfig.User;
 }
