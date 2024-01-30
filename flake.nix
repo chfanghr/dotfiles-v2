@@ -37,6 +37,7 @@
           ./generate-nix-cache-key.nix
           ./traefik.nix
           ./grafana.nix
+          ./prometheus.nix
           vscode-server.nixosModules.default
           {
             environment.systemPackages = [

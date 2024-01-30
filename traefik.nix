@@ -33,7 +33,7 @@ in {
     package = traefik3;
     staticConfigOptions = {
       global.sendAnonymousUsage = false;
-      accessLog = {};
+      # accessLog = {};
       certificatesResolvers.tailnetResolver.tailscale = {};
       entryPoints = {
         insecure = {
@@ -59,10 +59,23 @@ in {
             service = "grafana";
             rule = "Host(`demeter.snow-dace.ts.net`) && PathPrefix(`/grafana/`)";
           };
+          prometheusWriteReceiver = {
+            service = "prometheusWriteReceiver";
+            rule = "Host(`demeter.snow-dace.ts.net`) && Path(`/prometheus/write`)";
+            middlewares = [ "setPrometheusWriteApiPath" ];
+          };
+        };
+        middlewares = {
+          setPrometheusWriteApiPath = {
+            replacePath.path = "/api/v1/write";
+          };
         };
         services = {
           grafana.loadBalancer.servers = [
             {url = with config.services.grafana.settings.server; "http://127.0.0.1:${builtins.toString http_port}/";}
+          ];
+          prometheusWriteReceiver.loadBalancer.servers = [
+            {url = with config.services.prometheus; "http://127.0.0.1:${builtins.toString port}/"; }
           ];
         };
       };
