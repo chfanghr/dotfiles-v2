@@ -27,8 +27,20 @@ in {
         "i2c-dev"
         "i2c-piix4"
       ];
-      network.enable = true;
-      network.udhcpc.extraArgs = ["-t" "20"];
+      network = {
+        enable = true;
+        udhcpc = {
+          enable = true;
+          extraArgs = ["-t" "20"];
+        };
+        ssh = {
+          enable = true;
+          authorizedKeys = config.users.users.fanghr.openssh.authorizedKeys.keys;
+          hostKeys = [
+            "/etc/secrets/initrd/ssh_host_ed25519_key"
+          ];
+        };
+      };
       luks = {
         yubikeySupport = true;
         devices = {

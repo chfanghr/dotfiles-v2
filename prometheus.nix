@@ -17,12 +17,12 @@
       }
     ];
 
-    extraFlags = [ "--web.enable-remote-write-receiver" ];
+    extraFlags = ["--web.enable-remote-write-receiver"];
 
     exporters = {
       node = {
         enable = true;
-        enabledCollectors = [ "systemd" ];
+        enabledCollectors = ["systemd"];
         listenAddress = "127.0.0.1";
       };
     };
