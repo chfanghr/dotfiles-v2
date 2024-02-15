@@ -73,7 +73,7 @@
   services = {
     avahi = {
       enable = true;
-      nssmdns = true;
+      nssmdns4 = true;
       publish = {
         enable = true;
         workstation = true;
@@ -81,10 +81,14 @@
         domain = true;
         addresses = true;
       };
+      ipv6 = false;
       extraServiceFiles = {
         ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
         sftp = "${pkgs.avahi}/etc/avahi/services/sftp-ssh.service";
       };
+      allowInterfaces = [
+        "enp81s0"
+      ];
     };
 
     openssh = {
