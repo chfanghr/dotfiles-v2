@@ -45,7 +45,7 @@
             ];
             services.vscode-server.enable = true;
           }
-          ./thungghuan
+          ./thungghuan.nix
         ];
         specialArgs = {
           inherit hostname;
