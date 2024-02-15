@@ -57,9 +57,9 @@
       ];
       substituters = [
         "https://cache.nixos.org"
-        "https://nix-community.cachix.org?priority=2"
-        "https://mlabs.cachix.org?priority=3"
-        "https://iohk.cachix.org?priority=999"
+        # "https://nix-community.cachix.org?priority=2"
+        # "https://mlabs.cachix.org?priority=3"
+        # "https://iohk.cachix.org?priority=999"
       ];
       trusted-public-keys = [
         "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
