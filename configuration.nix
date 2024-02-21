@@ -154,6 +154,8 @@
   services.iperf3.enable = true;
   services.iperf3.openFirewall = true;
 
+  services.journald.console = "/dev/console";
+
   # services.vscode-server.enable = true;
 
   system.stateVersion = "24.05";
