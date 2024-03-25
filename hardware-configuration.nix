@@ -56,8 +56,8 @@ in {
           };
         };
       };
-      postDeviceCommands = staticColor "FF0000";
-      postMountCommands = staticColor "00FF00";
+      # postDeviceCommands = staticColor "FF0000";
+      # postMountCommands = staticColor "00FF00";
     };
     kernelModules = ["kvm-amd"];
   };
