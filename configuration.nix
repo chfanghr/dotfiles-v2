@@ -73,7 +73,7 @@
   services = {
     avahi = {
       enable = true;
-      nssmdns4 = true;
+      nssmdns = true;
       publish = {
         enable = true;
         workstation = true;
