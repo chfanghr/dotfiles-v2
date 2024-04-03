@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: {
   boot.loader = {
     systemd-boot.enable = true;
     efi.canTouchEfiVariables = true;
@@ -157,6 +157,14 @@
   services.journald.console = "/dev/console";
 
   # services.vscode-server.enable = true;
+
+  services.nix-serve = {
+    enable = true;
+    secretKeyFile = config.services.generate-nix-cache-key.privateKeyPath;
+    openFirewall = true;
+    package = pkgs.nix-serve-ng;
+  };
+
   services.generate-nix-cache-key.enable = true;
 
   system.stateVersion = "24.05";
