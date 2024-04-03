@@ -157,6 +157,7 @@
   services.journald.console = "/dev/console";
 
   # services.vscode-server.enable = true;
+  services.generate-nix-cache-key.enable = true;
 
   system.stateVersion = "24.05";
 }
