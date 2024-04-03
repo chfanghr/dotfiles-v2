@@ -41,8 +41,8 @@ in {
 
     systemd.services.generate-nix-cache-key = {
       wantedBy = ["multi-user.target"];
-      serviceConfig.Type = "oneshot";
       serviceConfig = {
+        Type = "oneshot";
         User = "root";
         Group = "root";
       };
