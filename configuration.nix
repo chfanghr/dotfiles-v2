@@ -17,6 +17,7 @@
     hostName = "Demeter";
     networkmanager.enable = false;
     useNetworkd = true;
+    enableIPv6 = false;
     proxy = {
       default = "http://10.42.0.1:1086";
       httpProxy = "http://10.42.0.1:1086";
@@ -61,7 +62,7 @@
       ];
       substituters = [
         "https://cache.nixos.org"
-        "https://nix-community.cachix.org?priority=2"
+        # "https://nix-community.cachix.org?priority=2"
         "https://mlabs.cachix.org?priority=3"
         "https://iohk.cachix.org?priority=999"
       ];
