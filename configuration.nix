@@ -62,7 +62,7 @@
       ];
       substituters = [
         "https://cache.nixos.org"
-        # "https://nix-community.cachix.org?priority=2"
+        "https://nix-community.cachix.org?priority=2"
         "https://mlabs.cachix.org?priority=3"
         # "https://iohk.cachix.org?priority=999"
       ];
@@ -86,7 +86,7 @@
         domain = true;
         addresses = true;
       };
-      ipv6 = false;
+      ipv6 = true;
       extraServiceFiles = {
         ssh = "${pkgs.avahi}/etc/avahi/services/ssh.service";
         sftp = "${pkgs.avahi}/etc/avahi/services/sftp-ssh.service";
