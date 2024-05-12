@@ -18,6 +18,7 @@
     ./podman.nix
     ./prometheus.nix
     ./rgb.nix
+    ./security.nix
     ./tailscale.nix
     ./traefik.nix
     ./video.nix
