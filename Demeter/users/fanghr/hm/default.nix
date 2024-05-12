@@ -4,7 +4,7 @@
     ./fonts.nix
     ./git.nix
     ./gpg.nix
-    ./hyperland.nix
+    ./sway.nix
     ./nvim.nix
     ./packages.nix
     ./pueue.nix
