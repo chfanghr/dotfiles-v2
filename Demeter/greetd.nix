@@ -44,5 +44,7 @@ in {
       TTYVHangup = true;
       TTYVTDisallocate = true;
     };
+
+    boot.plymouth.enable = true;
   };
 }

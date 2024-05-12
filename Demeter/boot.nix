@@ -8,6 +8,8 @@
       efi.canTouchEfiVariables = true;
     };
 
+    plymouth.enable = true;
+
     initrd = {
       availableKernelModules = [
         "xhci_pci"
