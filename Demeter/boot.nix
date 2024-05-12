@@ -27,6 +27,7 @@
         "r8169"
         "i2c-dev"
         "i2c-piix4"
+        "amdgpu"
       ];
       network = {
         enable = true;
