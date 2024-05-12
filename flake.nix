@@ -16,29 +16,18 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixvim.follows = "my-nvim/nixvim";
+    flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
-  outputs = inputs @ {
-    nixpkgs,
-    home-manager,
-    vscode-server,
-    ...
-  }: let
-    system = "x86_64-linux";
-    pkgs = import nixpkgs {
-      inherit system;
-      config.allowUnfree = true;
+  outputs = inputs @ {flake-parts, ...}:
+    flake-parts.lib.mkFlake {inherit inputs;} {
+      systems = [
+        "x86_64-linux"
+        "aarch64-darwin"
+        "x86_64-darwin"
+      ];
+      imports = [
+        ./flake-part-modules.nix
+      ];
     };
-    hostname = "Demeter";
-  in {
-    nixosConfigurations = {
-      "${hostname}" = nixpkgs.lib.nixosSystem {
-        inherit pkgs system;
-        modules = [./Demeter/default.nix];
-        specialArgs = {
-          inherit inputs;
-        };
-      };
-    };
-  };
 }
