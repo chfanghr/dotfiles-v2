@@ -11,6 +11,11 @@
       url = "github:nix-community/nixos-vscode-server";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    my-nvim = {
+      url = "github:chfanghr/nvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    nixvim.follows = "my-nvim/nixvim";
   };
 
   outputs = inputs @ {

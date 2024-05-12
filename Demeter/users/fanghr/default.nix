@@ -18,7 +18,10 @@ in {
     ];
     shell = pkgs.zsh;
     hashedPassword = "$y$j9T$QNGF492EVUDRotin.hBJA.$S0UY7FJKfDiAxmAg6hciTiiyVvEoUgSlhiHFWHvkz.7";
+    home = "/home/fanghr";
   };
 
   programs.zsh.enable = mkDefault true;
+
+  home-manager.users.fanghr = import ./hm;
 }
