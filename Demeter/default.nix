@@ -9,6 +9,7 @@
     ./clamav.nix
     ./file-systems.nix
     ./grafana.nix
+    ./greetd.nix
     ./bluetooth.nix
     ./hardware.nix
     ./misc.nix
@@ -25,7 +26,10 @@
     ./vscode.nix
   ];
 
-  specialisation.debug.configuration = {services.journald.console = "/dev/console";};
+  specialisation.debug.configuration = {
+    services.journald.console = "/dev/console";
+    demeter.greetd-sway.enable = false;
+  };
 
   system.stateVersion = "24.05";
 }
