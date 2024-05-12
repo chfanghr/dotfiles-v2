@@ -4,6 +4,7 @@
     ./fonts.nix
     ./git.nix
     ./gpg.nix
+    ./hyprland.nix
     ./sway.nix
     ./nvim.nix
     ./packages.nix

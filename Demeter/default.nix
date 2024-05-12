@@ -12,6 +12,7 @@
     ./greetd.nix
     ./bluetooth.nix
     ./hardware.nix
+    ./hyprland.nix
     ./misc.nix
     ./networking.nix
     ./nix.nix
