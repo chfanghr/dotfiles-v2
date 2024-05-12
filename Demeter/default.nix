@@ -7,10 +7,11 @@
     ./avahi.nix
     ./boot.nix
     ./clamav.nix
-    ./misc.nix
     ./file-systems.nix
     ./grafana.nix
+    ./bluetooth.nix
     ./hardware.nix
+    ./misc.nix
     ./networking.nix
     ./nix.nix
     ./openssh.nix
