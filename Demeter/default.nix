@@ -14,6 +14,7 @@
     ./networking.nix
     ./nix.nix
     ./openssh.nix
+    ./pipewire.nix
     ./podman.nix
     ./prometheus.nix
     ./rgb.nix
