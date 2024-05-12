@@ -25,5 +25,5 @@
 
   specialisation.debug.configuration = {services.journald.console = "/dev/console";};
 
-  system.stateVersion = "23.11";
+  system.stateVersion = "24.05";
 }
