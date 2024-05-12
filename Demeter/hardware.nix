@@ -10,5 +10,6 @@
   hardware = {
     enableRedistributableFirmware = true;
     amdgpu.amdvlk = true;
+    opengl.enable = true;
   };
 }

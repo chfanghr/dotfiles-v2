@@ -22,7 +22,6 @@
     ./security.nix
     ./tailscale.nix
     ./traefik.nix
-    ./video.nix
     ./vscode.nix
   ];
 
