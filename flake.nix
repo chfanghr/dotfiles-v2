@@ -21,6 +21,7 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
   };
 
   outputs = inputs @ {flake-parts, ...}:

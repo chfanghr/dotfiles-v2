@@ -1,9 +1,14 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{inputs, ...}: {
+  imports = with inputs.nixos-hardware.nixosModules; [
+    common-cpu-amd
+    common-cpu-amd-raphael-igpu
+    common-cpu-amd-pstate
+    common-gpu-amd
+  ];
+
   nixpkgs.hostPlatform = "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.enableRedistributableFirmware = true;
+  hardware = {
+    enableRedistributableFirmware = true;
+    amdgpu.amdvlk = true;
+  };
 }
