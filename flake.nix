@@ -13,7 +13,7 @@
     };
   };
 
-  outputs = {
+  outputs = inputs @ {
     nixpkgs,
     home-manager,
     vscode-server,
@@ -28,27 +28,10 @@
   in {
     nixosConfigurations = {
       "${hostname}" = nixpkgs.lib.nixosSystem {
-        inherit pkgs;
-        inherit system;
-        modules = [
-          ./hardware-configuration.nix
-          ./configuration.nix
-          ./cs2.nix
-          ./generate-nix-cache-key.nix
-          ./traefik.nix
-          ./grafana.nix
-          ./prometheus.nix
-          vscode-server.nixosModules.default
-          {
-            environment.systemPackages = [
-              home-manager.packages."${system}".home-manager
-            ];
-            services.vscode-server.enable = true;
-          }
-          ./thungghuan.nix
-        ];
+        inherit pkgs system;
+        modules = [./Demeter/default.nix];
         specialArgs = {
-          inherit hostname;
+          inherit inputs;
         };
       };
     };
