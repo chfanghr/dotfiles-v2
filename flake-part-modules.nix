@@ -1,5 +1,6 @@
-{inputs, ...}:
-  let inherit (inputs) nixpkgs; in {
+{inputs, ...}: let
+  inherit (inputs) nixpkgs;
+in {
   flake = {
     nixosConfigurations.Demeter = let
       system = "x86_64-linux";
@@ -9,9 +10,9 @@
       };
     in
       nixpkgs.lib.nixosSystem {
-         inherit system pkgs;
-         modules = [(import ./Demeter)];
-         specialArgs = {inherit inputs;};
+        inherit system pkgs;
+        modules = [(import ./Demeter)];
+        specialArgs = {inherit inputs;};
       };
   };
 }

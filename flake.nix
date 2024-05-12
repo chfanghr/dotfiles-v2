@@ -17,6 +17,10 @@
     };
     nixvim.follows = "my-nvim/nixvim";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    pre-commit-hooks-nix = {
+      url = "github:cachix/pre-commit-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -28,6 +32,7 @@
       ];
       imports = [
         ./flake-part-modules.nix
+        ./pre-commit.nix
       ];
     };
 }
