@@ -23,5 +23,7 @@
     ./vscode.nix
   ];
 
+  specialisation.debug.configuration = {services.journald.console = "/dev/console";};
+
   system.stateVersion = "23.11";
 }

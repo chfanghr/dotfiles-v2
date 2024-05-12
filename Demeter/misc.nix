@@ -31,6 +31,4 @@
     mosh.enable = true;
     nix-ld.enable = true;
   };
-
-  services.journald.console = "/dev/console";
 }
