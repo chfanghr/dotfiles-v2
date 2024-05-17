@@ -8,7 +8,7 @@
   ];
 
   nix = {
-    gc.automatic = true;
+    package = pkgs.nixVersions.nix_2_21;
     extraOptions = ''
       experimental-features = nix-command flakes ca-derivations
       keep-outputs = true
