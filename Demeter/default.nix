@@ -22,6 +22,7 @@
     ./prometheus.nix
     ./rgb.nix
     ./security.nix
+    ./steam.nix
     ./tailscale.nix
     ./traefik.nix
     ./vscode.nix
