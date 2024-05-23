@@ -22,6 +22,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    cardano-nix.url = "github:mlabs-haskell/cardano.nix";
   };
 
   outputs = inputs @ {flake-parts, ...}:

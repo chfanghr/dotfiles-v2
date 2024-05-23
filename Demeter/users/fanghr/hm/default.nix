@@ -10,6 +10,7 @@
     ./packages.nix
     ./pueue.nix
     ./ssh.nix
+    ./tmate.nix
     ./vscode.nix
     ./zsh.nix
   ];

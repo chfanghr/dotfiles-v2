@@ -27,7 +27,7 @@ in {
       };
     };
 
-    systemd.network.wait-online.extraArgs = ["-i" config.demeter.networking.mainPhyInterface];
+    # systemd.network.wait-online.extraArgs = ["-i" config.demeter.networking.mainPhyInterface];
 
     services.iperf3 = {
       enable = true;

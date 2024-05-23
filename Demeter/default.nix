@@ -6,6 +6,7 @@
     ./users
     ./avahi.nix
     ./boot.nix
+    ./cardano.nix
     ./clamav.nix
     ./file-systems.nix
     ./grafana.nix
