@@ -1,8 +1,4 @@
-{
-  lib,
-  config,
-  ...
-}: let
+{lib, ...}: let
   inherit (lib) types mkOption;
 in {
   options.demeter.networking.mainPhyInterface = mkOption {
