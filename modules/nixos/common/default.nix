@@ -1,25 +1,16 @@
 {inputs, ...}: {
   imports = [
-    ./avahi.nix
-    ./clamav.nix
-    ./bluetooth.nix
-    ./hardware.nix
+    ./desktop
+    ./hardware
+    ./nix
+    ./services
+    ./users
+    ./constants.nix
+    ./gaming.nix
     ./misc.nix
     ./networking.nix
-    ./nix.nix
-    ./openssh.nix
-    ./pipewire.nix
     ./podman.nix
-    ./rgb.nix
-    ./security.nix
-    ./tailscale.nix
-    ./vscode.nix
-    ./fanghr.nix
-    ./graphical.nix
-    ./gaming.nix
-    ./time.nix
-    ./dotfiles.nix
-    ./greetd.nix
+    ../../shared
     inputs.home-manager.nixosModules.home-manager
   ];
 

@@ -1,14 +1,10 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }:
-lib.mkIf (config.dotfiles.hasProp "is-for-gaming") {
-  hardware = {
-    xone.enable = true;
-    steam-hardware.enable = true;
-  };
-
+lib.mkIf (config.dotfiles.shared.props.purposes.graphical.gaming) {
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true;
@@ -27,4 +23,10 @@ lib.mkIf (config.dotfiles.hasProp "is-for-gaming") {
       insertNameservers = ["8.8.8.8" "1.1.1.1" "114.114.114.114"];
     };
   };
+
+  services.seatd.enable = true;
+
+  security.polkit.enable = true;
+
+  environment.systemPackages = with pkgs; [dualsensectl];
 }
