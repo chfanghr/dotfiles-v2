@@ -81,7 +81,7 @@
 
   boot.loader.systemd-boot.consoleMode = "auto";
 
-  users.users.fanghr.hashedPassword = "$y$j9T$QNGF492EVUDRotin.hBJA.$S0UY7FJKfDiAxmAg6hciTiiyVvEoUgSlhiHFWHvkz.7";
+  users.users.fanghr.hashedPassword = "$y$j9T$ESoL30N/VpkRWrQjHtuJy0$xyvywylDt4YaLWg5KdqsZ5x2bSaRbGIRld811A4dBjA";
 
   time.timeZone = "Asia/Hong_Kong";
 

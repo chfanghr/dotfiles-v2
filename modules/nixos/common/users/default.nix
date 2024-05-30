@@ -5,4 +5,6 @@
     ./root.nix
     ./thungghuan.nix
   ];
+
+  users.mutableUsers = false;
 }

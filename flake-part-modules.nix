@@ -11,7 +11,8 @@ in {
     in
       nixpkgs.lib.nixosSystem {
         inherit system pkgs;
-        modules = [(import ./Demeter)];
+        # modules = [(import ./Demeter)];
+        modules = [(import ./hosts/Demeter)];
         specialArgs = {inherit inputs;};
       };
     nixosConfigurations.Poseidon = let

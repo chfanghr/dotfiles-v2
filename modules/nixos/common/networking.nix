@@ -22,7 +22,7 @@ in {
       mkIf config.dotfiles.shared.props.networking.home.proxy.useRouter {
         networking.proxy = let
           inherit (config.dotfiles.shared.networking.home) router;
-          proxy = "http://${router.address}:${router.proxyPorts.http}";
+          proxy = "http://${router.address}:${builtins.toString router.proxyPorts.http}";
         in {
           default = proxy;
           httpProxy = proxy;
