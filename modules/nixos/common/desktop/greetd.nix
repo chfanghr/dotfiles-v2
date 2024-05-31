@@ -6,7 +6,8 @@
 }: let
   inherit (lib) mkIf mkDefault;
 in
-  mkIf (config.dotfiles.shared.props.purposes.graphical.desktop) {
+  mkIf (config.dotfiles.shared.props.purposes.graphical.desktop
+    && !config.dotfiles.shared.props.hardware.steamdeck) {
     services.greetd = {
       enable = true;
       settings = {

@@ -40,7 +40,7 @@ in {
       ];
     }
     (
-      mkIf (graphicalProps.gaming || graphicalProps.desktop) {
+      mkIf ((graphicalProps.gaming || graphicalProps.desktop) && !config.dotfiles.shared.props.hardware.steamdeck) {
         hardware.opengl = {
           enable = true;
           driSupport = true;

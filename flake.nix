@@ -28,6 +28,8 @@
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
     };
+    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
+    disko.url = "github:nix-community/disko";
   };
 
   outputs = inputs @ {flake-parts, ...}:

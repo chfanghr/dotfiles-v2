@@ -1,30 +1,18 @@
 {inputs, ...}: let
   inherit (inputs) nixpkgs;
+
+  mkNixos = system: host:
+    nixpkgs.lib.nixosSystem {
+      inherit system;
+      modules = [./hosts/${host}];
+      specialArgs = {inherit inputs;};
+    };
+  mkX86_64Nixos = mkNixos "x86_64-linux";
 in {
   flake = {
-    nixosConfigurations.Demeter = let
-      system = "x86_64-linux";
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in
-      nixpkgs.lib.nixosSystem {
-        inherit system pkgs;
-        modules = [(import ./hosts/Demeter)];
-        specialArgs = {inherit inputs;};
-      };
-    nixosConfigurations.Poseidon = let
-      system = "x86_64-linux";
-      pkgs = import inputs.nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-      };
-    in
-      nixpkgs.lib.nixosSystem {
-        inherit system pkgs;
-        modules = [(import ./hosts/Poseidon.nix)];
-        specialArgs = {inherit inputs;};
-      };
+    nixosConfigurations.Demeter = mkX86_64Nixos "Demeter";
+    nixosConfigurations.Poseidon = mkX86_64Nixos "Poseidon";
+    nixosConfigurations.Uranus = mkX86_64Nixos "Uranus";
+    nixosConfigurations.Jupiter = mkX86_64Nixos "Jupiter";
   };
 }

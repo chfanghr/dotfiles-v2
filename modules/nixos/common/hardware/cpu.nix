@@ -21,30 +21,33 @@ in {
     intel = mkPropOption "has a intel cpu";
   };
 
-  config = mkMerge [
-    {
-      assertions = [
-        {
-          assertion = xor cpuProps.amd cpuProps.intel;
-          message = "A machine can either have an amd or intel cpu, never both, never none";
+  config =
+    mkIf
+    (!config.dotfiles.shared.props.hardware.steamdeck)
+    (mkMerge [
+      {
+        assertions = [
+          {
+            assertion = xor cpuProps.amd cpuProps.intel;
+            message = "A machine can either have an amd or intel cpu, never both, never none";
+          }
+        ];
+      }
+      (
+        mkIf cpuProps.amd {
+          boot.kernelParams = ["amd_pstate=active"];
+          hardware.cpu.amd.updateMicrocode = true;
         }
-      ];
-    }
-    (
-      mkIf cpuProps.amd {
-        boot.kernelParams = ["amd_pstate=active"];
-        hardware.cpu.amd.updateMicrocode = true;
-      }
-    )
-    (
-      mkIf cpuProps.intel {
-        hardware.cpu.intel.updateMicrocode = true;
-      }
-    )
-    (
-      mkIf (graphicalProps.desktop || graphicalProps.gaming) {
-        powerManagement.cpuFreqGovernor = "ondemand";
-      }
-    )
-  ];
+      )
+      (
+        mkIf cpuProps.intel {
+          hardware.cpu.intel.updateMicrocode = true;
+        }
+      )
+      (
+        mkIf (graphicalProps.desktop || graphicalProps.gaming) {
+          powerManagement.cpuFreqGovernor = "ondemand";
+        }
+      )
+    ]);
 }

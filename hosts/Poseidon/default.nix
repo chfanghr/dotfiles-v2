@@ -4,7 +4,7 @@
   ...
 }: {
   imports = [
-    ../modules/nixos/common
+    ../../modules/nixos/common
   ];
 
   networking.hostName = "Poseidon";
@@ -104,6 +104,8 @@
       graphicalModule
       {
         dotfiles.nixos.props.hardware.gpu.nvidia = true;
+
+        nixpkgs.config.allowUnfree = true;
 
         hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.mkDriver {
           version = "555.42.02";
