@@ -52,11 +52,20 @@
     openFirewall = true;
   };
 
-  home-manager.users.fanghr.dotfiles.hm.graphical.desktop.hyprland.extraConfig = ''
-    monitor=DP-1,3840x2160@120,0x0,2
-  '';
+  home-manager.users.fanghr = {
+    dotfiles.hm.graphical.desktop.hyprland.extraConfig = ''
+      monitor=DP-1,3840x2160@120,0x0,2
+    '';
+    programs.git.signing = {
+      key = "0x06DA3273BC714AE7";
+      signByDefault = true;
+    };
+  };
 
-  users.users.fanghr.hashedPassword = "$y$j9T$q3G6zE9QU2YXOxG2wLqCW1$DDWbED5h2fXtgNev2MtNhkNXFPzayP7w8O9HCLlx3Y5";
+  users.users.fanghr = {
+    hashedPassword = "$y$j9T$q3G6zE9QU2YXOxG2wLqCW1$DDWbED5h2fXtgNev2MtNhkNXFPzayP7w8O9HCLlx3Y5";
+    extraGroups = ["cardano-node"];
+  };
 
   specialisation.debug.configuration = {
     boot = {

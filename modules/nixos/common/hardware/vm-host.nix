@@ -51,7 +51,7 @@ in {
     (
       mkIf cpuProps.amd {
         boot = {
-          kernelModules = ["kvm_amd"];
+          kernelModules = ["kvm-amd"];
           extraModprobeConfig = ''
             options kvm_amd nested=1
           '';

@@ -15,11 +15,6 @@
       "clear\\ /"
     ];
 
-    # signing = {
-    #   key = "0x06DA3273BC714AE7";
-    #   signByDefault = true;
-    # };
-
     userEmail = "chfanghr@gmail.com";
     userName = "Hongrui Fang";
 
