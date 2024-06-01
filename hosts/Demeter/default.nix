@@ -33,7 +33,7 @@
             enable = true;
             blueman = true;
           };
-          cpu.intel = true;
+          cpu.amd = true;
           gpu.amd.enable = true;
           emulation = true;
           rgb = true;

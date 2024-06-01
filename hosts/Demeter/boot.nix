@@ -61,7 +61,6 @@
         };
       };
     };
-    kernelModules = ["kvm-amd"];
   };
 
   systemd.services.successBootIndication = {
