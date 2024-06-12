@@ -5,12 +5,12 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkIf;
+  inherit (lib) mkIf mkDefault;
 in
   mkIf config.dotfiles.shared.props.purposes.graphical.desktop
   {
     xdg.portal.enable = true;
-    xdg.portal.wlr.enable = true;
+    xdg.portal.wlr.enable = mkDefault true;
     xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-wlr];
     xdg.portal.configPackages = [pkgs.xdg-desktop-portal-wlr];
 
