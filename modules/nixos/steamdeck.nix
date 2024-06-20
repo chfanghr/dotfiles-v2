@@ -74,5 +74,7 @@ in {
     };
   };
 
+  nix.gc.options = "--delete-older-than +4";
+
   hardware.opengl.driSupport32Bit = true;
 }
