@@ -18,7 +18,10 @@ lib.mkIf (config.dotfiles.shared.props.purposes.graphical.gaming) (lib.mkMerge [
 
     security.polkit.enable = true;
 
-    environment.systemPackages = with pkgs; [dualsensectl];
+    environment.systemPackages = with pkgs; [
+      dualsensectl
+      chiaki4deck
+    ];
 
     nixpkgs.config.allowUnfree = true;
   }
