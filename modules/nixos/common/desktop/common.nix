@@ -5,14 +5,14 @@
   inputs,
   ...
 }: let
-  inherit (lib) mkIf mkDefault;
+  inherit (lib) mkIf;
 in
   mkIf config.dotfiles.shared.props.purposes.graphical.desktop
   {
     xdg.portal.enable = true;
-    xdg.portal.wlr.enable = mkDefault true;
-    xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-wlr];
-    xdg.portal.configPackages = [pkgs.xdg-desktop-portal-wlr];
+    # xdg.portal.wlr.enable = mkDefault true;
+    # xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-wlr];
+    # xdg.portal.configPackages = [pkgs.xdg-desktop-portal-wlr];
 
     programs.hyprland = {
       enable = true;
