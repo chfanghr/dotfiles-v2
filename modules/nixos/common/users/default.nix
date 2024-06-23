@@ -7,4 +7,6 @@
   ];
 
   users.mutableUsers = false;
+
+  home-manager.backupFileExtension = "backup";
 }
