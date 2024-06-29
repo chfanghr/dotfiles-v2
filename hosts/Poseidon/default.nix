@@ -100,7 +100,7 @@
       };
     };
 
-    nvidia_gpu.configuration = lib.mkMerge [
+    nvidiaGpu.configuration = lib.mkMerge [
       graphicalModule
       {
         dotfiles.nixos.props.hardware.gpu.nvidia = true;
@@ -119,7 +119,7 @@
       }
     ];
 
-    amd_gpu.configuration = lib.mkMerge [
+    amdGpu.configuration = lib.mkMerge [
       graphicalModule
       {
         dotfiles.nixos.props.hardware.gpu.amd.enable = true;
