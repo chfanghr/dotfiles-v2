@@ -43,8 +43,6 @@ in {
       mkIf ((graphicalProps.gaming || graphicalProps.desktop) && !config.dotfiles.shared.props.hardware.steamdeck) {
         hardware.opengl = {
           enable = true;
-          driSupport = true;
-          driSupport32Bit = true;
           package = pkgs-unstable.mesa.drivers;
           package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
         };
@@ -63,6 +61,7 @@ in {
         hardware.opengl.extraPackages = with pkgs; [
           vaapiVdpau
         ];
+        nixpkgs.config.allowUnfree = true;
       }
     )
     (
