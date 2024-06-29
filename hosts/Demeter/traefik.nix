@@ -1,36 +1,6 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}: let
-  traefik3 = pkgs.buildGoModule rec {
-    pname = "traefik";
-    version = "3.0.0-beta5";
-    src = pkgs.fetchzip {
-      url = "https://github.com/traefik/traefik/releases/download/v${version}/traefik-v${version}.src.tar.gz";
-      hash = "sha256-fEwwGF9r1ZdSDJoGDz3OD9ZOaiQfq2fupgO858flEeI=";
-      stripRoot = false;
-    };
-    vendorHash = "sha256-Q6dlb6+mBRx8ZveFvFIXgAGHerzExi9HaSuJKVt1Ogc=";
-    subPackages = ["cmd/traefik"];
-
-    preBuild = ''
-      go generate
-
-      CODENAME=$(awk -F "=" '/CODENAME=/ { print $2}' script/binary)
-
-      buildFlagsArray+=("-ldflags= -s -w \
-        -X github.com/traefik/traefik/v${lib.versions.major version}/pkg/version.Version=${version} \
-        -X github.com/traefik/traefik/v${lib.versions.major version}/pkg/version.Codename=$CODENAME")
-    '';
-
-    doCheck = false;
-  };
-in {
+{config, ...}: {
   services.traefik = {
     enable = true;
-    package = traefik3;
     staticConfigOptions = {
       global.sendAnonymousUsage = false;
       # accessLog = {};
