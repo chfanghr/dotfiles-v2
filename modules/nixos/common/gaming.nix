@@ -21,6 +21,7 @@ lib.mkIf (config.dotfiles.shared.props.purposes.graphical.gaming) (lib.mkMerge [
     environment.systemPackages = with pkgs; [
       dualsensectl
       chiaki4deck
+      prismlauncher
     ];
 
     nixpkgs.config.allowUnfree = true;
