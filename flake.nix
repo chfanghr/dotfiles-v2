@@ -30,6 +30,7 @@
     };
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
     disko.url = "github:nix-community/disko";
+    nix-minecraft.url = "github:Infinidoge/nix-minecraft";
   };
 
   outputs = inputs @ {flake-parts, ...}:

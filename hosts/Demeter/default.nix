@@ -4,6 +4,7 @@
     ./cardano.nix
     ./file-systems.nix
     ./grafana.nix
+    ./minecraft.nix
     ./prometheus.nix
     ./security.nix
     ./traefik.nix
