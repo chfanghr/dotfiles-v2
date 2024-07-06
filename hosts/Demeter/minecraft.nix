@@ -38,6 +38,7 @@
         server-port = 25565;
         enable-rcon = true;
         "rcon.port" = 25575;
+        "rcon.password" = 8964;
         level-seed = 8964;
         motd = "Jesus Fucking Christ";
         difficulty = "hard";
