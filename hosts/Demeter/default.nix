@@ -41,7 +41,10 @@
           vmHost = true;
         };
         nix.roles.builder = true;
-        users.guests.thungghuan = true;
+        users.guests = {
+          thungghuan = true;
+          robertchen = true;
+        };
         ociHost = true;
       };
       networking.lanInterfaces = ["enp81s0"];
@@ -63,9 +66,12 @@
     };
   };
 
-  users.users.fanghr = {
-    hashedPassword = "$y$j9T$q3G6zE9QU2YXOxG2wLqCW1$DDWbED5h2fXtgNev2MtNhkNXFPzayP7w8O9HCLlx3Y5";
-    extraGroups = ["cardano-node"];
+  users.users = {
+    fanghr = {
+      hashedPassword = "$y$j9T$q3G6zE9QU2YXOxG2wLqCW1$DDWbED5h2fXtgNev2MtNhkNXFPzayP7w8O9HCLlx3Y5";
+      extraGroups = ["cardano-node" "minecraft"];
+    };
+    robertchen.extraGroups = ["minecraft"];
   };
 
   specialisation.debug.configuration = {
