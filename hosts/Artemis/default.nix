@@ -4,6 +4,7 @@
     ./boot.nix
     ./dlna.nix
     ./networking.nix
+    ./prometheus.nix
     ./qbittorrent.nix
     ./root-fs.nix
     ./samba.nix
