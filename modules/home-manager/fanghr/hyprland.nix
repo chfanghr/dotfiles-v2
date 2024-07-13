@@ -2,7 +2,6 @@
   pkgs,
   lib,
   config,
-  inputs,
   ...
 }: {
   options.dotfiles.hm.graphical.desktop.hyprland.extraConfig = lib.mkOption {
@@ -13,9 +12,8 @@
     wayland.windowManager.hyprland = {
       enable = true;
       xwayland.enable = true;
-      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
       plugins = [
-        inputs.hyprland-plugins.packages.${pkgs.system}.hyprbars
+        pkgs.hyprlandPlugins.hyprbars
       ];
       extraConfig = ''
         ${(builtins.readFile ./hyprland.conf)}

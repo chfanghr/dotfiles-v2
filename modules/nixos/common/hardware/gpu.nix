@@ -2,7 +2,6 @@
   lib,
   config,
   pkgs,
-  inputs,
   ...
 }: let
   inherit (lib) mkIf mkMerge types mkOption mdDoc mkDefault mkForce;
@@ -19,8 +18,6 @@
   graphicalProps = config.dotfiles.shared.props.purposes.graphical;
 
   inherit (config.dotfiles.shared.props.hardware) steamdeck;
-
-  pkgs-unstable = inputs.hyprland.inputs.nixpkgs.legacyPackages.${pkgs.stdenv.hostPlatform.system};
 in {
   options.dotfiles.nixos.props.hardware.gpu = {
     nvidia = mkPropOption "has nvidia graphics cards";
@@ -43,8 +40,6 @@ in {
       mkIf ((graphicalProps.gaming || graphicalProps.desktop) && !config.dotfiles.shared.props.hardware.steamdeck) {
         hardware.graphics = {
           enable = true;
-          package = pkgs-unstable.mesa.drivers;
-          package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
         };
       }
     )
