@@ -57,7 +57,7 @@ in {
         hardware.graphics.extraPackages = with pkgs; [
           vaapiVdpau
         ];
-        nixpkgs.config.allowUnfreePredicate = pkg_name: config.hardware.nvidia.package.name == pkg_name;
+        nixpkgs.config.allowUnfreePredicate = pkg: config.hardware.nvidia.package.name == lib.getName pkg;
       }
     )
     (
