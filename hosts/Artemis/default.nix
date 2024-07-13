@@ -32,9 +32,7 @@
     openFirewall = true;
   };
 
-  users.users.fanghr = {
-    hashedPassword = "$y$j9T$da6fRvhfh8tQZ9.SbLCd60$uS50OnQww4mXqjkZEA5aQlAsZMs4/Q/gu48.y6sxLq/";
-  };
+  users.users.fanghr.hashedPassword = "$y$j9T$LXMnQ178S.dmirDdpF2ZF.$99/2fGfE5kMpaWlHXKWryIJhusvk1urp1GGJlN8Hlh3";
 
   services.openssh.hostKeys = [
     {
