@@ -23,7 +23,7 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     cardano-nix.url = "github:mlabs-haskell/cardano.nix";
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1&&rev=9e781040d9067c2711ec2e9f5b47b76ef70762b3"; # v0.41.1
+    hyprland.url = "github:hyprwm/Hyprland/v0.41.2"; # v0.41.1
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
       inputs.hyprland.follows = "hyprland";
