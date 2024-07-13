@@ -46,5 +46,7 @@
     }
   ];
 
+  nix.gc.options = "--delete-older-than +8";
+
   system.stateVersion = lib.mkForce "22.11";
 }
