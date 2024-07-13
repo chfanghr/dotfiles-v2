@@ -8,6 +8,7 @@
     ./root-fs.nix
     ./samba.nix
     ./tank.nix
+    ./traefik.nix
     ./yotsuba.nix
   ];
 
