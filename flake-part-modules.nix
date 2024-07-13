@@ -10,9 +10,12 @@
   mkX86_64Nixos = mkNixos "x86_64-linux";
 in {
   flake = {
-    nixosConfigurations.Demeter = mkX86_64Nixos "Demeter";
-    nixosConfigurations.Poseidon = mkX86_64Nixos "Poseidon";
-    nixosConfigurations.Uranus = mkX86_64Nixos "Uranus";
-    nixosConfigurations.Jupiter = mkX86_64Nixos "Jupiter";
+    nixosConfigurations = {
+      Demeter = mkX86_64Nixos "Demeter";
+      Poseidon = mkX86_64Nixos "Poseidon";
+      Uranus = mkX86_64Nixos "Uranus";
+      Jupiter = mkX86_64Nixos "Jupiter";
+      Artemis = mkX86_64Nixos "Artemis";
+    };
   };
 }
