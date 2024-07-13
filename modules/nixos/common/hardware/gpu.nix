@@ -41,7 +41,7 @@ in {
     }
     (
       mkIf ((graphicalProps.gaming || graphicalProps.desktop) && !config.dotfiles.shared.props.hardware.steamdeck) {
-        hardware.opengl = {
+        hardware.graphics = {
           enable = true;
           package = pkgs-unstable.mesa.drivers;
           package32 = pkgs-unstable.pkgsi686Linux.mesa.drivers;
@@ -57,29 +57,26 @@ in {
           modesetting.enable = true;
           nvidiaSettings = true;
           package = mkDefault config.boot.kernelPackages.nvidiaPackages.beta;
+          dynamicBoost.enable = true;
         };
-        hardware.opengl.extraPackages = with pkgs; [
+        hardware.graphics.extraPackages = with pkgs; [
           vaapiVdpau
         ];
-        nixpkgs.config.allowUnfree = true;
+        nixpkgs.config.allowUnfreePredicate = pkg_name: config.hardware.nvidia.package.name == pkg_name;
       }
     )
     (
       mkIf gpuProps.amd.enable (mkMerge [
         {
-          hardware.opengl = {
-            extraPackages = with pkgs; [
-              amdvlk
-            ];
-
-            extraPackages32 = with pkgs; [
-              driversi686Linux.amdvlk
-            ];
+          hardware.amdgpu = {
+            amdvlk = {
+              enable = true;
+              support32Bit.enable = true;
+            };
+            initrd.enable = true;
+            opencl.enable = true;
           };
-
-          boot.initrd.kernelModules = ["amdgpu"];
-
-          services.xserver.videoDrivers = mkDefault ["modesetting"];
+          # services.xserver.videoDrivers = mkDefault ["modesetting"];
         }
         (
           mkIf gpuProps.amd.integrated.raphael {
