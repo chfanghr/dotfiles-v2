@@ -6,7 +6,7 @@
     group = "qbittorrent";
     openFilesLimit = 65536;
     port = 8080;
-    openFirewall = true;
+    # openFirewall = true;
   };
 
   fileSystems."/mnt/qbittorrent" = {
