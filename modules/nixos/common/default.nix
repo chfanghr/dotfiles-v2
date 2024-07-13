@@ -10,6 +10,7 @@
     ./misc.nix
     ./networking.nix
     ./podman.nix
+    ./upgrade-diff.nix
     ../../shared
     inputs.home-manager.nixosModules.home-manager
   ];
