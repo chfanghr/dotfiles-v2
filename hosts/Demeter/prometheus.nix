@@ -16,6 +16,17 @@
           }
         ];
       }
+      {
+        job_name = "demeter-systemd";
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}"
+            ];
+            labels.instance = config.networking.hostName;
+          }
+        ];
+      }
     ];
 
     extraFlags = ["--web.enable-remote-write-receiver"];
@@ -24,6 +35,10 @@
       node = {
         enable = true;
         enabledCollectors = ["systemd"];
+        listenAddress = "127.0.0.1";
+      };
+      systemd = {
+        enable = true;
         listenAddress = "127.0.0.1";
       };
     };

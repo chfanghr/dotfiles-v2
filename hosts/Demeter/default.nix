@@ -72,6 +72,15 @@
       extraGroups = ["cardano-node" "minecraft"];
     };
     robertchen.extraGroups = ["minecraft"];
+    szg251 = {
+      isNormalUser = true;
+      createHome = true;
+      extraGroups = ["cardano-node" "docker"];
+      home = "/home/szg251";
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP8SiZHctbdcQhuteXYuO1Yw4XgM/fO3QDTYKyyA4UKj"
+      ];
+    };
   };
 
   specialisation.debug.configuration = {
