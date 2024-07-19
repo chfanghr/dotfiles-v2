@@ -71,7 +71,7 @@ in {
           settings = {
             substituters = [
               "https://mlabs.cachix.org?priority=3"
-              "https://iohk.cachix.org?priority=999"
+              # "https://iohk.cachix.org?priority=999"
             ];
             trusted-public-keys = [
               "mlabs.cachix.org-1:gStKdEqNKcrlSQw5iMW6wFCj3+b+1ASpBVY2SYuNV2M="

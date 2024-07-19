@@ -83,6 +83,8 @@
     };
   };
 
+  programs.mosh.enable = true;
+
   specialisation.debug.configuration = {
     boot = {
       loader.systemd-boot.memtest86.enable = true;
