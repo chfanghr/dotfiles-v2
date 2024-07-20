@@ -81,6 +81,15 @@
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIP8SiZHctbdcQhuteXYuO1Yw4XgM/fO3QDTYKyyA4UKj"
       ];
     };
+    huang825172 = {
+      isNormalUser = true;
+      createHome = true;
+      home = "/home/huang825172";
+      extraGroups = ["minecraft"];
+      openssh.authorizedKeys.keys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAazJ0pGWavJEs9ndG5Ki4Ww8ninGwOBo2sZhPq2Et1f"
+      ];
+    };
   };
 
   programs.mosh.enable = true;
