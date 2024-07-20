@@ -47,6 +47,7 @@
         motd = "Jesus Fucking Christ";
         difficulty = "hard";
         force-gamemode = true;
+        allow-flight = true;
       };
     };
   };
