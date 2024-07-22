@@ -44,6 +44,8 @@ in {
           ];
           trusted-public-keys = [
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+            "mlabs.cachix.org-1:gStKdEqNKcrlSQw5iMW6wFCj3+b+1ASpBVY2SYuNV2M="
+            "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
           ];
         };
         gc.automatic = true;
@@ -72,10 +74,6 @@ in {
             substituters = [
               "https://mlabs.cachix.org?priority=3"
               # "https://iohk.cachix.org?priority=999"
-            ];
-            trusted-public-keys = [
-              "mlabs.cachix.org-1:gStKdEqNKcrlSQw5iMW6wFCj3+b+1ASpBVY2SYuNV2M="
-              "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
             ];
           };
         };
