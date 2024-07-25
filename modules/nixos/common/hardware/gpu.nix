@@ -65,10 +65,11 @@ in {
         {
           hardware.amdgpu = {
             amdvlk = {
-              enable = true;
+              enable = false;
               support32Bit.enable = true;
             };
             initrd.enable = true;
+            opencl.enable = true;
           };
           # services.xserver.videoDrivers = mkDefault ["modesetting"];
         }
