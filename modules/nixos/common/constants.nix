@@ -1,5 +1,5 @@
 {config, ...}: let
-  inherit (config.dotfiles.nixos.users) superUser;
+  inherit (config.dotfiles.nixos.props.users) superUser;
 in {
   dotfiles.nixos.nix.builderPubKeys = [
     "Demeter-1:st+mG+g+DIrAmwIz0DpkPD4XfLtzrElbMiKDR9Jf+Nw="
