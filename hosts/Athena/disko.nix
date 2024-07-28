@@ -19,8 +19,16 @@
                 mountpoint = "/boot";
               };
             };
+            swap = {
+              size = "2G";
+              content = {
+                type = "swap";
+                discardPolicy = "both";
+                resumeDevice = true; # resume from hiberation from this device
+              };
+            };
             root = {
-              size = "-2G";
+              size = "100%";
               content = {
                 type = "btrfs";
                 extraArgs = ["-f"]; # Override existing partition
@@ -43,14 +51,6 @@
                   };
                 };
                 mountpoint = "/partition-root";
-              };
-            };
-            swap = {
-              size = "100%";
-              content = {
-                type = "swap";
-                discardPolicy = "both";
-                resumeDevice = true; # resume from hiberation from this device
               };
             };
           };
