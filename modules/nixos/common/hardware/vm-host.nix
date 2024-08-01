@@ -13,7 +13,7 @@
     };
 
   cpuProps = config.dotfiles.nixos.props.hardware.cpu;
-  inherit (config.dotfiles.nixos.users) superUser;
+  inherit (config.dotfiles.nixos.props.users) superUser;
 in {
   options.dotfiles.nixos.props.hardware.vmHost = mkPropOption "runs vms";
 

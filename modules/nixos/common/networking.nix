@@ -27,6 +27,7 @@ in {
           default = proxy;
           httpProxy = proxy;
           httpsProxy = proxy;
+          noProxy = "127.0.0.1,localhost,*.local,*.snow-dace.ts.net";
         };
       }
     )
