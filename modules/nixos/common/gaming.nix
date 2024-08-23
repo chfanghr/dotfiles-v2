@@ -10,7 +10,8 @@ lib.mkIf (config.dotfiles.shared.props.purposes.graphical.gaming) (lib.mkMerge [
       useNetworkd = false;
       networkmanager = {
         enable = true;
-        insertNameservers = ["8.8.8.8" "1.1.1.1" "114.114.114.114"];
+        appendNameservers = ["8.8.8.8" "1.1.1.1" "114.114.114.114"];
+        dns = "systemd-resolved";
       };
     };
 
@@ -31,6 +32,7 @@ lib.mkIf (config.dotfiles.shared.props.purposes.graphical.gaming) (lib.mkMerge [
       enable = true;
       remotePlay.openFirewall = true;
       gamescopeSession.enable = true;
+      localNetworkGameTransfers.openFirewall = true;
     };
 
     programs.gamescope = {

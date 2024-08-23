@@ -1,15 +1,11 @@
 {
-  config,
-  pkgs,
-  ...
-}: {
   boot = {
-    kernelPackages = pkgs.linuxPackages_latest;
-
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
+
+    plymouth.enable = false;
 
     initrd = {
       availableKernelModules = [
@@ -27,31 +23,20 @@
         "nls_cp437"
         "nls_iso8859-1"
         "usbhid"
-        # "r8169"
-        "igc"
-        "i2c-dev"
-        "i2c-piix4"
+        "r8169"
       ];
       network = {
         enable = true;
-        udhcpc = {
-          enable = true;
-          extraArgs = ["-t" "20"];
-        };
-        ssh = {
-          enable = true;
-          authorizedKeys = config.users.users.fanghr.openssh.authorizedKeys.keys;
-          hostKeys = [
-            "/etc/secrets/initrd/ssh_host_ed25519_key"
-          ];
-        };
+        # ssh = {
+        #   enable = true;
+        # };
       };
       luks = {
         yubikeySupport = true;
         devices = {
-          enc = {
+          enc_root = {
             allowDiscards = true;
-            device = "/dev/nvme0n1p2";
+            # device = "/dev/nvme1n1p2"; # handled by disko
             preLVM = false;
             yubikey = {
               slot = 2;
@@ -62,12 +47,5 @@
         };
       };
     };
-  };
-
-  systemd.services.successBootIndication = {
-    script = "sleep 10; ${config.services.hardware.openrgb.package}/bin/openrgb -d 0 -c 4169E1 -m static -b 50";
-    wantedBy = ["multi-user.target"];
-    after = ["openrgb.service"];
-    serviceConfig.Type = "oneshot";
   };
 }

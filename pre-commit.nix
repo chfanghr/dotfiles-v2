@@ -3,7 +3,11 @@
     inputs.pre-commit-hooks-nix.flakeModule
   ];
 
-  perSystem = {config, ...}: {
+  perSystem = {
+    config,
+    inputs',
+    ...
+  }: {
     pre-commit = {
       check.enable = true;
       settings.hooks = {
@@ -11,6 +15,16 @@
         deadnix.enable = true;
       };
     };
-    devShells.default = config.pre-commit.devShell;
+    devShells.default = config.pre-commit.devShell.overrideAttrs (_: prev: {
+      buildInputs =
+        (
+          if prev ? buildInputs
+          then prev.buildInputs
+          else []
+        )
+        ++ [
+          inputs'.agenix.packages.default
+        ];
+    });
   };
 }

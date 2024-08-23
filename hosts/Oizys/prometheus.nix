@@ -2,13 +2,11 @@
   services.prometheus = {
     enable = true;
     enableReload = true;
-    enableAgentMode = true;
-
     listenAddress = "127.0.0.1";
 
     scrapeConfigs = [
       {
-        job_name = "artemis-node";
+        job_name = "${config.networking.hostName}-node";
         static_configs = [
           {
             targets = [

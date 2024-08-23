@@ -3,8 +3,8 @@
   lib,
   pkgs,
   ...
-}:
-with lib; let
+}: let
+  inherit (lib) mkOption types mkIf;
   cfg = config.services.qbittorrent;
   configDir = "${cfg.dataDir}/.config";
   openFilesLimit = 4096;
@@ -64,10 +64,17 @@ in {
     };
 
     openFilesLimit = mkOption {
+      type = types.ints.unsigned;
       default = openFilesLimit;
       description = ''
         Number of files to allow qBittorrent to open.
       '';
+    };
+
+    systemdServiceName = mkOption {
+      type = types.str;
+      default = "qbittorrent";
+      readOnly = true;
     };
   };
 
@@ -79,11 +86,10 @@ in {
       allowedUDPPorts = [cfg.port 56621 9000];
     };
 
-    systemd.services.qbittorrent = {
+    systemd.services.${cfg.systemdServiceName} = {
       after = ["network.target"];
       description = "qBittorrent Daemon";
       wantedBy = ["multi-user.target"];
-      path = [pkgs.qbittorrent-nox];
       serviceConfig = {
         ExecStart = ''
           ${cfg.package}/bin/qbittorrent-nox \
@@ -95,7 +101,7 @@ in {
         Restart = "on-success";
         User = cfg.user;
         Group = cfg.group;
-        UMask = "006";
+        UMask = "022";
         LimitNOFILE = cfg.openFilesLimit;
       };
     };

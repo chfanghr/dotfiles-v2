@@ -23,7 +23,7 @@
       };
       networking.home = {
         onLanNetwork = true;
-        proxy.useRouter = true;
+        proxy.useGateway = true;
       };
     };
     nixos = {
@@ -94,12 +94,50 @@
 
   programs.mosh.enable = true;
 
-  specialisation.debug.configuration = {
-    boot = {
-      loader.systemd-boot.memtest86.enable = true;
-      plymouth.enable = false;
-    };
+  boot = {
+    kernelModules = ["tcp_bbr"];
 
-    dotfiles.shared.props.purposes.graphical.desktop = false;
+    kernel.sysctl = {
+      "net.ipv4.tcp_congestion_control" = "bbr";
+      "net.core.default_qdisc" = "fq";
+    };
+  };
+
+  networking = {
+    bonds.bond0 = {
+      interfaces = ["enp6s0f0" "enp6s0f1"];
+      driverOptions = {
+        mode = "802.3ad";
+      };
+    };
+    interfaces.bond0.useDHCP = true;
+  };
+
+  systemd.network.networks."40-eno1" = {
+    matchConfig.Name = "eno1";
+    dhcpV4Config.RouteMetric = 1025;
+    networkConfig.DHCP = "ipv4";
+  };
+
+  services.lldpd.enable = true;
+
+  specialisation = {
+    debug.configuration = {
+      boot = {
+        loader.systemd-boot.memtest86.enable = true;
+        plymouth.enable = false;
+      };
+
+      dotfiles.shared.props.purposes.graphical.desktop = false;
+    };
+    noProxy.configuration = {
+      dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce false;
+      networking.proxy = {
+        default = lib.mkForce null;
+        httpProxy = lib.mkForce null;
+        httpsProxy = lib.mkForce null;
+        noProxy = "127.0.0.1,localhost,*.local,*.snow-dace.ts.net";
+      };
+    };
   };
 }

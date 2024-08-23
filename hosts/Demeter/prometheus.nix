@@ -1,4 +1,6 @@
 {config, ...}: {
+  dotfiles.nixoss.props.services.prometheusReportToDemeter = false;
+
   services.prometheus = {
     enable = true;
     enableReload = true;

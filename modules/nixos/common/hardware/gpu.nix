@@ -24,6 +24,7 @@ in {
     amd = {
       integrated.raphael = mkPropOption "has enabled hacks for integrated amd gpu(Raphael)";
       enable = mkPropOption "has amd graphics cards";
+      amdvlk.enable = mkPropOption "use amdvlk driver" // {default = true;};
     };
   };
 
@@ -40,6 +41,7 @@ in {
       mkIf ((graphicalProps.gaming || graphicalProps.desktop) && !config.dotfiles.shared.props.hardware.steamdeck) {
         hardware.graphics = {
           enable = true;
+          enable32Bit = true;
         };
       }
     )
@@ -64,15 +66,19 @@ in {
       mkIf gpuProps.amd.enable (mkMerge [
         {
           hardware.amdgpu = {
-            amdvlk = {
-              enable = true;
-              support32Bit.enable = true;
-            };
             initrd.enable = true;
             opencl.enable = true;
           };
           # services.xserver.videoDrivers = mkDefault ["modesetting"];
         }
+        (
+          mkIf gpuProps.amd.amdvlk.enable {
+            hardware.amdgpu.amdvlk = {
+              enable = true;
+              support32Bit.enable = true;
+            };
+          }
+        )
         (
           mkIf gpuProps.amd.integrated.raphael {
             boot = {

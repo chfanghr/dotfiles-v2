@@ -19,6 +19,12 @@ in {
   options.dotfiles.nixos.props.hardware.cpu = {
     amd = mkPropOption "has a amd cpu";
     intel = mkPropOption "has a intel cpu";
+
+    tweaks = {
+      amd = {
+        noPstate = mkPropOption "don't use amd_spstate";
+      };
+    };
   };
 
   config =
@@ -34,10 +40,14 @@ in {
         ];
       }
       (
-        mkIf cpuProps.amd {
-          boot.kernelParams = ["amd_pstate=active"];
-          hardware.cpu.amd.updateMicrocode = true;
-        }
+        mkIf cpuProps.amd (mkMerge [
+          {
+            hardware.cpu.amd.updateMicrocode = true;
+          }
+          (mkIf (!cpuProps.tweaks.amd.noPstate) {
+            boot.kernelParams = ["amd_pstate=active"];
+          })
+        ])
       )
       (
         mkIf cpuProps.intel {

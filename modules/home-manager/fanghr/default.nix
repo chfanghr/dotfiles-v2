@@ -5,8 +5,10 @@
     ./fonts.nix
     ./git.nix
     ./gpg.nix
+    ./mangohud.nix
     ./hyprland.nix
     ./nvim.nix
+    ./obs.nix
     ./packages.nix
     ./pueue.nix
     ./ssh.nix

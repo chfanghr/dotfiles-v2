@@ -17,8 +17,9 @@
       workgroup = WORKGROUP
       server role = standalone server
       server min protocol = SMB2_02
+      protocol=SMB3
 
-      hosts allow = 10.41.0. 127.0.0.1 100.
+      hosts allow = 10.41.0. 127.0.0.1 100. persephone.snow-dace.ts.net
       hosts deny = 0.0.0.0/0
 
       hide unreadable = yes
@@ -37,6 +38,9 @@
       follow symlinks = yes
       vfs objects = acl_xattr catia fruit streams_xattr
       inherit permissions = yes
+
+      wins support = yes
+      dns proxy = yes
     '';
     shares = {
       global = {
@@ -44,9 +48,10 @@
         "read only" = "yes";
         "guest ok" = "no";
       };
-      homes = {
-        browseable = "no";
-        "read only" = "no";
+      qbittorrent = {
+        path = "/data/qbittorrent/downloads";
+        browseable = "yes";
+        "read only" = "yes";
         "guest ok" = "no";
       };
     };

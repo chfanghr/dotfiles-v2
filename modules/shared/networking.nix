@@ -15,10 +15,15 @@
 in {
   options.dotfiles.shared = {
     props.networking.home = {
-      proxy.useRouter = mkPropOption "needs to use the proxy server runs on the router";
+      proxy.useGateway = mkPropOption "needs to use the proxy server runs on the gateway";
       onLanNetwork = mkPropOption "is on subnet 10.42.0.0/16";
     };
     networking.home.router = {
+      address = mkOption {
+        type = types.str;
+      };
+    };
+    networking.home.gateway = {
       address = mkOption {
         type = types.str;
       };
@@ -39,7 +44,7 @@ in {
       message = "VPS cannot be on home lan network";
     }
     {
-      assertion = props.networking.home.proxy.useRouter -> props.networking.home.onLanNetwork;
+      assertion = props.networking.home.proxy.useGateway -> props.networking.home.onLanNetwork;
       message = "To use the proxy service runs on the router, the machine should be on home lan";
     }
   ];

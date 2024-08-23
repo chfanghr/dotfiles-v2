@@ -26,6 +26,8 @@ lib.mkMerge [
       distrobox
       btop
       dua
+      dig
+      zed-editor
 
       # nix
       nixpkgs-fmt
@@ -39,7 +41,6 @@ lib.mkMerge [
     lib.mkIf config.dotfiles.shared.props.purposes.graphical.desktop {
       home.packages = with pkgs; [
         spotify
-        moonlight-qt
 
         # fonts
         nerdfonts
@@ -48,6 +49,13 @@ lib.mkMerge [
         builtins.elem (lib.getName pkg) [
           "spotify"
         ];
+    }
+  )
+  (
+    lib.mkIf config.dotfiles.shared.props.purposes.graphical.gaming {
+      home.packages = with pkgs; [
+        moonlight-qt
+      ];
     }
   )
 ]

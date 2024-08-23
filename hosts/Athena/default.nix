@@ -1,11 +1,34 @@
-{inputs, ...}: {
+{
+  inputs,
+  pkgs,
+  lib,
+  ...
+}: let
+  bondName = "bond0";
+  inherit (lib) mkForce;
+
+  mkEnableInterfaceFeatureScript = interface: feature:
+    pkgs.writeShellApplication {
+      name = "enable-${feature}-for-${interface}";
+
+      runtimeInputs = [pkgs.ethtool];
+
+      text = ''
+        echo "enabling ${feature} for ${interface}"
+
+        ( (ethtool --show-features ${interface} | grep ${feature}) \
+          && ethtool -K ${interface} ${feature} on ) \
+          || true
+      '';
+    };
+in {
   imports = [
     ./disko.nix
+    ./sing-box.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
+    inputs.agenix.nixosModules.default
   ];
-
-  networking.hostName = "Athena";
 
   dotfiles.nixos.props = {
     nix.roles.consumer = true;
@@ -27,12 +50,71 @@
   };
 
   boot = {
-    initrd.availableKernelModules = ["xhci_pci" "ahci" "usbhid" "usb_storage" "sd_mod" "igc"];
+    initrd.availableKernelModules = [
+      "xhci_pci"
+      "ahci"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+      "igc"
+    ];
+    kernelModules = ["tcp_bbr"];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
+    kernel.sysctl = {
+      "net.ipv4.tcp_congestion_control" = "bbr";
+      "net.core.default_qdisc" = "fq";
+    };
   };
 
   nix.gc.options = "--delete-older-than +8";
+
+  networking = {
+    hostName = "Athena";
+
+    useNetworkd = true;
+
+    nftables.enable = true;
+
+    bonds.${bondName} = {
+      interfaces = ["enp1s0" "enp2s0" "enp3s0"];
+      driverOptions.mode = "802.3ad";
+    };
+    interfaces.${bondName}.useDHCP = true;
+
+    firewall.enable = false;
+
+    localCommands = ''
+      ${lib.getExe (mkEnableInterfaceFeatureScript "bond0" "rx-udp-gro-forwarding")}
+      ${lib.getExe (mkEnableInterfaceFeatureScript "enp1s0" "rx-udp-gro-forwarding")}
+      ${lib.getExe (mkEnableInterfaceFeatureScript "enp2s0" "rx-udp-gro-forwarding")}
+    '';
+
+    enableIPv6 = false;
+  };
+
+  environment.defaultPackages = [
+    pkgs.zellij
+    pkgs.minicom
+  ];
+
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+  };
+
+  age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+
+  powerManagement.cpuFreqGovernor = "ondemand";
+
+  services = {
+    tailscale.useRoutingFeatures = mkForce "both";
+    iperf3 = {
+      enable = true;
+      openFirewall = true;
+    };
+    lldpd.enable = true;
+  };
 }

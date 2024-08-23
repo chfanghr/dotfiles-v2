@@ -8,10 +8,10 @@ lib.mkMerge [
   {
     programs.ssh.enable = true;
   }
-  (lib.mkIf config.dotfiles.shared.props.networking.home.proxy.useRouter {
+  (lib.mkIf config.dotfiles.shared.props.networking.home.proxy.useGateway {
     programs.ssh.matchBlocks = let
-      inherit (config.dotfiles.shared.networking.home) router;
-      proxyCommand = "${lib.getExe' pkgs.netcat "nc"} -X 5 -x ${router.address}:${builtins.toString router.proxyPorts.socks5} %h %p";
+      inherit (config.dotfiles.shared.networking.home) gateway;
+      proxyCommand = "${lib.getExe' pkgs.netcat "nc"} -X 5 -x ${gateway.address}:${builtins.toString gateway.proxyPorts.socks5} %h %p";
     in {
       "github.com" = {
         hostname = "github.com";

@@ -16,13 +16,21 @@ in {
         useNetworkd = mkDefault true;
         enableIPv6 = mkDefault true;
         firewall.enable = mkDefault true;
+        nameservers = mkDefault [
+          "1.1.1.1"
+          "8.8.8.8"
+          "9.9.9.9"
+          "233.5.5.5"
+          "114.114.114.114"
+          config.dotfiles.shared.networking.home.router.address
+        ];
       };
     }
     (
-      mkIf config.dotfiles.shared.props.networking.home.proxy.useRouter {
+      mkIf config.dotfiles.shared.props.networking.home.proxy.useGateway {
         networking.proxy = let
-          inherit (config.dotfiles.shared.networking.home) router;
-          proxy = "http://${router.address}:${builtins.toString router.proxyPorts.http}";
+          inherit (config.dotfiles.shared.networking.home) gateway;
+          proxy = "http://${gateway.address}:${builtins.toString gateway.proxyPorts.http}";
         in {
           default = proxy;
           httpProxy = proxy;

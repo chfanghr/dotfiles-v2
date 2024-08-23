@@ -1,7 +1,6 @@
 {
   imports = [
     ./disko.nix
-    ./prometheus.nix
     ../../modules/nixos/common
     ../../modules/nixos/steamdeck.nix
   ];

@@ -4,7 +4,6 @@
     ./boot.nix
     ./dlna.nix
     ./networking.nix
-    ./prometheus.nix
     ./qbittorrent.nix
     ./root-fs.nix
     ./samba.nix
@@ -18,7 +17,7 @@
   dotfiles = {
     shared.props.networking.home = {
       onLanNetwork = true;
-      proxy.useRouter = true;
+      proxy.useGateway = true;
     };
     nixos.props = {
       hardware = {
@@ -51,4 +50,8 @@
   nix.gc.options = "--delete-older-than +8";
 
   system.stateVersion = lib.mkForce "22.11";
+
+  specialisation.noProxy.configuration = {
+    dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce false;
+  };
 }
