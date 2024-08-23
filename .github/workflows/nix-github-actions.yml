@@ -9,7 +9,7 @@ on:
 
 jobs:
   nix-matrix:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted]
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
@@ -24,7 +24,7 @@ jobs:
 
   nix-build:
     needs: nix-matrix
-    runs-on: ${{ matrix.os }}
+    runs-on: [self-hosted]
     strategy:
       matrix: ${{fromJSON(needs.nix-matrix.outputs.matrix)}}
     steps:

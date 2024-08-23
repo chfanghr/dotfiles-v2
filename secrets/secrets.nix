@@ -8,4 +8,5 @@ in {
   "artemis-cifs-credential.age".publicKeys = [master persephone];
   "yotsuba.key.age".publicKeys = [master persephone];
   "oizys-pap-password.age".publicKeys = [master oizys];
+  "github-runner-token-chfanghr-dotfiles-v2.age".publicKeys = [master persephone];
 }

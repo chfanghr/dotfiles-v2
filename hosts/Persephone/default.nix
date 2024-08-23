@@ -7,6 +7,7 @@
   imports = [
     ./boot.nix
     ./fah.nix
+    ./github-runners.nix
     ./migration.nix
     ./minidlna.nix
     ./networking.nix
