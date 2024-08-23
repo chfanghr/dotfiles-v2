@@ -9,4 +9,6 @@ in {
   "yotsuba.key.age".publicKeys = [master persephone];
   "oizys-pap-password.age".publicKeys = [master oizys];
   "github-runner-token-chfanghr-dotfiles-v2.age".publicKeys = [master persephone];
+  "persephone-hci-token.age".publicKeys = [master persephone];
+  "persephone-hci-binary-caches.age".publicKeys = [master persephone];
 }

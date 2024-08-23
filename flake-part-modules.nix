@@ -4,8 +4,8 @@
   ...
 }: let
   inherit (inputs) nixpkgs;
-  inherit (lib) recursiveUpdate foldl nameValuePair attrsToList;
-  inherit (builtins) listToAttrs map;
+  inherit (lib) nameValuePair;
+  inherit (builtins) listToAttrs;
 
   mkNixos = system: host: let
     final = nixpkgs.lib.nixosSystem {
@@ -29,20 +29,8 @@
     (mkX86_64Nixos "Dionysus")
     (mkX86_64Nixos "Oizys")
   ];
-
-  mergeAttrs = foldl recursiveUpdate {};
-
-  githubActions = inputs.nix-github-actions.lib.mkGithubMatrix (
-    mergeAttrs (map ({
-        name,
-        value,
-      }: {
-        checks.${value.config.nixpkgs.system}.${name} = value.config.system.build.toplevel;
-      })
-      (attrsToList nixosConfigurations))
-  );
 in {
   flake = {
-    inherit nixosConfigurations githubActions;
+    inherit nixosConfigurations;
   };
 }

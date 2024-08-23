@@ -27,10 +27,6 @@
     disko.url = "github:nix-community/disko";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     agenix.url = "github:ryantm/agenix";
-    nix-github-actions = {
-      url = "github:nix-community/nix-github-actions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = inputs @ {flake-parts, ...}:

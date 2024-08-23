@@ -7,7 +7,7 @@
   imports = [
     ./boot.nix
     ./fah.nix
-    ./github-runners.nix
+    ./hercules-ci-agent.nix
     ./migration.nix
     ./minidlna.nix
     ./networking.nix
