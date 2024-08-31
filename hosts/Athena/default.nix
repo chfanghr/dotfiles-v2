@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  config,
   ...
 }: let
   bondName = "bond0";
@@ -82,7 +83,16 @@ in {
       interfaces = ["enp1s0" "enp2s0" "enp3s0"];
       driverOptions.mode = "802.3ad";
     };
-    interfaces.${bondName}.useDHCP = true;
+    interfaces.${bondName}.ipv4.addresses = [
+      {
+        address = config.dotfiles.shared.networking.home.gateway.address;
+        prefixLength = 16;
+      }
+    ];
+    defaultGateway = {
+      interface = bondName;
+      address = config.dotfiles.shared.networking.home.router.address;
+    };
 
     firewall.enable = false;
 
