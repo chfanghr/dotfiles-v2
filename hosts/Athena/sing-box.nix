@@ -174,7 +174,7 @@ in {
           fib daddr type local return
           ip daddr $RESERVED_IP return
           ip daddr $LAN_IP return
-          udp sport 41641 counter accept comment "Dont' proxy downstream Tailscale traffic"
+          udp sport 41641 counter accept comment "Dont't proxy downstream Tailscale traffic"
           udp dport 3478 counter accept comment "Don't proxy downstream STUN traffic"
           meta l4proto tcp socket transparent 1 meta mark set ${toString proxyFwMark} accept
           meta l4proto {tcp, udp} tproxy to :${toString tproxyPort} meta mark set ${toString proxyFwMark} accept
