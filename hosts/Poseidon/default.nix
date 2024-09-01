@@ -81,49 +81,30 @@
 
   time.timeZone = "Asia/Hong_Kong";
 
-  specialisation = let
-    graphicalModule = {
-      dotfiles.shared.props.purposes.graphical = {
-        gaming = true;
-        desktop = true;
-      };
-    };
-  in {
+  dotfiles.shared.props.purposes.graphical = {
+    gaming = lib.mkDefault true;
+    desktop = lib.mkDefault true;
+  };
+
+  dotfiles.nixos.props.hardware.gpu.amd.enable = lib.mkDefault true;
+
+  home-manager.users.fanghr.dotfiles.hm.graphical.desktop.hyprland.extraConfig = ''
+    monitor=HDMI-A-1,3840x2160@120,0x0,2
+  '';
+
+  specialisation = {
     debug.configuration = {
       boot = {
         loader.systemd-boot.memtest86.enable = true;
         plymouth.enable = false;
       };
+
+      dotfiles.shared.props.purposes.graphical = {
+        gaming = false;
+        desktop = false;
+      };
+
+      dotfiles.nixos.props.hardware.gpu.amd.enable = false;
     };
-
-    nvidiaGpu.configuration = lib.mkMerge [
-      graphicalModule
-      {
-        dotfiles.nixos.props.hardware.gpu.nvidia = true;
-
-        nixpkgs.config.allowUnfree = true;
-
-        home-manager.users.fanghr.dotfiles.hm.graphical.desktop.hyprland.extraConfig = ''
-          env = LIBVA_DRIVER_NAME,nvidia
-          env = XDG_SESSION_TYPE,wayland
-          env = GBM_BACKEND,nvidia-drm
-          env = __GLX_VENDOR_LIBRARY_NAME,nvidia
-          env = NVD_BACKEND,direct
-
-          monitor=HDMI-A-2,3840x2160@100,0x0,1
-        '';
-      }
-    ];
-
-    amdGpu.configuration = lib.mkMerge [
-      graphicalModule
-      {
-        dotfiles.nixos.props.hardware.gpu.amd.enable = true;
-
-        home-manager.users.fanghr.dotfiles.hm.graphical.desktop.hyprland.extraConfig = ''
-          monitor=HDMI-A-1,3840x2160@120,0x0,2
-        '';
-      }
-    ];
   };
 }
