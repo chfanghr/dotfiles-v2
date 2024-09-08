@@ -85,7 +85,7 @@
       vlc
       telegram-desktop
 
-      cinnamon.nemo-with-extensions
+      nemo-with-extensions
       wofi
       lxqt.lxqt-policykit
     ];

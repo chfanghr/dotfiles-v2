@@ -60,8 +60,6 @@
     openFirewall = true;
   };
 
-  services.desktopManager.plasma6.enable = true;
-
   specialisation = {
     debug.configuration = {
       dotfiles.shared.props.purposes.graphical = {
