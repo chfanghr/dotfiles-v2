@@ -53,4 +53,6 @@ in
         waylandFrontend = true;
       };
     };
+
+    programs.xwayland.enable = true;
   }
