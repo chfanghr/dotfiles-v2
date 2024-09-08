@@ -43,4 +43,14 @@ in
     services.libinput.enable = true;
 
     services.desktopManager.plasma6.enable = true;
+
+    i18n.inputMethod = {
+      enable = true;
+      type = "fcitx5";
+      fcitx5 = {
+        addons = with pkgs; [fcitx5-rime];
+        plasma6Support = true;
+        waylandFrontend = true;
+      };
+    };
   }
