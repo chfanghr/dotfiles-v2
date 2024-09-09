@@ -13,6 +13,11 @@ lib.mkMerge [
       inherit (config.dotfiles.shared.networking.home) gateway;
       proxyCommand = "${lib.getExe' pkgs.netcat "nc"} -X 5 -x ${gateway.address}:${builtins.toString gateway.proxyPorts.socks5} %h %p";
     in {
+      "gitlab.com" = {
+        hostname = "gitlab.com";
+        user = "git";
+        inherit proxyCommand;
+      };
       "github.com" = {
         hostname = "github.com";
         user = "git";
