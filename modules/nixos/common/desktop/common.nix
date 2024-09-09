@@ -48,7 +48,12 @@ in
       enable = true;
       type = "fcitx5";
       fcitx5 = {
-        addons = with pkgs; [fcitx5-rime];
+        addons = with pkgs; [
+          fcitx5-rime
+          fcitx5-pinyin-zhwiki
+          kdePackages.fcitx5-with-addons
+          kdePackages.fcitx5-chinese-addons
+        ];
         plasma6Support = true;
         waylandFrontend = true;
       };
