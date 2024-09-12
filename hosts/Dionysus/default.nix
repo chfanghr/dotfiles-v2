@@ -60,6 +60,11 @@
     openFirewall = true;
   };
 
+  systemd.tmpfiles.settings."10-game-backup"."/data/game-backup".d = {
+    user = "fanghr";
+    mode = "0700";
+  };
+
   specialisation = {
     debug.configuration = {
       dotfiles.shared.props.purposes.graphical = {

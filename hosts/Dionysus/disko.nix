@@ -2,7 +2,7 @@
   disko.devices = {
     disk = {
       main = {
-        device = "/dev/nvme1n1";
+        device = "/dev/disk/by-id/nvme-CT2000T500SSD8_240346494D26";
         type = "disk";
         content = {
           type = "gpt";
@@ -51,6 +51,20 @@
                 discardPolicy = "both";
                 resumeDevice = true; # resume from hiberation from this device
               };
+            };
+          };
+        };
+      };
+      gameBackup = {
+        device = "/dev/disk/by-id/ata-KIOXIA-EXCERIA_SATA_SSD_62EB81STK0Z5";
+        content = {
+          type = "gpt";
+          partitions.primary = {
+            size = "100%";
+            content = {
+              type = "btrfs";
+              mountpoint = "/data/game-backup";
+              mountOptions = ["compress=zstd" "noatime"];
             };
           };
         };

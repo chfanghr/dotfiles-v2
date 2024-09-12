@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: let
   inherit (lib) mkOption types mdDoc mkIf;
@@ -19,6 +20,15 @@ in {
       # networkSocket.enable = true;
       dockerCompat = true;
       defaultNetwork.settings = {dns_enabled = true;};
+      dockerSocket.enable = true;
     };
+
+    environment.systemPackages = [
+      pkgs.docker-compose
+    ];
+
+    users.users.${config.dotfiles.nixos.props.users.superUser}.extraGroups = [
+      "podman"
+    ];
   };
 }
