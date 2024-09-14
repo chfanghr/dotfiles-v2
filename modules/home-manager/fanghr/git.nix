@@ -28,6 +28,11 @@
     extraConfig = {
       core.autocrlf = "input";
       init.defaultBranch = "main";
+      "credential \"https://gitlab.com\"" = {
+        username = "connor81";
+        helper = "store";
+        useHttpPath = true;
+      };
     };
 
     lfs = {

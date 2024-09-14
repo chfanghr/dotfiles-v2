@@ -65,6 +65,8 @@
     mode = "0700";
   };
 
+  services.xserver.displayManager.startx.enable = true;
+
   specialisation = {
     debug.configuration = {
       dotfiles.shared.props.purposes.graphical = {

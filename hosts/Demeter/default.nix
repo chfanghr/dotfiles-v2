@@ -110,7 +110,7 @@
         mode = "802.3ad";
       };
     };
-    interfaces.bond0.useDHCP = true;
+    interfaces.bond0.useDHCP = false;
   };
 
   systemd.network.networks."40-eno1" = {
@@ -137,6 +137,30 @@
         httpProxy = lib.mkForce null;
         httpsProxy = lib.mkForce null;
         noProxy = "127.0.0.1,localhost,*.local,*.snow-dace.ts.net";
+      };
+    };
+    staticIP.configuration = {
+      dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce false;
+      networking.proxy = {
+        default = lib.mkForce null;
+        httpProxy = lib.mkForce null;
+        httpsProxy = lib.mkForce null;
+        noProxy = "127.0.0.1,localhost,*.local,*.snow-dace.ts.net";
+      };
+      networking = {
+        interfaces.bond0 = {
+          useDHCP = lib.mkForce false;
+          ipv4.addresses = [
+            {
+              address = "10.41.0.246";
+              prefixLength = 16;
+            }
+          ];
+        };
+        defaultGateway = {
+          address = "10.41.255.251";
+          interface = "bond0";
+        };
       };
     };
   };
