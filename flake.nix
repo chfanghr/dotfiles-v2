@@ -27,6 +27,7 @@
     disko.url = "github:nix-community/disko";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     agenix.url = "github:ryantm/agenix";
+    hci-effects.url = "github:hercules-ci/hercules-ci-effects";
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -38,6 +39,7 @@
       ];
       imports = [
         ./flake-part-modules.nix
+        ./hercules-ci.nix
         ./pre-commit.nix
       ];
     };
