@@ -10,11 +10,11 @@
   age.secrets = {
     hci-token = {
       owner = "hercules-ci-agent";
-      file = ../../secrets/persephone-hci-token.age;
+      file = ../../secrets/demeter-hci-token.age;
     };
     hci-binary-caches = {
       owner = "hercules-ci-agent";
-      file = ../../secrets/persephone-hci-binary-caches.age;
+      file = ../../secrets/demeter-hci-binary-caches.age;
     };
   };
 }

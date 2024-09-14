@@ -1,14 +1,20 @@
-{lib, ...}: {
+{
+  lib,
+  inputs,
+  ...
+}: {
   imports = [
     ./boot.nix
     ./cardano.nix
     ./file-systems.nix
     ./grafana.nix
+    ./hercules-ci-agent.nix
     ./minecraft.nix
     ./prometheus.nix
     ./security.nix
     ./traefik.nix
     ../../modules/nixos/common
+    inputs.agenix.nixosModules.default
   ];
 
   networking.hostName = "Demeter";
