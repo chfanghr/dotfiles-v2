@@ -39,7 +39,10 @@ in {
   programs = {
     zsh.enable = true;
     htop.enable = true;
-    vim.defaultEditor = true;
+    vim = {
+      enable = true;
+      defaultEditor = true;
+    };
   };
 
   environment.defaultPackages = [

@@ -6,6 +6,7 @@ let
   demeter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC6nS/4X/8gD4nAVR1aQqbyxZXt2j22NQc4FkHq2aB2Z root@Demeter";
 in {
   "athena-sing-box-default-out.age".publicKeys = [master athena];
+  "oizys-sing-box-default-out.age".publicKeys = [master oizys];
   "artemis-cifs-credential.age".publicKeys = [master persephone];
   "yotsuba.key.age".publicKeys = [master persephone];
   "oizys-pap-password.age".publicKeys = [master oizys];
