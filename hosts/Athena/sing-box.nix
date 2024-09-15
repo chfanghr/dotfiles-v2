@@ -164,7 +164,7 @@ in {
       table ip sing_box {
         chain prerouting_dns {
           type nat hook prerouting priority dstnat; policy accept;
-          meta l4proto { tcp, udp } th dport 53 redirect to :5333 comment "Forward all incoming packets targeting port 53 to port 5333 on which sing-box dns server is listening"
+          ip daddr ${config.dotfiles.shared.networking.home.gateway.address} meta l4proto { tcp, udp } th dport 53 redirect to :5333 comment "Forward all incoming packets targeting port 53 to port 5333 on which sing-box dns server is listening"
         }
 
         chain prerouting_tproxy {
