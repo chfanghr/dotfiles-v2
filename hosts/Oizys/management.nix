@@ -1,4 +1,11 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}: let
+  inherit (lib) mkForce;
+in {
   users = {
     users.fanghr = {
       openssh.authorizedKeys.keys = [
@@ -32,6 +39,7 @@
   programs = {
     zsh.enable = true;
     htop.enable = true;
+    vim.defaultEditor = true;
   };
 
   environment.defaultPackages = [
@@ -41,4 +49,28 @@
     pkgs.inetutils
     pkgs.speedtest-cli
   ];
+
+  containers.simLanHost = {
+    privateNetwork = true;
+    hostBridge = config.oizys.networking.lan.bridge.interface;
+    ephemeral = true;
+    autoStart = true;
+    config = {pkgs, ...}: {
+      networking = {
+        useNetworkd = true;
+        firewall.enable = true;
+        useHostResolvConf = mkForce false;
+        interfaces.eth0.useDHCP = true;
+      };
+
+      services.resolved.enable = true;
+
+      environment.systemPackages = [
+        pkgs.dig
+        pkgs.ethtool
+      ];
+
+      system.stateVersion = "24.11";
+    };
+  };
 }

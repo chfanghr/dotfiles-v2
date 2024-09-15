@@ -17,6 +17,7 @@
         "mlabs.cachix.org-1:gStKdEqNKcrlSQw5iMW6wFCj3+b+1ASpBVY2SYuNV2M="
         "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
         "Demeter-1:st+mG+g+DIrAmwIz0DpkPD4XfLtzrElbMiKDR9Jf+Nw="
+        "chfanghr.cachix.org-1:gt1W4ZP4F/kgsA2JtH+di/yBaUM2WPMqr0IrRyIIED0="
       ];
     };
     gc = {
