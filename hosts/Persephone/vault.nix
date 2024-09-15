@@ -34,21 +34,19 @@ in {
     };
   };
 
-  services.samba.shares = {
+  services.samba.settings = {
     safe = {
       path = safeMountPoint;
       browsable = "no";
       "read only" = "no";
-      "guest ok" = "no";
       "force create mode" = "0600";
       "force directory mode" = "0700";
       "force group" = "root";
     };
     hera = {
       path = heraMountPoint;
-      browsable = "yes";
+      browsable = "no";
       "read only" = "no";
-      "guest ok" = "no";
       "valid users" = "fanghr";
       public = "no";
       writeable = "yes";

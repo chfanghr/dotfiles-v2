@@ -39,10 +39,9 @@
     };
   };
 
-  services.samba.shares = {
+  services.samba.settings = {
     music = {
       path = "/data/music";
-      browsable = "yes";
       "read only" = "no";
       "guest ok" = "yes";
       "read list" = "nobody guest";
@@ -51,9 +50,7 @@
     };
     collections = {
       path = "/data/collections";
-      browsable = "yes";
       "read only" = "no";
-      "guest ok" = "no";
     };
   };
 

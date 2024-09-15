@@ -52,4 +52,8 @@ in {
       '';
     };
   };
+
+  services.samba.settings.qbittorrent = {
+    path = "${dataDir}/downloads";
+  };
 }
