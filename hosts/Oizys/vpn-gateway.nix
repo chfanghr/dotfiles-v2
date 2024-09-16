@@ -40,7 +40,12 @@ in {
             useNetworkd = true;
             firewall.enable = true;
             useHostResolvConf = mkForce false;
-            interfaces.eth0.useDHCP = true;
+            interfaces.eth0.ipv4.addresses = [
+              {
+                address = "10.31.0.3";
+                prefixLength = 16;
+              }
+            ];
             defaultGateway = {
               interface = "eth0";
               address = cfg.ipv4.address;
