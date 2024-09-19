@@ -23,6 +23,7 @@ lib.mkIf (config.dotfiles.shared.props.purposes.graphical.gaming) (lib.mkMerge [
       dualsensectl
       chiaki4deck
       prismlauncher
+      protonup-qt
     ];
 
     nixpkgs.config.allowUnfree = true;
