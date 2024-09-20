@@ -6,8 +6,8 @@
   dataDir = "/data/qbittorrent";
 
   altUI = pkgs.fetchzip {
-    url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.11.1/vuetorrent.zip";
-    hash = "sha256-VoG4voG+ptYSNfrQhg5zKDnfxS86/n1XfZJTYocs6NA=";
+    url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.13.0/vuetorrent.zip";
+    hash = "sha256-qs/muP+eIh43rekffEMSoyOT3d6rOINMH3oOBcqfjT8=";
   };
 
   altUIPath = "${dataDir}/alt_ui";

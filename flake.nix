@@ -28,6 +28,10 @@
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     agenix.url = "github:ryantm/agenix";
     hci-effects.url = "github:hercules-ci/hercules-ci-effects";
+    microvm = {
+      url = "github:astro/microvm.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
