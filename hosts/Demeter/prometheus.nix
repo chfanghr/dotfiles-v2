@@ -44,5 +44,7 @@
         listenAddress = "127.0.0.1";
       };
     };
+
+    retentionTime = "12w";
   };
 }
