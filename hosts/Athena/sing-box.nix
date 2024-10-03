@@ -134,6 +134,8 @@ in {
     };
   };
 
+  systemd.services.sing-box.restartTriggers = [config.age.secrets."athena-sing-box-default-out".file];
+
   age.secrets."athena-sing-box-default-out".file = ../../secrets/athena-sing-box-default-out.age;
 
   networking = {
