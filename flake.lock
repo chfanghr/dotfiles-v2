@@ -2221,11 +2221,11 @@
         "nixpkgs": "nixpkgs_15"
       },
       "locked": {
-        "lastModified": 1728017225,
-        "narHash": "sha256-lLV+OMkMeFqTEmoIZhpWtw6H+ebghupckhrCO+K0MdU=",
+        "lastModified": 1728183036,
+        "narHash": "sha256-aq8i8LCbbo2gIBcFiMTFxyE4fdAKrjFU1c//zZn0bZM=",
         "owner": "Jovian-Experiments",
         "repo": "Jovian-NixOS",
-        "rev": "cb63dc934ba512b2d56d89b94c5da7894f6a7809",
+        "rev": "751641e82a34709ed2a177e69e23b1ea08a75561",
         "type": "github"
       },
       "original": {
