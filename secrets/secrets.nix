@@ -13,4 +13,5 @@ in {
   "github-runner-token-chfanghr-dotfiles-v2.age".publicKeys = [master persephone];
   "demeter-hci-token.age".publicKeys = [master demeter];
   "demeter-hci-binary-caches.age".publicKeys = [master demeter];
+  "demeter-hci-secrets-json.age".publicKeys = [master demeter];
 }
