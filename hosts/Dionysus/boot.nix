@@ -41,7 +41,7 @@
             yubikey = {
               slot = 2;
               twoFactor = false;
-              storage.device = "/dev/nvme0n1p1";
+              storage.device = "/dev/disk/by-uuid/12CE-A600";
             };
           };
         };
