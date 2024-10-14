@@ -7,7 +7,6 @@
     enable = true;
     baseBranch = "main";
     createPullRequest = true;
-    autoMergeMethod = "merge";
     when = {
       minute = 45;
       hour = 12;
