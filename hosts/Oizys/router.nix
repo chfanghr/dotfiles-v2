@@ -233,6 +233,10 @@ in {
       boot.kernel.sysctl = {
         "net.ipv4.ip_forward" = 1;
         "net.ipv4.conf.all.forwarding" = 1;
+        "net.ipv6.conf.all.forwarding" = 1;
+        "net.ipv6.conf.all.accept_ra" = 2;
+        "net.ipv6.conf.all.accept_redirects" = 1;
+        "net.ipv6.conf.all.accept_source_route" = 1;
       };
     }
     (
@@ -299,9 +303,18 @@ in {
                 EmitLLDP = "yes";
                 DHCPServer = "yes";
                 IPv4Forwarding = "yes";
+                IPv6Forwarding = "yes";
+                IPv6SendRA = "yes";
+                DHCPPrefixDelegation = "yes";
               };
               bridgeConfig = {
                 AllowPortToBeRoot = "yes";
+              };
+              dhcpPrefixDelegationConfig = {
+                UplinkInterface = cfg.wan.finalInterface;
+                Announce = "yes";
+                Assign = "yes";
+                SubnetId = "0x01";
               };
               address = [cfg.lan.ipv4.address.networkdAddress];
               dhcpServerConfig = {
@@ -383,15 +396,25 @@ in {
           systemd.network.networks.${cfg.wan.networkdProfile}.linkConfig.ActivationPolicy = "always-up";
 
           systemd.network.networks.${cfg.wan.pppoe.networkdProfile} = {
-            matchConfig.Name = cfg.wan.pppoe.interface;
+            matchConfig.Type = "ppp";
             networkConfig = {
-              Description = "wan pppoe interface";
               IPv4Forwarding = "yes";
+              IPv6Forwarding = "yes";
+              DHCP = "ipv6";
+              IPv6AcceptRA = "yes";
+              DHCPPrefixDelegation = "yes";
+              KeepConfiguration = "yes";
             };
             linkConfig = {
               RequiredForOnline = "no";
-              Unmanaged = true;
+              RequiredFamilyForOnline = "ipv4";
+              ActivationPolicy = "manual";
             };
+            dhcpV6Config = {
+              PrefixDelegationHint = "::/64";
+              UseDelegatedPrefix = "yes";
+            };
+            dhcpPrefixDelegationConfig = {UplinkInterface = ":self";};
           };
 
           systemd.services.setup-pap-secrets = {
@@ -426,6 +449,8 @@ in {
                   maxfail 0
                   holdoff 5
 
+                  +ipv6
+
                   noipdefault
                   defaultroute
                 '';
@@ -448,6 +473,7 @@ in {
             chain input {
                 type filter hook input priority filter; policy drop;
 
+                udp dport dhcpv6-client accept
                 iifname "lo" accept comment "Accept everything from loopback interface"
                 iifname "tailscale0" accept comment "Allow tailscale to access the router"
                 iifname "${cfg.mgmt.interface}" accept comment "Allow management network to access the router"
