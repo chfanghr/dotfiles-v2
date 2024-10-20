@@ -1,6 +1,8 @@
 {
   lib,
   config,
+  inputs,
+  pkgs,
   ...
 }: let
   inherit (lib) types mkOption mkEnableOption mkMerge mkIf attrValues mergeAttrsList;
@@ -36,6 +38,10 @@
         type = types.str;
       };
     };
+  };
+
+  pkgs2405 = import inputs.nixpkgs {
+    inherit (pkgs.stdenv) system;
   };
 in {
   options.oizys.networking = {
@@ -354,6 +360,7 @@ in {
       };
       services.adguardhome = {
         enable = true;
+        package = pkgs2405.adguardhome;
         host = "127.0.0.1";
         port = cfg.lan.dnsServer.webuUIPort;
         settings = {
