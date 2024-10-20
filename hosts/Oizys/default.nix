@@ -32,7 +32,7 @@
       };
     };
 
-    debug = true;
+    debug = false;
   };
 
   system.stateVersion = "24.11";
