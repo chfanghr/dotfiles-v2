@@ -23,12 +23,16 @@
 
   age.secrets."oizys-pap-password".file = ../../secrets/oizys-pap-password.age;
 
-  oizys.networking.wan = {
-    mode = "pppoe";
-    pppoe = {
-      username = "075488857405";
-      passwordFile = config.age.secrets."oizys-pap-password".path;
+  oizys.networking = {
+    wan = {
+      mode = "pppoe";
+      pppoe = {
+        username = "075488857405";
+        passwordFile = config.age.secrets."oizys-pap-password".path;
+      };
     };
+
+    debug = true;
   };
 
   system.stateVersion = "24.11";

@@ -211,9 +211,9 @@ in {
           ];
         };
       };
-
-      # TODO(chfanghr): IPv6
     };
+
+    debug = mkEnableOption "networkd debug log";
   };
 
   config = mkMerge [
@@ -240,11 +240,14 @@ in {
         "net.ipv4.ip_forward" = 1;
         "net.ipv4.conf.all.forwarding" = 1;
         "net.ipv6.conf.all.forwarding" = 1;
-        "net.ipv6.conf.all.accept_ra" = 2;
-        "net.ipv6.conf.all.accept_redirects" = 1;
-        "net.ipv6.conf.all.accept_source_route" = 1;
+        "net.ipv6.conf.default.forwarding" = 1;
       };
     }
+    (
+      mkIf cfg.debug {
+        systemd.services."systemd-networkd".environment.SYSTEMD_LOG_LEVEL = "debug";
+      }
+    )
     (
       # Mgmt
       mkIf cfg.mgmt.enable (
@@ -316,12 +319,7 @@ in {
               bridgeConfig = {
                 AllowPortToBeRoot = "yes";
               };
-              dhcpPrefixDelegationConfig = {
-                UplinkInterface = cfg.wan.finalInterface;
-                Announce = "yes";
-                Assign = "yes";
-                SubnetId = "0x01";
-              };
+              dhcpPrefixDelegationConfig.UplinkInterface = cfg.wan.finalInterface;
               address = [cfg.lan.ipv4.address.networkdAddress];
               dhcpServerConfig = {
                 PoolOffset = 10;
@@ -409,7 +407,7 @@ in {
               IPv6Forwarding = "yes";
               DHCP = "ipv6";
               IPv6AcceptRA = "yes";
-              DHCPPrefixDelegation = "yes";
+              IPv6PrivacyExtensions = "yes";
               KeepConfiguration = "yes";
             };
             linkConfig = {
@@ -420,8 +418,8 @@ in {
             dhcpV6Config = {
               PrefixDelegationHint = "::/64";
               UseDelegatedPrefix = "yes";
+              WithoutRA = "solicit";
             };
-            dhcpPrefixDelegationConfig = {UplinkInterface = ":self";};
           };
 
           systemd.services.setup-pap-secrets = {
@@ -480,6 +478,8 @@ in {
             chain input {
                 type filter hook input priority filter; policy drop;
 
+                icmpv6 type { nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, nd-redirect } accept
+
                 udp dport dhcpv6-client accept
                 iifname "lo" accept comment "Accept everything from loopback interface"
                 iifname "tailscale0" accept comment "Allow tailscale to access the router"
@@ -495,6 +495,8 @@ in {
                 type filter hook forward priority filter; policy drop;
 
                 # ip protocol { tcp, udp } flow offload @f
+
+                icmpv6 type { nd-router-advert, nd-neighbor-solicit, nd-neighbor-advert, nd-redirect } accept
 
                 iifname "tailscale0" accept comment "Let tailscale handle the traffic"
 
