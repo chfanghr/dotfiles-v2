@@ -322,7 +322,7 @@ in {
               dhcpPrefixDelegationConfig.UplinkInterface = cfg.wan.finalInterface;
               address = [cfg.lan.ipv4.address.networkdAddress];
               dhcpServerConfig = {
-                PoolOffset = 10;
+                PoolOffset = 128;
                 EmitDNS = "yes";
                 DNS = cfg.lan.ipv4.address.address;
                 EmitRouter = "yes";
