@@ -67,6 +67,13 @@
 
   services.xserver.displayManager.startx.enable = true;
 
+  services.xserver.desktopManager.gnome.enable = true;
+
+  environment.systemPackages = [
+    pkgs.vulkan-tools
+    pkgs.nvtopPackages.amd
+  ];
+
   specialisation = {
     debug.configuration = {
       dotfiles.shared.props.purposes.graphical = {

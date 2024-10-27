@@ -24,7 +24,7 @@ in {
     amd = {
       integrated.raphael = mkPropOption "has enabled hacks for integrated amd gpu(Raphael)";
       enable = mkPropOption "has amd graphics cards";
-      amdvlk.enable = mkPropOption "use amdvlk driver" // {default = true;};
+      amdvlk.enable = mkPropOption "use amdvlk driver";
     };
   };
 
