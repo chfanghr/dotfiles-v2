@@ -15,6 +15,8 @@ lib.mkIf (config.dotfiles.shared.props.purposes.graphical.gaming) (lib.mkMerge [
       };
     };
 
+    services.resolved.enable = true;
+
     services.seatd.enable = true;
 
     security.polkit.enable = true;
