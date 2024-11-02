@@ -93,5 +93,62 @@ in {
 
       python3
     ];
+
+    extraPythonPackages = pythonPackages:
+      with pythonPackages; [
+        pyyaml # hhd-decky
+      ];
+
+    plugins = {
+      "SDH-CssLoader" = {
+        src = pkgs.fetchzip {
+          url = "https://github.com/DeckThemes/SDH-CssLoader/releases/download/v2.1.1/SDH-CSSLoader-Decky.zip";
+          sha256 = "1vp8h46di4a1qrfsbp0xhyb92x0k0cvv5w7ak2mi995xwl8x9n4j";
+          extension = "zip";
+          stripRoot = true;
+        };
+      };
+    };
+
+    themes = {
+      "Switch Like Home" = {
+        enable = true;
+        src = pkgs.fetchzip {
+          url = "https://api.deckthemes.com/blobs/3aa81edf-e2de-45c7-89fc-52277987ed50";
+          sha256 = "sha256-VX4Y5vZfNChB4DX1w/Ro0e9vKymOOWGp7ZdhUwwoepc=";
+          stripRoot = true;
+          extension = "zip";
+        };
+        config = {
+          "No Friends" = "No";
+        };
+      };
+      "Round" = {
+        enable = true;
+        src = pkgs.fetchzip {
+          url = "https://api.deckthemes.com/blobs/bcac4a5e-4364-4d32-b2a7-ed716a926059";
+          sha256 = "sha256-VX4Y5vZfNChB4DX1w/Ro0e9vKymOOWGp7ZdhUwwoepc=";
+          stripRoot = true;
+          extension = "zip";
+        };
+      };
+      "DellyVolume" = {
+        enable = true;
+        src = pkgs.fetchzip {
+          url = "https://api.deckthemes.com/blobs/c7663cae-04a4-4409-886e-bdfdda8a8613";
+          sha256 = "sha256-NaPQA3wEEG/uYcQqIaacLBE4KBlNrUAlb9nEiplGc94=";
+          stripRoot = true;
+          extension = "zip";
+        };
+      };
+    };
   };
+
+  system.activationScripts.prepareSteamForDeckyLoader = ''
+    if [ -d /home/fanghr/.steam/steam/ ]; then
+      FLAG=/home/fanghr/.steam/steam/.cef-enable-remote-debugging
+      touch $FLAG
+      chown fanghr: $FLAG
+    fi
+  '';
 }

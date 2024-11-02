@@ -29,12 +29,6 @@
     root.hashedPassword = "$y$j9T$LclEAQG.FK8eoV2.mc6ku1$dDc7MUikq2gi7Jpbo4AeQsnkdUjEFsfJ0XbhMY3yedA";
   };
 
-  system.activationScripts.prepareSteamForDeckyLoader = ''
-    if [ -d /home/fanghr/.steam/steam/ ]; then
-      touch /home/fanghr/.steam/steam/.cef-enable-remote-debugging
-    fi
-  '';
-
   specialisation.plasma.configuration = {
     jovian.steam.desktopSession = lib.mkForce "plasma";
     services.desktopManager.plasma6.enable = true;
