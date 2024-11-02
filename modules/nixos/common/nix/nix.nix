@@ -74,7 +74,7 @@ in {
           settings = {
             substituters = [
               "https://mlabs.cachix.org?priority=3"
-              "https://chfanghr.cachix.org"
+              # "https://chfanghr.cachix.org"
               # "https://iohk.cachix.org?priority=999"
             ];
           };
