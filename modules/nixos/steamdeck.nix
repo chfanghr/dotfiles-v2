@@ -37,6 +37,7 @@ in {
       user = "fanghr";
       desktopSession = "hyprland";
     };
+    decky-loader.enable = true;
   };
 
   boot.kernel.sysctl = {

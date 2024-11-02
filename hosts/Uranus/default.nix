@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   imports = [
     ./disko.nix
     ../../modules/nixos/common
@@ -27,5 +27,10 @@
   users.users = {
     fanghr.hashedPassword = "$y$j9T$tn5fAVwNCepbQ4xrimozH0$FhC1TMwwwcKFfDFtX4qx23AUhHRee9o2GviL5dM35b.";
     root.hashedPassword = "$y$j9T$LclEAQG.FK8eoV2.mc6ku1$dDc7MUikq2gi7Jpbo4AeQsnkdUjEFsfJ0XbhMY3yedA";
+  };
+
+  specialisation.plasma.configuration = {
+    jovian.steam.desktopSession = lib.mkForce "plasma";
+    services.desktopManager.plasma6.enable = true;
   };
 }
