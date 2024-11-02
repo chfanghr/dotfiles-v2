@@ -103,7 +103,7 @@ in {
       "SDH-CssLoader" = {
         src = pkgs.fetchzip {
           url = "https://github.com/DeckThemes/SDH-CssLoader/releases/download/v2.1.1/SDH-CSSLoader-Decky.zip";
-          sha256 = "1vp8h46di4a1qrfsbp0xhyb92x0k0cvv5w7ak2mi995xwl8x9n4j";
+          sha256 = "sha256-ktjUEeW9pBSrmOrwsjcDE3SRlocd3KVdxkGR2AyB6O4=";
           extension = "zip";
           stripRoot = true;
         };
@@ -123,15 +123,6 @@ in {
           "No Friends" = "No";
         };
       };
-      "Round" = {
-        enable = true;
-        src = pkgs.fetchzip {
-          url = "https://api.deckthemes.com/blobs/bcac4a5e-4364-4d32-b2a7-ed716a926059";
-          sha256 = "sha256-VX4Y5vZfNChB4DX1w/Ro0e9vKymOOWGp7ZdhUwwoepc=";
-          stripRoot = true;
-          extension = "zip";
-        };
-      };
       "DellyVolume" = {
         enable = true;
         src = pkgs.fetchzip {
@@ -140,6 +131,7 @@ in {
           stripRoot = true;
           extension = "zip";
         };
+        config = {};
       };
     };
   };
