@@ -19,6 +19,7 @@ in {
   imports = [
     inputs.jovian.nixosModules.default
     inputs.disko.nixosModules.default
+    ./decky.nix
   ];
 
   boot = {
@@ -37,7 +38,6 @@ in {
       user = "fanghr";
       desktopSession = "hyprland";
     };
-    decky-loader.enable = true;
   };
 
   boot.kernel.sysctl = {
@@ -75,4 +75,23 @@ in {
   };
 
   nix.gc.options = "--delete-older-than +4";
+
+  jovian.decky-loader = {
+    enable = true;
+    user = "fanghr";
+    stateDir = "/home/fanghr/.local/share/decky";
+    extraPackages = with pkgs; [
+      curl
+      unzip
+      util-linux
+      gnugrep
+
+      readline.out
+      procps
+      pciutils
+      libpulseaudio
+
+      python3
+    ];
+  };
 }

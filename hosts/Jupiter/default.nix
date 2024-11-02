@@ -1,7 +1,7 @@
 {
   imports = [
     ../../modules/nixos/common
-    ../../modules/nixos/steamdeck.nix
+    ../../modules/nixos/steamdeck
   ];
 
   networking.hostName = "Jupiter";
