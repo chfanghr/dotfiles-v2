@@ -154,7 +154,7 @@ in {
                 servers = [
                   {
                     tag = "bootstrap-dns";
-                    address = "223.5.5.5";
+                    address = "10.31.0.1";
                     detour = "direct-out";
                   }
                   {
