@@ -59,7 +59,13 @@ in {
     };
   };
 
-  services.samba.settings.qbittorrent = {
-    path = "${dataDir}/downloads";
+  services.samba.settings = {
+    qbittorrent = {
+      path = "${dataDir}/downloads";
+    };
+    qbittorrent_incomplete = {
+      path = "${dataDir}/incomplete";
+      browsable = "no";
+    };
   };
 }
