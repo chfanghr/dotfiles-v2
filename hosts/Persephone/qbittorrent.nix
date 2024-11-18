@@ -1,21 +1,16 @@
 {
   config,
   pkgs,
-  inputs,
   ...
 }: let
   dataDir = "/data/qbittorrent";
 
   altUI = pkgs.fetchzip {
-    url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.14.1/vuetorrent.zip";
-    hash = "sha256-pSXhRxhjB21Us/OgvbIXKhZtpXWZD+F1yb6/w/PQASs=";
+    url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.18.0/vuetorrent.zip";
+    hash = "sha256-Z+N1RgcF67R6hWEfmfBls1+YLWkhEJQuOVqXXJCyptE=";
   };
 
   altUIPath = "${dataDir}/alt_ui";
-
-  pkgs2405 = import inputs.nixpkgs-2405 {
-    inherit (pkgs.stdenv) system;
-  };
 in {
   systemd.tmpfiles.settings."10-qbittorrent-data".${dataDir}.d = {
     inherit (config.services.qbittorrent) user group;
@@ -29,7 +24,6 @@ in {
   };
 
   services.qbittorrent = {
-    package = pkgs2405.qbittorrent-nox;
     enable = true;
     inherit dataDir;
     openFilesLimit = 65536;

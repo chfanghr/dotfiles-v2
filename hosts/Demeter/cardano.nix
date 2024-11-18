@@ -4,10 +4,11 @@
   ];
 
   cardano = {
-    enable = true;
     network = "preprod";
+    node.enable = true;
+    ogmios.enable = true;
     http.enable = false;
-    db-sync.enable = false;
+    db-sync.enable = true;
     blockfrost.enable = false;
     oura.enable = false;
   };
