@@ -462,6 +462,17 @@ in {
               };
             };
           };
+
+          systemd.services."pppd-${cfg.wan.pppoe.peerName}" = {
+            wantedBy = ["multi-user.target"];
+            serviceConfig = {
+              Restart = "always";
+              RuntimeMaxSec = "1d";
+            };
+            unitConfig = {
+              StartLimitIntervalSec = 0;
+            };
+          };
         })
       ]
     )
