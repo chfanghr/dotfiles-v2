@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  inputs,
   ...
 }: let
   inherit (lib) mkIf mkMerge types mkOption mdDoc xor;
@@ -16,6 +17,10 @@
 
   graphicalProps = config.dotfiles.shared.props.purposes.graphical;
 in {
+  imports = [
+    inputs.ucodenix.nixosModules.default
+  ];
+
   options.dotfiles.nixos.props.hardware.cpu = {
     amd = mkPropOption "has a amd cpu";
     intel = mkPropOption "has a intel cpu";

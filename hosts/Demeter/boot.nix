@@ -70,4 +70,6 @@
     after = ["openrgb.service"];
     serviceConfig.Type = "oneshot";
   };
+
+  services.ucodenix.enable = true;
 }
