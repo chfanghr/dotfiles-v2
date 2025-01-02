@@ -179,7 +179,7 @@ in {
       };
 
       dnsServer = {
-        webuUIPort = mkOption {
+        webUIPort = mkOption {
           type = types.port;
           default = 3000;
           readOnly = true;
@@ -360,7 +360,7 @@ in {
         enable = true;
         package = pkgs2405.adguardhome;
         host = "127.0.0.1";
-        port = cfg.lan.dnsServer.webuUIPort;
+        port = cfg.lan.dnsServer.webUIPort;
         settings = {
           dns = {
             bind_hosts = [
