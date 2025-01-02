@@ -188,7 +188,7 @@ in {
         upstreams = mkOption {
           type = types.listOf types.str;
           default = [
-            "tls://dns-unfiltered.adguard.com"
+            "tls://dns.adguard-dns.com"
             "9.9.9.9"
             "149.112.112.112"
             "1.1.1.1"
