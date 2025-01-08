@@ -4,19 +4,6 @@
       enable = true;
       enableVteIntegration = true;
 
-      history = {
-        size = 1000000;
-        path = "$HOME/.local/share/zsh/history";
-      };
-
-      initExtra = ''
-        if [[ -r "$HOME/.iterm2_shell_integration.zsh" ]]; then
-          source "$HOME/.iterm2_shell_integration.zsh"
-        fi
-
-        export GPG_TTY="$(tty)"
-      '';
-
       prezto = {
         enable = true;
         prompt = {
