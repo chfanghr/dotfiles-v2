@@ -192,6 +192,7 @@ in {
             "9.9.9.9"
             "149.112.112.112"
             "1.1.1.1"
+            "https://dns.alidns.com/dns-query"
           ];
         };
 
@@ -208,6 +209,7 @@ in {
           default = [
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_9.txt" # The Big List of Hacked Malware Web Sites
             "https://adguardteam.github.io/HostlistsRegistry/assets/filter_11.txt" # malicious url blocklist
+            "https://adguardteam.github.io/HostlistsRegistry/assets/filter_21.txt"
           ];
         };
       };
