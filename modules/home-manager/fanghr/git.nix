@@ -27,6 +27,7 @@
 
     extraConfig = {
       core.autocrlf = "input";
+      core.editor = "nvim";
       init.defaultBranch = "main";
       "credential \"https://gitlab.com\"" = {
         username = "connor81";
