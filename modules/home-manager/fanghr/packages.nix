@@ -41,9 +41,6 @@ lib.mkMerge [
     lib.mkIf config.dotfiles.shared.props.purposes.graphical.desktop {
       home.packages = with pkgs; [
         spotify
-
-        # fonts
-        nerdfonts
       ];
       nixpkgs.config.allowUnfreePredicate = pkg:
         builtins.elem (lib.getName pkg) [

@@ -72,7 +72,6 @@
 
     home.packages = with pkgs; [
       cantarell-fonts
-      nerdfonts
       font-awesome
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
