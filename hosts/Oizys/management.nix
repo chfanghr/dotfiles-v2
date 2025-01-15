@@ -36,7 +36,10 @@ in {
   };
 
   services = {
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      useRoutingFeatures = "both";
+    };
 
     openssh = {
       enable = true;
