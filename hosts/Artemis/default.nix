@@ -5,6 +5,9 @@
 }: {
   imports = [
     ./disko.nix
+    ./fry.nix
+    ./samba.nix
+    ./tank.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
     inputs.agenix.nixosModules.default
@@ -12,12 +15,8 @@
 
   dotfiles.nixos.props = {
     nix.roles.consumer = true;
-    users = {
-      fanghr.disableHm = true;
-    };
-    hardware = {
-      cpu.intel = true;
-    };
+    users.fanghr.disableHm = true;
+    hardware.cpu.intel = true;
   };
 
   time.timeZone = "Asia/Hong_Kong";
@@ -39,21 +38,21 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
+    supportedFilesystems.zfs = true;
+    kernelPackages = pkgs.linuxPackages_latest;
   };
 
   nix.gc.options = "--delete-older-than +8";
 
   networking = {
     hostName = "Artemis";
-
     useNetworkd = true;
-
     nftables.enable = true;
+    hostId = "f12cb296";
   };
 
   environment.defaultPackages = [
     pkgs.zellij
-    pkgs.minicom
   ];
 
   programs.vim = {
