@@ -1,57 +1,75 @@
-{lib, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
   imports = [
+    ./disko.nix
     ../../modules/nixos/common
-    ./boot.nix
-    ./dlna.nix
-    ./networking.nix
-    ./qbittorrent.nix
-    ./root-fs.nix
-    ./samba.nix
-    ./tank.nix
-    ./traefik.nix
-    ./yotsuba.nix
+    inputs.disko.nixosModules.default
+    inputs.agenix.nixosModules.default
   ];
 
-  networking.hostName = "Artemis";
-
-  dotfiles = {
-    shared.props.networking.home = {
-      onLanNetwork = true;
-      proxy.useGateway = true;
+  dotfiles.nixos.props = {
+    nix.roles.consumer = true;
+    users = {
+      fanghr.disableHm = true;
     };
-    nixos.props = {
-      hardware = {
-        cpu.intel = true;
-        vmHost = true;
-      };
-      nix.roles.consumer = true;
+    hardware = {
+      cpu.intel = true;
     };
   };
 
-  services.iperf3 = {
-    enable = true;
-    openFirewall = true;
+  time.timeZone = "Asia/Hong_Kong";
+
+  users.users.fanghr.hashedPassword = "$y$j9T$tn5fAVwNCepbQ4xrimozH0$FhC1TMwwwcKFfDFtX4qx23AUhHRee9o2GviL5dM35b.";
+
+  boot = {
+    initrd.availableKernelModules = [
+      "sdhci_pci"
+      "xhci_pci"
+      "ahci"
+      "usbhid"
+      "usb_storage"
+      "sd_mod"
+      "nvme"
+      "r8169"
+    ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
   };
-
-  users.users.fanghr.hashedPassword = "$y$j9T$LXMnQ178S.dmirDdpF2ZF.$99/2fGfE5kMpaWlHXKWryIJhusvk1urp1GGJlN8Hlh3";
-
-  services.openssh.hostKeys = [
-    {
-      bits = 4096;
-      path = "/etc/secrets/ssh/ssh_host_rsa_key";
-      type = "rsa";
-    }
-    {
-      path = "/etc/secrets/ssh/ssh_host_ed25519_key";
-      type = "ed25519";
-    }
-  ];
 
   nix.gc.options = "--delete-older-than +8";
 
-  system.stateVersion = lib.mkForce "22.11";
+  networking = {
+    hostName = "Artemis";
 
-  specialisation.noProxy.configuration = {
-    dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce false;
+    useNetworkd = true;
+
+    nftables.enable = true;
+  };
+
+  environment.defaultPackages = [
+    pkgs.zellij
+    pkgs.minicom
+  ];
+
+  programs.vim = {
+    enable = true;
+    defaultEditor = true;
+  };
+
+  age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
+
+  powerManagement.cpuFreqGovernor = "ondemand";
+
+  services = {
+    iperf3 = {
+      enable = true;
+      openFirewall = true;
+    };
+    lldpd.enable = true;
   };
 }

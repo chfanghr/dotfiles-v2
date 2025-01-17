@@ -19,6 +19,7 @@
   mkX86_64Nixos = mkNixos "x86_64-linux";
 
   nixosConfigurations = listToAttrs [
+    (mkX86_64Nixos "Artemis")
     (mkX86_64Nixos "Demeter")
     (mkX86_64Nixos "Poseidon")
     (mkX86_64Nixos "Uranus")
