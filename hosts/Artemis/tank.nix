@@ -4,7 +4,7 @@
     "fry"
   ];
 
-  systemd.tmpfiles.settings."10-vault" = {
+  systemd.tmpfiles.settings."10-tank" = {
     "/data/tank/main".d = {
       user = "root";
       group = "smb-users";
