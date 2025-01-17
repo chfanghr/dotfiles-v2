@@ -40,6 +40,7 @@
     };
     supportedFilesystems.zfs = true;
     kernelPackages = pkgs.linuxPackages_latest;
+    kernelParams = ["nohibernate"];
   };
 
   nix.gc.options = "--delete-older-than +8";
@@ -71,4 +72,6 @@
     };
     lldpd.enable = true;
   };
+
+  services.zfs.autoScrub.enable = true;
 }
