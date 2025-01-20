@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }: let
   dataDir = "/data/qbittorrent";
@@ -11,6 +12,10 @@
   };
 
   altUIPath = "${dataDir}/alt_ui";
+
+  pkgsUnstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs.stdenv) system;
+  };
 in {
   systemd.tmpfiles.settings."10-qbittorrent-data".${dataDir}.d = {
     inherit (config.services.qbittorrent) user group;
@@ -25,6 +30,7 @@ in {
 
   services.qbittorrent = {
     enable = true;
+    package = pkgsUnstable.qbittorrent-nox;
     inherit dataDir;
     openFilesLimit = 65536;
     port = 8080;

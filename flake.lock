@@ -2970,6 +2970,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable_3": {
+      "locked": {
+        "lastModified": 1737062831,
+        "narHash": "sha256-Tbk1MZbtV2s5aG+iM99U8FqwxU/YNArMcWAv6clcsBc=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "5df43628fdf08d642be8ba5b3625a6c70731c19c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs_10": {
       "locked": {
         "lastModified": 1731319897,
@@ -3476,6 +3492,7 @@
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_17",
         "nixpkgs-2405": "nixpkgs-2405_2",
+        "nixpkgs-unstable": "nixpkgs-unstable_3",
         "nixvim": [
           "my-nvim",
           "nixvim"
