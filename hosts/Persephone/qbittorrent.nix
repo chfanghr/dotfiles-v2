@@ -35,6 +35,7 @@ in {
     openFilesLimit = 65536;
     port = 8080;
     openFirewall = false;
+    confirmLegalNotice = true;
   };
 
   systemd.services = {
