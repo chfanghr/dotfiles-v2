@@ -1,28 +1,30 @@
 {
-  services.btrfs.autoScrub.enable = true;
+  users.groups.smb-users.members = [
+    "fanghr"
+    "fry"
+  ];
 
-  fileSystems."/mnt/tank" = {
-    device = "/dev/mapper/yotsuba1";
-    fsType = "btrfs";
-    options = ["subvol=tank"];
+  systemd.tmpfiles.settings."10-tank" = {
+    "/data/tank/main".d = {
+      user = "root";
+      group = "smb-users";
+      mode = "0770";
+    };
   };
 
-  services.samba.shares = {
-    tank = {
-      path = "/mnt/tank";
-      browseable = "yes";
-      "read only" = "no";
-      "guest ok" = "no";
-      "create mask" = "0644";
-      "directory mask" = "0755";
-      "valid users" = "fanghr";
-      writeable = "yes";
+  fileSystems = {
+    "/data/tank/main" = {
+      device = "tank/main";
+      fsType = "zfs";
+      options = ["noexec"];
     };
-    guest = {
-      path = "/mnt/tank/Guest";
-      browseable = "yes";
-      "guest ok" = "yes";
-      writeable = "no";
+  };
+
+  services.samba.settings = {
+    main = {
+      path = "/data/tank/main";
+      "read only" = "no";
+      "create mask" = "0755";
     };
   };
 }
