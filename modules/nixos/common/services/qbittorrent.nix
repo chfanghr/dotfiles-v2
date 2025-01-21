@@ -76,6 +76,11 @@ in {
       default = "qbittorrent";
       readOnly = true;
     };
+
+    confirmLegalNotice = mkOption {
+      type = types.bool;
+      default = false;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -92,9 +97,11 @@ in {
       wantedBy = ["multi-user.target"];
       serviceConfig = {
         ExecStart = ''
-          ${cfg.package}/bin/qbittorrent-nox \
-            --profile=${configDir} \
-            --webui-port=${toString cfg.port}
+          ${cfg.package}/bin/qbittorrent-nox ${lib.cli.toGNUCommandLineShell {optionValueSeparator = "=";} {
+            profile = configDir;
+            webui-port = cfg.port;
+            confirm-legal-notice = cfg.confirmLegalNotice;
+          }}
         '';
         # To prevent "Quit & shutdown daemon" from working; we want systemd to
         # manage it!
