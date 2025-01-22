@@ -4,7 +4,7 @@ let
   persephone = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEe9Z3dt2JFIbqE13NCv7q6ELCh6zfxd8jBl7US8kb9e root@Persephone";
   oizys = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDxg7xOUiwUYgizuVkUm9nogD5dpLAqiwkz9X8pYkb8z root@Oizys";
   demeter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC6nS/4X/8gD4nAVR1aQqbyxZXt2j22NQc4FkHq2aB2Z root@Demeter";
-  eros = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAfjrznT4rTTmjRTLaigW3pex+ESYH9eAZHKrQpYxgp9 root@Eros";
+  eros = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMOSikUUYizqdxd2NZ+zk2jiEySufOR6432+DbPxhUw3 root@Eros";
 in {
   "athena-sing-box-default-out.age".publicKeys = [master athena];
   "oizys-sing-box-default-out.age".publicKeys = [master oizys];
