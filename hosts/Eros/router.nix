@@ -8,7 +8,7 @@
   inherit (lib) types mkOption mkEnableOption mkMerge mkIf attrValues mergeAttrsList;
   inherit (builtins) toString map;
 
-  cfg = config.oizys.networking;
+  cfg = config.eros.networking;
 
   staticAddressType = types.submodule ({config, ...}: {
     options = {
@@ -44,7 +44,7 @@
     inherit (pkgs.stdenv) system;
   };
 in {
-  options.oizys.networking = {
+  options.eros.networking = {
     mgmt = {
       enable =
         mkEnableOption "Management port"
@@ -54,7 +54,7 @@ in {
 
       interface = mkOption {
         type = types.str;
-        default = "enp0s20f0u4";
+        default = "enp2s0";
       };
 
       address = mkOption {
@@ -72,7 +72,7 @@ in {
     wan = {
       interface = mkOption {
         type = types.str;
-        default = "enp1s0";
+        default = "enp7s0";
       };
 
       mode = mkOption {
@@ -132,7 +132,7 @@ in {
     lan = {
       interfaces = mkOption {
         type = types.nonEmptyListOf types.str;
-        default = ["enp3s0" "enp4s0"];
+        default = ["enp3s0" "enp4s0" "enp5s0" "enp6s0"];
       };
 
       ipv4 = {

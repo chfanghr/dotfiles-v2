@@ -20,14 +20,14 @@
 
   nixosConfigurations = listToAttrs [
     (mkX86_64Nixos "Artemis")
+    (mkX86_64Nixos "Athena")
     (mkX86_64Nixos "Demeter")
+    (mkX86_64Nixos "Dionysus")
+    (mkX86_64Nixos "Eros")
+    (mkX86_64Nixos "Jupiter")
+    (mkX86_64Nixos "Persephone")
     (mkX86_64Nixos "Poseidon")
     (mkX86_64Nixos "Uranus")
-    (mkX86_64Nixos "Jupiter")
-    (mkX86_64Nixos "Athena")
-    (mkX86_64Nixos "Persephone")
-    (mkX86_64Nixos "Dionysus")
-    (mkX86_64Nixos "Oizys")
   ];
 in {
   flake = {

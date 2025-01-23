@@ -16,7 +16,7 @@
     inputs.agenix.nixosModules.default
   ];
 
-  networking.hostName = "Oizys";
+  networking.hostName = "Eros";
 
   time.timeZone = "Asia/Hong_Kong";
 
@@ -24,7 +24,7 @@
 
   age.secrets."oizys-pap-password".file = ../../secrets/oizys-pap-password.age;
 
-  oizys.networking = {
+  eros.networking = {
     wan = {
       mode = "pppoe";
       pppoe = {
