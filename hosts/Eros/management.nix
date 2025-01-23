@@ -89,6 +89,8 @@ in {
     pkgs.ethtool
     pkgs.inetutils
     pkgs.speedtest-cli
+    pkgs.htop
+    pkgs.btop
   ];
 
   containers.simLanHost = {
