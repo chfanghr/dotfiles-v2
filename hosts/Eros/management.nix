@@ -2,10 +2,14 @@
   pkgs,
   config,
   lib,
+  inputs,
   ...
 }: let
   inherit (lib) mkForce;
 in {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
   users = {
     users.fanghr = {
       openssh.authorizedKeys.keys = [
@@ -46,6 +50,26 @@ in {
       settings = {
         PermitRootLogin = "no";
         PasswordAuthentication = false;
+      };
+    };
+  };
+
+  home-manager.users.fanghr = {
+    programs.home-manager.enable = true;
+
+    home.stateVersion = "24.05";
+
+    programs.zsh = {
+      enable = true;
+      enableVteIntegration = true;
+
+      prezto = {
+        enable = true;
+        prompt = {
+          theme = "smiley";
+          showReturnVal = true;
+          pwdLength = "short";
+        };
       };
     };
   };

@@ -88,17 +88,17 @@ in {
               useDHCP = true;
               ipv4.addresses = [
                 {
-                  prefixLength = config.oizys.networking.lan.ipv4.address.prefixLength;
+                  prefixLength = config.eros.networking.lan.ipv4.address.prefixLength;
                   address = cfg.ipv4.address;
                 }
               ];
             };
             defaultGateway = {
               interface = lanInterface;
-              address = config.oizys.networking.lan.ipv4.address.address;
+              address = config.eros.networking.lan.ipv4.address.address;
             };
             nameservers = [
-              config.oizys.networking.lan.ipv4.address.address
+              config.eros.networking.lan.ipv4.address.address
             ];
             localCommands = ''
               ip rule add fwmark ${toString proxyFwMark} lookup ${toString proxyRouteTable}
@@ -119,7 +119,8 @@ in {
                 }
 
                 define LAN_IP = {
-                  10.31.0.0/16
+                  10.31.0.0/16,
+                  10.41.0.0/16
                 }
 
                 table ip sing_box {
