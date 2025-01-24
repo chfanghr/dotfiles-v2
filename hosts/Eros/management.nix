@@ -2,10 +2,14 @@
   pkgs,
   config,
   lib,
+  inputs,
   ...
 }: let
   inherit (lib) mkForce;
 in {
+  imports = [
+    inputs.home-manager.nixosModules.home-manager
+  ];
   users = {
     users.fanghr = {
       openssh.authorizedKeys.keys = [
@@ -50,6 +54,26 @@ in {
     };
   };
 
+  home-manager.users.fanghr = {
+    programs.home-manager.enable = true;
+
+    home.stateVersion = "24.05";
+
+    programs.zsh = {
+      enable = true;
+      enableVteIntegration = true;
+
+      prezto = {
+        enable = true;
+        prompt = {
+          theme = "smiley";
+          showReturnVal = true;
+          pwdLength = "short";
+        };
+      };
+    };
+  };
+
   programs = {
     zsh.enable = true;
     htop.enable = true;
@@ -65,11 +89,13 @@ in {
     pkgs.ethtool
     pkgs.inetutils
     pkgs.speedtest-cli
+    pkgs.htop
+    pkgs.btop
   ];
 
   containers.simLanHost = {
     privateNetwork = true;
-    hostBridge = config.oizys.networking.lan.bridge.interface;
+    hostBridge = config.eros.networking.lan.bridge.interface;
     ephemeral = true;
     autoStart = true;
     config = {pkgs, ...}: {

@@ -5,7 +5,7 @@
 }: let
   inherit (lib) mkForce types mkOption;
 
-  cfg = config.oizys.networking.vpnGatway;
+  cfg = config.eros.networking.vpnGatway;
 
   routingMark = 69;
 
@@ -20,7 +20,7 @@
 
   vpnServerConfigFilePathInContainer = "/tmp/vpn-server.json";
 in {
-  options.oizys.networking.vpnGatway = {
+  options.eros.networking.vpnGatway = {
     ipv4.address = mkOption {
       type = types.str;
       default = "10.31.0.2";
@@ -32,7 +32,7 @@ in {
     containers = {
       simLanHost2 = {
         privateNetwork = true;
-        hostBridge = config.oizys.networking.lan.bridge.interface;
+        hostBridge = config.eros.networking.lan.bridge.interface;
         ephemeral = true;
         autoStart = true;
         config = {pkgs, ...}: {
@@ -68,7 +68,7 @@ in {
       };
       vpnGateway = {
         privateNetwork = true;
-        hostBridge = config.oizys.networking.lan.bridge.interface;
+        hostBridge = config.eros.networking.lan.bridge.interface;
         autoStart = true;
         bindMounts = {
           vpnServer = {
@@ -88,17 +88,17 @@ in {
               useDHCP = true;
               ipv4.addresses = [
                 {
-                  prefixLength = config.oizys.networking.lan.ipv4.address.prefixLength;
+                  prefixLength = config.eros.networking.lan.ipv4.address.prefixLength;
                   address = cfg.ipv4.address;
                 }
               ];
             };
             defaultGateway = {
               interface = lanInterface;
-              address = config.oizys.networking.lan.ipv4.address.address;
+              address = config.eros.networking.lan.ipv4.address.address;
             };
             nameservers = [
-              config.oizys.networking.lan.ipv4.address.address
+              config.eros.networking.lan.ipv4.address.address
             ];
             localCommands = ''
               ip rule add fwmark ${toString proxyFwMark} lookup ${toString proxyRouteTable}
@@ -119,7 +119,8 @@ in {
                 }
 
                 define LAN_IP = {
-                  10.31.0.0/16
+                  10.31.0.0/16,
+                  10.41.0.0/16
                 }
 
                 table ip sing_box {
