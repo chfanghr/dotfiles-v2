@@ -447,19 +447,10 @@ in {
                 enable = true;
                 config = ''
                   plugin pppoe.so ${cfg.wan.interface}
-
                   name "${cfg.wan.pppoe.username}"
-
                   unit ${toString cfg.wan.pppoe.unitNumber}
-
-                  persist
-                  maxfail 0
-                  holdoff 5
-
-                  +ipv6
-
-                  noipdefault
                   defaultroute
+                  debug
                 '';
               };
             };
@@ -469,11 +460,13 @@ in {
             wantedBy = ["multi-user.target"];
             serviceConfig = {
               Restart = "always";
-              RuntimeMaxSec = "1d";
             };
             unitConfig = {
               StartLimitIntervalSec = 0;
             };
+            reloadTriggers = [
+              pkgs.ppp
+            ];
           };
         })
       ]
