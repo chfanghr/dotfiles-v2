@@ -13,7 +13,7 @@
       enable = true;
       xwayland.enable = true;
       plugins = [
-        pkgs.hyprlandPlugins.hyprbars
+        # pkgs.hyprlandPlugins.hyprbars
       ];
       extraConfig = ''
         ${(builtins.readFile ./hyprland.conf)}
