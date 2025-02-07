@@ -6,21 +6,12 @@
 }: {
   dotfiles.nixos.props.hardware.cpu.tweaks.amd.noPstate = true;
 
-  # specialisation = {
-  #   zenKernel.configuration = {
-  #     boot.kernelPackages = pkgs.linuxPackages_zen;
-  #   };
-  #   latestKernel.configuration = {
-  #     boot.kernelPackages = pkgs.linuxPackages_latest;
-  #   };
-  # };
-
   boot = let
     loadAllZfsKeys = pkgs.writeScript "load-all-zfs-keys" ''
       ${lib.getExe config.boot.zfs.package} load-key -a
     '';
   in {
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_6_12;
 
     initrd = {
       availableKernelModules = [
