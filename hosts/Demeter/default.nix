@@ -167,6 +167,7 @@
           address = "10.41.255.251";
           interface = "bond0";
         };
+        nameservers = lib.mkBefore ["10.41.255.251"];
       };
     };
   };
