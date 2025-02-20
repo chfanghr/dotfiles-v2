@@ -14,25 +14,33 @@
     servers.main = let
       mods = pkgs.linkFarmFromDrvs "mods" (builtins.attrValues {
         fabric-api = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/tAwdMmKY/fabric-api-0.97.1%2B1.20.4.jar";
-          sha512 = "161d5d8c67330cbda4ce825f92f23b96bfa884f881d5931c0375aba9ceef0f5e14b11c8607b5368fb6b72b796694a86a48271eecc3d9b63991f4b01352d66d5f";
+          url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/ocg4hG3t/fabric-api-0.100.8%2B1.20.6.jar";
+          sha256 = "sha256-7w2k7KiqcxRp3eY9vuRRvGsNWBS8FAx0enApubsqjO8=";
         };
         fabric-carpet = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/yYzR60Xd/fabric-carpet-1.20.3-1.4.128%2Bv231205.jar";
-          sha512 = "6ca0bd328a76b7c3c10eb0253cb57eba8791087775467fbe2217c7f938c0064700bdca4cbf358e7f2f3427ae50a6d63f520f2b1a549cb36da1cc718812f86375";
+          url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/iImwtlTX/fabric-carpet-1.20.6-1.4.141%2Bv240429.jar";
+          sha256 = "sha256-lqq1ynWxkUP3Up9pFyKhj/lGHydeXbf56r/mTug52uo=";
+        };
+        carpet-extra = pkgs.fetchurl {
+          url = "https://cdn.modrinth.com/data/VX3TgwQh/versions/K5R1RGk8/carpet-extra-1.20.6-1.4.141.jar";
+          sha256 = "sha256-YExC0MCkt/VX49xKQDdfah6H+OcH5b+FXcTG28UMdxg=";
         };
         lithium = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/nMhjKWVE/lithium-fabric-mc1.20.4-0.12.1.jar";
-          sha512 = "70bea154eaafb2e4b5cb755cdb12c55d50f9296ab4c2855399da548f72d6d24c0a9f77e3da2b2ea5f47fa91d1258df4d08c6c6f24a25da887ed71cea93502508";
+          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/5a3sPIH2/lithium-fabric-mc1.20.6-0.12.5.jar";
+          sha256 = "sha256-yQEzF/tGZ0+QZfNfXV0XVhh3OPqAFNNS7U8lw/xpY/w=";
         };
         no-chat-report = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/Pjto4zdj/NoChatReports-FABRIC-1.20.4-v2.6.1.jar";
-          sha512 = "a2ca389f4024a2089dd1224713e23f356067fbfd27aaf6f3aa74ad28b75d6f0d19e0ed07e721035943964730a2d2a09473067d0d4db34ce7d5b7d6a15a6a5b42";
+          url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/MNkuIjea/NoChatReports-FABRIC-1.20.6-v2.7.1.jar";
+          sha256 = "sha256-a1Fc+r0iDpY6s8ThiHyfa5q4JBMpR+9VB+r+zTzvQds=";
+        };
+        simple-voice-chat = pkgs.fetchurl {
+          url = "https://cdn.modrinth.com/data/9eGKb6K1/versions/FGDBZ2bv/voicechat-fabric-1.20.6-2.5.22.jar";
+          sha256 = "sha256-p7vLXyKE0Y0VdoCHkLeXYfi/WFm49cGxOZHGKHXgivo=";
         };
       });
     in {
       enable = true;
-      package = pkgs.fabricServers.fabric-1_20_4.override {loaderVersion = "0.15.11";};
+      package = pkgs.fabricServers.fabric-1_20_6.override {loaderVersion = "0.16.10";};
       symlinks = {
         "mods" = "${mods}";
       };
@@ -52,7 +60,10 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [25565];
+  networking.firewall.allowedTCPPorts = [
+    25565
+    24454 # Simple Voice Chat
+  ];
 
   nixpkgs.config.allowUnfree = lib.mkForce true;
 }

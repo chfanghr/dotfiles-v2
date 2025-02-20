@@ -2432,11 +2432,11 @@
         "nixpkgs": "nixpkgs_16"
       },
       "locked": {
-        "lastModified": 1735523359,
-        "narHash": "sha256-b5oyqt/9+hSkWwd1o5XX1yC5rlug473b8ZHsveD3Xgk=",
+        "lastModified": 1740016049,
+        "narHash": "sha256-f/Ym311LkLXY5TAIqiZYPwPxRQRS/S7s23T9Y8Obt00=",
         "owner": "Infinidoge",
         "repo": "nix-minecraft",
-        "rev": "ca9391fe4d9951a046f99af6490c9a15b61d8e8a",
+        "rev": "7fd1ca82a67646717556873bb18ffc3e565b86e7",
         "type": "github"
       },
       "original": {
