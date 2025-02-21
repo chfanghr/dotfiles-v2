@@ -60,10 +60,15 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [
-    25565
-    24454 # Simple Voice Chat
-  ];
+  networking.firewall = {
+    allowedTCPPorts = [
+      25565
+      24454 # Simple Voice Chat
+    ];
+    allowedUDPPorts = [
+      24454
+    ];
+  };
 
   nixpkgs.config.allowUnfree = lib.mkForce true;
 }
