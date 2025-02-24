@@ -37,6 +37,10 @@
           url = "https://cdn.modrinth.com/data/9eGKb6K1/versions/FGDBZ2bv/voicechat-fabric-1.20.6-2.5.22.jar";
           sha256 = "sha256-p7vLXyKE0Y0VdoCHkLeXYfi/WFm49cGxOZHGKHXgivo=";
         };
+        advanced-backup = pkgs.fetchurl {
+          url = "https://cdn.modrinth.com/data/Jrmoreqs/versions/hkz64BY7/AdvancedBackups-fabric-1.20.6-3.7.1.jar";
+          sha256 = "sha256-BwKACGHurpyLiRHstodjZOA/hdnKX8DXBqFLbeyT1n4=";
+        };
       });
     in {
       enable = true;
