@@ -69,7 +69,7 @@
           };
         };
       };
-      games = {
+      game = {
         device = "/dev/disk/by-id/nvme-KIOXIA-EXCERIA_PLUS_G2_SSD_72RB40WBKS92";
         content = {
           type = "gpt";
@@ -77,7 +77,7 @@
             size = "100%";
             content = {
               type = "btrfs";
-              mountpoint = "/data/games";
+              mountpoint = "/data/game";
               mountOptions = ["compress=zstd" "noatime"];
             };
           };
