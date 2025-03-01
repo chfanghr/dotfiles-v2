@@ -25,6 +25,8 @@
       };
     };
 
+    home.file.${config.gtk.gtk2.configLocation}.force = lib.mkForce true;
+
     home.pointerCursor = {
       gtk.enable = true;
       # x11.enable = true;
