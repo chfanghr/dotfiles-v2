@@ -60,6 +60,7 @@
         difficulty = "hard";
         force-gamemode = true;
         allow-flight = true;
+        view-distance = 16;
       };
     };
   };
