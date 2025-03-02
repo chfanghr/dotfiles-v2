@@ -14,37 +14,37 @@
     servers.main = let
       mods = pkgs.linkFarmFromDrvs "mods" (builtins.attrValues {
         fabric-api = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/ocg4hG3t/fabric-api-0.100.8%2B1.20.6.jar";
-          sha256 = "sha256-7w2k7KiqcxRp3eY9vuRRvGsNWBS8FAx0enApubsqjO8=";
+          url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/ZNwYCTsk/fabric-api-0.118.0%2B1.21.4.jar";
+          sha256 = "sha256-EDrLCs4eCeI4e8oe03vLVlYEESwRlhneCQ5vrjswPFM=";
         };
         fabric-carpet = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/iImwtlTX/fabric-carpet-1.20.6-1.4.141%2Bv240429.jar";
-          sha256 = "sha256-lqq1ynWxkUP3Up9pFyKhj/lGHydeXbf56r/mTug52uo=";
+          url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/aVB2lYQQ/fabric-carpet-1.21.4-1.4.161%2Bv241203.jar";
+          sha256 = "sha256-AxFO/ZnFl6Y4ZD2OuXt9xIUxjAB3UHddil6MhmtE7XY=";
         };
         carpet-extra = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/VX3TgwQh/versions/K5R1RGk8/carpet-extra-1.20.6-1.4.141.jar";
-          sha256 = "sha256-YExC0MCkt/VX49xKQDdfah6H+OcH5b+FXcTG28UMdxg=";
+          url = "https://cdn.modrinth.com/data/VX3TgwQh/versions/jLwlJK0f/carpet-extra-1.21.4-1.4.161.jar";
+          sha256 = "sha256-b/7KVVsUNTGkzlru6ISSi/ZDBgLQi2kOvBb3iEHXrjE=";
         };
         lithium = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/5a3sPIH2/lithium-fabric-mc1.20.6-0.12.5.jar";
-          sha256 = "sha256-yQEzF/tGZ0+QZfNfXV0XVhh3OPqAFNNS7U8lw/xpY/w=";
+          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/3HMQZXbw/lithium-fabric-0.14.8%2Bmc1.21.1.jar";
+          sha256 = "sha256-tu7WkTfLG3Za+LyBhnIqqGstNWhDxAm2K0q85/lS5NU=";
         };
         no-chat-report = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/MNkuIjea/NoChatReports-FABRIC-1.20.6-v2.7.1.jar";
-          sha256 = "sha256-a1Fc+r0iDpY6s8ThiHyfa5q4JBMpR+9VB+r+zTzvQds=";
+          url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/9xt05630/NoChatReports-FABRIC-1.21.4-v2.11.0.jar";
+          sha256 = "sha256-1jMJbw5wL/PwsNSEHs4MHJpjyvPVhbhiP59dnXRQJwI=";
         };
         simple-voice-chat = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/9eGKb6K1/versions/FGDBZ2bv/voicechat-fabric-1.20.6-2.5.22.jar";
-          sha256 = "sha256-p7vLXyKE0Y0VdoCHkLeXYfi/WFm49cGxOZHGKHXgivo=";
+          url = "https://cdn.modrinth.com/data/9eGKb6K1/versions/DWQCr1uB/voicechat-fabric-1.21.4-2.5.28.jar";
+          sha256 = "sha256-/MCQyBXPG+BPGKFQjtKAE0VNoZ2hEnpov/rco5wjWYE=";
         };
         advanced-backup = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/Jrmoreqs/versions/hkz64BY7/AdvancedBackups-fabric-1.20.6-3.7.1.jar";
-          sha256 = "sha256-BwKACGHurpyLiRHstodjZOA/hdnKX8DXBqFLbeyT1n4=";
+          url = "https://cdn.modrinth.com/data/Jrmoreqs/versions/g1B8uoKN/AdvancedBackups-fabric-1.21.2-3.7.1.jar";
+          sha256 = "sha256-h/wKJEWqMP4531kMyNoj2CMblZx4v6Vrk1w/+ruHwRs=";
         };
       });
     in {
       enable = true;
-      package = pkgs.fabricServers.fabric-1_20_6.override {loaderVersion = "0.16.10";};
+      package = pkgs.fabricServers.fabric-1_21_4.override {loaderVersion = "0.16.10";};
       symlinks = {
         "mods" = "${mods}";
       };
