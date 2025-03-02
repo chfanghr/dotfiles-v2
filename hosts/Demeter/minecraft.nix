@@ -26,8 +26,8 @@
           sha256 = "sha256-b/7KVVsUNTGkzlru6ISSi/ZDBgLQi2kOvBb3iEHXrjE=";
         };
         lithium = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/3HMQZXbw/lithium-fabric-0.14.8%2Bmc1.21.1.jar";
-          sha256 = "sha256-tu7WkTfLG3Za+LyBhnIqqGstNWhDxAm2K0q85/lS5NU=";
+          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/kLc5Oxr4/lithium-fabric-0.14.8%2Bmc1.21.4.jar";
+          sha256 = "sha256-tRIF9xDNCcY5scktZLxSG6bZD/pej0GVHspeo2kSFT0=";
         };
         no-chat-report = pkgs.fetchurl {
           url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/9xt05630/NoChatReports-FABRIC-1.21.4-v2.11.0.jar";
