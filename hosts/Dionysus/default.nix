@@ -74,6 +74,8 @@
     pkgs.nvtopPackages.amd
   ];
 
+  services.ucodenix.enable = true;
+
   specialisation = {
     debug.configuration = {
       dotfiles.shared.props.purposes.graphical = {
