@@ -41,12 +41,26 @@
           url = "https://cdn.modrinth.com/data/Jrmoreqs/versions/g1B8uoKN/AdvancedBackups-fabric-1.21.2-3.7.1.jar";
           sha256 = "sha256-h/wKJEWqMP4531kMyNoj2CMblZx4v6Vrk1w/+ruHwRs=";
         };
+        servux = pkgs.fetchurl {
+          url = "https://cdn.modrinth.com/data/zQhsx8KF/versions/EQhfaAYE/servux-fabric-1.21.4-0.5.2.jar";
+          sha256 = "sha256-2u8hPQGqt5PkndJWUBC0/ybqIO1XzC5fMvVTo43U7aE=";
+        };
       });
+
+      carpetConf = pkgs.writeText "carpet.conf" ''
+        commandPlayer true
+        defaultLoggers mobcaps,tps
+        accurateBlockPlacement true
+      '';
     in {
       enable = true;
       package = pkgs.fabricServers.fabric-1_21_4.override {loaderVersion = "0.16.10";};
+      files = {
+        "world/carpet.conf" = "${carpetConf}";
+      };
       symlinks = {
         "mods" = "${mods}";
+        "server-icon.png" = ./server-icon.png;
       };
       jvmOpts = "-Xmx8192M";
       serverProperties = {
@@ -56,7 +70,7 @@
         "rcon.port" = 25575;
         "rcon.password" = 8964;
         level-seed = 8964;
-        motd = "Jesus Fucking Christ";
+        motd = "包蜜进";
         difficulty = "hard";
         force-gamemode = true;
         allow-flight = true;
