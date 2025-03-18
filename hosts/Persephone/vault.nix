@@ -1,6 +1,7 @@
 let
   safeMountPoint = "/data/safe";
   heraMountPoint = "/data/hera";
+  minecraftMainMountPoint = "/data/minecraft/main";
 in {
   services.sanoid.datasets."vault/safe" = {
     daily = 30;
@@ -10,6 +11,11 @@ in {
   };
 
   systemd.tmpfiles.settings."10-vault" = {
+    ${minecraftMainMountPoint}.d = {
+      user = "fanghr";
+      group = "root";
+      mode = "0700";
+    };
     ${safeMountPoint}.d = {
       user = "fanghr";
       group = "root";
@@ -30,6 +36,10 @@ in {
     };
     ${heraMountPoint} = {
       device = "vault/tm/hera";
+      fsType = "zfs";
+    };
+    ${minecraftMainMountPoint} = {
+      device = "vault/minecraft/main";
       fsType = "zfs";
     };
   };
