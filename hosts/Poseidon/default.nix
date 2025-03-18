@@ -114,4 +114,6 @@
       dotfiles.nixos.props.hardware.gpu.amd.enable = false;
     };
   };
+
+  powerManagement.cpuFreqGovernor = lib.mkForce "performance";
 }
