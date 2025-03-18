@@ -4,6 +4,8 @@
   ...
 }: {
   imports = [
+    ./minecraft.nix
+    ./nfs.nix
     ../../modules/nixos/common
   ];
 
