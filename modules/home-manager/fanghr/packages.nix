@@ -27,7 +27,6 @@ lib.mkMerge [
       btop
       dua
       dig
-      zed-editor
 
       # nix
       nixpkgs-fmt
@@ -44,6 +43,11 @@ lib.mkMerge [
 
         # fonts
         nerdfonts
+
+        signal-desktop
+        telegram-desktop
+        vlc
+        zed-editor
       ];
       nixpkgs.config.allowUnfreePredicate = pkg:
         builtins.elem (lib.getName pkg) [

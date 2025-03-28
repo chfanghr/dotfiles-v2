@@ -78,10 +78,6 @@
       font-awesome
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-
-      vlc
-      telegram-desktop
-
       nemo-with-extensions
       wofi
       lxqt.lxqt-policykit
