@@ -23,5 +23,5 @@
 
   services.zfs.autoScrub.enable = true;
 
-  networking.hostId = "networking";
+  networking.hostId = "f12cb296";
 }
