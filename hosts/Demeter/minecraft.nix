@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  config,
   ...
 }: {
   imports = [inputs.nix-minecraft.nixosModules.minecraft-servers];
@@ -55,6 +56,10 @@
     in {
       enable = true;
       package = pkgs.fabricServers.fabric-1_21_4.override {loaderVersion = "0.16.10";};
+      environment = {
+        # NOTE(chfanghr): Ticket granted by minecraft-krb5-ticket-refresher
+        KRB5CCNAME = "FILE:/srv/minecraft/krb-ticket-cache";
+      };
       files = {
         "world/carpet.conf" = "${carpetConf}";
       };
@@ -81,12 +86,17 @@
 
   networking.firewall = {
     allowedTCPPorts = [
-      25565
-      24454 # Simple Voice Chat
+      config.services.minecraft-servers.servers.main.serverProperties.server-port
     ];
     allowedUDPPorts = [
-      24454
+      24454 # Simple Voice Chat
     ];
+  };
+
+  fileSystems."/srv/minecraft/main/world" = {
+    device = "persephone.snow-dace.ts.net:/minecraft/main";
+    fsType = "nfs";
+    options = ["nfsvers=4.2" "x-systemd.automount" "noauto"];
   };
 
   nixpkgs.config.allowUnfree = lib.mkForce true;

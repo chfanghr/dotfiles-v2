@@ -14,7 +14,7 @@ in {
     users.users.thungghuan = let
       authorizedKeysGH = pkgs.fetchurl {
         url = "https://github.com/thungghuan.keys";
-        hash = "sha256-v10FpLQzFRrgSkQ1Xcd/HRdgcP0L0NC0kV/1pGq5nBg=";
+        hash = "sha256-lvsp5iFqvtFYpCGl31svZd0rEoLuJ64n2tX+jroL7Q0=";
       };
     in {
       openssh.authorizedKeys.keyFiles = [authorizedKeysGH];

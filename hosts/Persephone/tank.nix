@@ -1,17 +1,3 @@
-# let datasets = {
-#   music = {
-#     mountPoint = "/data/music";
-#     dataset = "tank/music";
-#     user = "nobody";
-#     group = "nobody";
-#   };
-#   steam = {
-#     mountPoint = "/data/steam";
-#     dataset = "tank/steam";
-#     user = "nobody";
-#     group = "nobody";
-#   };
-# }; in
 {
   systemd.tmpfiles.settings."10-vault" = {
     "/data/collections".d = {
@@ -24,6 +10,11 @@
       group = "users";
       mode = "0755";
     };
+    "/data/nfs-test".d = {
+      user = "nobody";
+      group = "nogroup";
+      mode = "0777";
+    };
   };
 
   fileSystems = {
@@ -34,6 +25,11 @@
     };
     "/data/music" = {
       device = "tank/music";
+      fsType = "zfs";
+      options = ["noexec"];
+    };
+    "/data/nfs-test" = {
+      device = "tank/nfs-test";
       fsType = "zfs";
       options = ["noexec"];
     };

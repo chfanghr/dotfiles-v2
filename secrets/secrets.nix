@@ -15,4 +15,6 @@ in {
   "demeter-hci-token.age".publicKeys = [master demeter];
   "demeter-hci-binary-caches.age".publicKeys = [master demeter];
   "demeter-hci-secrets-json.age".publicKeys = [master demeter];
+  "demeter-default.keytab.age".publicKeys = [master demeter];
+  "minecraft.keytab.age".publicKeys = [master demeter];
 }

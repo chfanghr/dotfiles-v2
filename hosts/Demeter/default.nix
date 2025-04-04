@@ -10,6 +10,7 @@
     ./grafana.nix
     ./hercules-ci-agent.nix
     ./minecraft.nix
+    ./nfs.nix
     ./prometheus.nix
     ./security.nix
     ./traefik.nix
