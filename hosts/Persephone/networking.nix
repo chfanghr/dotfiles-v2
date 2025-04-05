@@ -1,4 +1,8 @@
 {
+  lib,
+  config,
+  ...
+}: {
   networking = {
     hostName = "Persephone";
     hostId = "9ce62f33"; # Required by zfs
@@ -39,6 +43,24 @@
     lldpd = {
       enable = true;
       extraArgs = ["-I" "bond0"];
+    };
+  };
+
+  specialisation.staticIP.configuration = {
+    networking = {
+      interfaces.bond0 = {
+        useDHCP = lib.mkForce false;
+        ipv4.addresses = [
+          {
+            address = "10.41.255.234";
+            prefixLength = 16;
+          }
+        ];
+      };
+      defaultGateway = {
+        address = config.dotfiles.shared.networking.home.router.address;
+        interface = "bond0";
+      };
     };
   };
 }
