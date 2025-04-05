@@ -7,11 +7,11 @@
   services.rpcbind.enable = true;
 
   services.nfs = {
-    settings = {
-      gssd = {
-        verbosity = 3;
-      };
-    };
+    # settings = {
+    #   gssd = {
+    #     verbosity = 3;
+    #   };
+    # };
     idmapd.settings = {
       General = {
         Domain = "snow-dace.ts.net";
