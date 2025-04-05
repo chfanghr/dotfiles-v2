@@ -31,7 +31,7 @@
       mode = "600";
     };
     minecraft-keytab = {
-      owner = "root";
+      owner = "minecraft";
       file = ../../secrets/minecraft.keytab.age;
       mode = "600";
     };
@@ -45,11 +45,11 @@
     ];
     script = ''
       k5start -U -f ${config.age.secrets.minecraft-keytab.path} \
-        -k /srv/minecraft/krb-ticket-cache -l 10h -K 30 \
-        -m 600 -o minecraft -g minecraft
+        -l 10h -K 10 -v
     '';
     serviceConfig = {
       Restart = "on-failure";
+      User = "minecraft";
     };
   };
 }

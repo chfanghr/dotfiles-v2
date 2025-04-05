@@ -56,10 +56,6 @@
     in {
       enable = true;
       package = pkgs.fabricServers.fabric-1_21_4.override {loaderVersion = "0.16.10";};
-      environment = {
-        # NOTE(chfanghr): Ticket granted by minecraft-krb5-ticket-refresher
-        KRB5CCNAME = "FILE:/srv/minecraft/krb-ticket-cache";
-      };
       files = {
         "world/carpet.conf" = "${carpetConf}";
       };
