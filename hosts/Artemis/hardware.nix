@@ -15,7 +15,7 @@
       efi.canTouchEfiVariables = true;
     };
     supportedFilesystems.zfs = true;
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_6_12;
     kernelParams = ["nohibernate"];
   };
 
