@@ -16,30 +16,45 @@
       };
     };
 
-    services.check-online = {
-      wantedBy = ["multi-user.target"];
-      path = [
-        pkgs.curl
-      ];
-      environment = {
-        CURL_CA_BUNDLE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+    services = {
+      start-pppd-main = {
+        wantedBy = ["multi-user.target"];
+        path = [
+          pkgs.systemd
+        ];
+        script = ''
+          systemctl start pppd-main.service
+        '';
+        serviceConfig = {
+          Type = "oneshot";
+          Restart = "no";
+        };
       };
-      script = ''
-        curl --connect-timeout 5 \
-          --max-time 10 \
-          --retry 5 \
-          --retry-delay 10 \
-          --retry-max-time 40 \
-          --retry-all-errors \
-          -v \
-          'https://www.google.cn/generate_204'
-      '';
-      # unitConfig.FailureAction = "reboot";
-      serviceConfig = {
-        Type = "oneshot";
-        Restart = "no";
-        User = "nobody";
-        Group = "nogroup";
+      check-online = {
+        wantedBy = ["multi-user.target"];
+        path = [
+          pkgs.curl
+        ];
+        environment = {
+          CURL_CA_BUNDLE = "${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt";
+        };
+        script = ''
+          curl --connect-timeout 5 \
+            --max-time 10 \
+            --retry 5 \
+            --retry-delay 10 \
+            --retry-max-time 40 \
+            --retry-all-errors \
+            -v \
+            'https://www.google.cn/generate_204'
+        '';
+        unitConfig.FailureAction = "reboot";
+        serviceConfig = {
+          Type = "oneshot";
+          Restart = "no";
+          User = "nobody";
+          Group = "nogroup";
+        };
       };
     };
   };
