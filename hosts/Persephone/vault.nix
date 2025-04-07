@@ -1,6 +1,7 @@
 let
   safeMountPoint = "/data/safe";
   heraMountPoint = "/data/hera";
+  heraOldMountPoint = "/data/hera-old";
   minecraftMainMountPoint = "/data/minecraft/main";
 in {
   services.sanoid.datasets."vault/safe" = {
@@ -26,6 +27,11 @@ in {
       group = "users";
       mode = "0700";
     };
+    ${heraOldMountPoint}.d = {
+      user = "fanghr";
+      group = "users";
+      mode = "0700";
+    };
   };
 
   fileSystems = {
@@ -36,6 +42,10 @@ in {
     };
     ${heraMountPoint} = {
       device = "vault/tm/hera";
+      fsType = "zfs";
+    };
+    ${heraOldMountPoint} = {
+      device = "vault/tm/hera-old";
       fsType = "zfs";
     };
     ${minecraftMainMountPoint} = {
@@ -55,6 +65,18 @@ in {
     };
     hera = {
       path = heraMountPoint;
+      browsable = "no";
+      "read only" = "no";
+      "valid users" = "fanghr";
+      public = "no";
+      writeable = "yes";
+      "force user" = "fanghr";
+      "fruit:aapl" = "yes";
+      "fruit:time machine" = "yes";
+      "vfs objects" = "catia fruit streams_xattr";
+    };
+    hera-old = {
+      path = heraOldMountPoint;
       browsable = "no";
       "read only" = "no";
       "valid users" = "fanghr";
