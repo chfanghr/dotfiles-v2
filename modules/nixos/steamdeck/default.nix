@@ -74,8 +74,6 @@ in {
     };
   };
 
-  nix.gc.options = "--delete-older-than +4";
-
   jovian.decky-loader = {
     enable = true;
     user = "fanghr";

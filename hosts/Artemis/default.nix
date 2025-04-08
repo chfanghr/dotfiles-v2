@@ -26,8 +26,6 @@
 
   users.users.fanghr.hashedPassword = "$y$j9T$tn5fAVwNCepbQ4xrimozH0$FhC1TMwwwcKFfDFtX4qx23AUhHRee9o2GviL5dM35b.";
 
-  nix.gc.options = "--delete-older-than +8";
-
   networking = {
     hostName = "Artemis";
     useNetworkd = true;
