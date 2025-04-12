@@ -41,12 +41,14 @@ in {
           ];
           substituters = [
             "https://nix-community.cachix.org?priority=2"
+            "https://om.cachix.org?priority=3"
           ];
           trusted-public-keys = [
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             "mlabs.cachix.org-1:gStKdEqNKcrlSQw5iMW6wFCj3+b+1ASpBVY2SYuNV2M="
             "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
             "chfanghr.cachix.org-1:gt1W4ZP4F/kgsA2JtH+di/yBaUM2WPMqr0IrRyIIED0="
+            "om.cachix.org-1:ifal/RLZJKN4sbpScyPGqJ2+appCslzu7ZZF/C01f2Q="
           ];
         };
         gc.automatic = true;
