@@ -1,8 +1,6 @@
 {config, ...}: {
   services.traefik = let
     domainName = "persephone.snow-dace.ts.net";
-    qbittorrentPrefix = "/qbittorrent";
-    jellyfinPrefix = "/jellyfin";
   in {
     enable = true;
     staticConfigOptions = {
@@ -22,68 +20,6 @@
           http.tls = {
             certResolver = "tailnetResolver";
             domains = [{main = domainName;}];
-          };
-        };
-      };
-    };
-    dynamicConfigOptions = {
-      http = {
-        routers = {
-          qbittorrent = {
-            service = "qbittorrent";
-            rule = "Host(`${domainName}`) && PathPrefix(`${qbittorrentPrefix}`)";
-            middlewares = [
-              "qbittorrentRedirect"
-              "qbittorrentStripPrefix"
-              "qbittorrentSetHeaders"
-            ];
-          };
-          jellyfin = {
-            service = "jellyfin";
-            rule = "Host(`${domainName}`) && PathPrefix(`${jellyfinPrefix}`)";
-            # middlewares = [
-            #   "jellyfinSetHeaders"
-            # ];
-          };
-        };
-        middlewares = {
-          qbittorrentSetHeaders.headers.customRequestHeaders = {
-            X-Frame-Options = "SAMEORIGIN";
-            Referer = "";
-            Origin = "";
-          };
-          qbittorrentRedirect.redirectRegex = {
-            regex = "^(.*)${qbittorrentPrefix}$";
-            replacement = "$1${qbittorrentPrefix}/";
-          };
-          qbittorrentStripPrefix.stripPrefix.prefixes = ["${qbittorrentPrefix}/"];
-          jellyfinSetHeaders.headers = {
-            stsSeconds = 315360000;
-            stsIncludeSubdomains = true;
-            stsPreload = true;
-            forceSTSHeader = true;
-            frameDeny = true;
-            contentTypeNosniff = true;
-            # customresponseheaders.X-XSS-PROTECTION=1;
-            # customFrameOptionsValue="allow-from https://snow-dace.ts.net";
-          };
-        };
-        services = {
-          qbittorrent.loadBalancer = {
-            passHostHeader = false;
-            servers = [
-              {
-                url = "http://127.0.0.1:${builtins.toString config.services.qbittorrent.port}";
-              }
-            ];
-          };
-          jellyfin.loadBalancer = {
-            passHostHeader = true;
-            servers = [
-              {
-                url = "http://127.0.0.1:8096/";
-              }
-            ];
           };
         };
       };

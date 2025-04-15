@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption types mkIf;
+  inherit (lib) mkOption types mkIf mkDefault;
   cfg = config.services.qbittorrent;
   configDir = "${cfg.dataDir}/.config";
   openFilesLimit = 4096;
@@ -125,6 +125,6 @@ in {
     };
 
     users.groups =
-      mkIf (cfg.group == "qbittorrent") {qbittorrent = {gid = null;};};
+      mkIf (cfg.group == "qbittorrent") {qbittorrent = {gid = mkDefault null;};};
   };
 }
