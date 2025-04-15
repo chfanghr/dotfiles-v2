@@ -7,7 +7,6 @@
   imports = [
     ./boot.nix
     ./fah.nix
-    ./jellyfin.nix
     ./kerberos.nix
     ./migration.nix
     ./minidlna.nix
