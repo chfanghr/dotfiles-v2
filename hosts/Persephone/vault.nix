@@ -4,11 +4,19 @@ let
   heraOldMountPoint = "/data/hera-old";
   minecraftMainMountPoint = "/data/minecraft/main";
 in {
-  services.sanoid.datasets."vault/safe" = {
-    daily = 30;
-    hourly = 48;
-    autosnap = true;
-    autoprune = true;
+  services.sanoid.datasets = {
+    "vault/minecraft/main" = {
+      daily = 30;
+      hourly = 48;
+      autosnap = true;
+      autoprune = true;
+    };
+    "vault/safe" = {
+      daily = 30;
+      hourly = 48;
+      autosnap = true;
+      autoprune = true;
+    };
   };
 
   systemd.tmpfiles.settings."10-vault" = {
