@@ -13,8 +13,8 @@ in {
 
   systemd.tmpfiles.settings."10-vault" = {
     ${minecraftMainMountPoint}.d = {
-      user = "fanghr";
-      group = "root";
+      user = "minecraft-data";
+      group = "nogroup";
       mode = "0700";
     };
     ${safeMountPoint}.d = {
