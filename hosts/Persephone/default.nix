@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./boot.nix
+    ./calibre.nix
     ./fah.nix
     ./kerberos.nix
     ./migration.nix
