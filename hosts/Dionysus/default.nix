@@ -50,6 +50,10 @@
 
   users.users.fanghr.hashedPassword = "$y$j9T$SxmPzl.7ervjxa6Mzvq7p1$KLXfgvnEzCboA8TPWqGrEV/rn49v6uXiFSoIf7j5YGD";
 
+  home-manager.users.fanghr.home.packages = [
+    pkgs.handbrake
+  ];
+
   programs.steam = {
     protontricks.enable = true;
   };

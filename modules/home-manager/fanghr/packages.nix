@@ -46,7 +46,10 @@ lib.mkMerge [
 
         signal-desktop
         telegram-desktop
+        discord
+
         vlc
+
         zed-editor
       ];
       nixpkgs.config.allowUnfreePredicate = pkg:
