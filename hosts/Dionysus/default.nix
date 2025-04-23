@@ -71,7 +71,7 @@
 
   services.xserver.displayManager.startx.enable = true;
 
-  services.xserver.desktopManager.gnome.enable = true;
+  programs.kdeconnect.enable = true;
 
   environment.systemPackages = [
     pkgs.vulkan-tools
