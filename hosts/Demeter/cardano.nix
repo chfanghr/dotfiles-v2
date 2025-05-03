@@ -1,15 +1,31 @@
-{inputs, ...}: {
-  imports = [
-    inputs.cardano-nix.nixosModules.default
-  ];
+{
+  inputs,
+  lib,
+  ...
+}: {
+  containers.cardano-node-preprod = {
+    nixpkgs = inputs.nixpkgs-2411;
+    privateNetwork = true;
+    config = {
+      imports = [
+        inputs.cardano-nix.nixosModules.default
+      ];
 
-  cardano = {
-    network = "preprod";
-    node.enable = true;
-    ogmios.enable = true;
-    http.enable = false;
-    db-sync.enable = true;
-    blockfrost.enable = false;
-    oura.enable = false;
+      cardano = {
+        network = "preprod";
+        node.enable = true;
+        ogmios.enable = true;
+        http.enable = false;
+        db-sync.enable = true;
+        blockfrost.enable = false;
+        oura.enable = false;
+      };
+
+      networking.useHostResolvConf = lib.mkForce false;
+
+      services.resolved.enable = true;
+
+      system.stateVersion = "24.11";
+    };
   };
 }

@@ -118,6 +118,12 @@
       };
     };
     interfaces.bond0.useDHCP = false;
+    nat = {
+      enable = true;
+      internalInterfaces = ["ve-+"];
+      externalInterface = "bond0";
+      enableIPv6 = true;
+    };
   };
 
   systemd.network.networks."40-eno1" = {
