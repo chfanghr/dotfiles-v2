@@ -6,6 +6,10 @@
   containers.cardano-node-preprod = {
     privateNetwork = true;
     autoStart = true;
+    hostAddress = "172.16.0.1";
+    localAddress = "172.16.0.2";
+    hostAddress6 = "fc00::1";
+    localAddress6 = "fc00::2";
     config = {
       imports = [
         inputs.cardano-nix.nixosModules.default
