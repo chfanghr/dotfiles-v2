@@ -4,7 +4,6 @@
   ...
 }: {
   containers.cardano-node-preprod = {
-    nixpkgs = inputs.nixpkgs-2411;
     privateNetwork = true;
     config = {
       imports = [
