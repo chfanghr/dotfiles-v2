@@ -6,6 +6,7 @@
   perSystem = {
     config,
     inputs',
+    pkgs,
     ...
   }: {
     pre-commit = {
@@ -24,6 +25,7 @@
         )
         ++ [
           inputs'.agenix.packages.default
+          pkgs.nurl
         ];
     });
   };

@@ -21,7 +21,7 @@
 
   hardware.cpu.intel.updateMicrocode = true;
 
-  powerManagement.cpuFreqGovernor = "ondemand";
+  powerManagement.cpuFreqGovernor = "performance";
 
   services = {
     btrfs.autoScrub.enable = true;

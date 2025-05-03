@@ -10,6 +10,7 @@
     ./grafana.nix
     ./hercules-ci-agent.nix
     ./minecraft.nix
+    ./nfs.nix
     ./prometheus.nix
     ./security.nix
     ./traefik.nix
@@ -167,6 +168,7 @@
           address = "10.41.255.251";
           interface = "bond0";
         };
+        nameservers = lib.mkBefore ["10.41.255.251"];
       };
     };
   };

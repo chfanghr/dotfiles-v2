@@ -3,6 +3,7 @@
 in {
   dotfiles.nixos.nix.builderPubKeys = [
     "Demeter-1:st+mG+g+DIrAmwIz0DpkPD4XfLtzrElbMiKDR9Jf+Nw="
+    "Persephone-1:SlL2/HsC5uw1FvL+sdl4zm1cYpeFFyQLXNh9aKvKFQY="
   ];
 
   users.users = {

@@ -27,7 +27,6 @@ lib.mkMerge [
       btop
       dua
       dig
-      zed-editor
 
       # nix
       nixpkgs-fmt
@@ -41,6 +40,14 @@ lib.mkMerge [
     lib.mkIf config.dotfiles.shared.props.purposes.graphical.desktop {
       home.packages = with pkgs; [
         spotify
+
+        signal-desktop
+        telegram-desktop
+        discord
+
+        vlc
+
+        zed-editor
       ];
       nixpkgs.config.allowUnfreePredicate = pkg:
         builtins.elem (lib.getName pkg) [

@@ -50,6 +50,10 @@
 
   users.users.fanghr.hashedPassword = "$y$j9T$SxmPzl.7ervjxa6Mzvq7p1$KLXfgvnEzCboA8TPWqGrEV/rn49v6uXiFSoIf7j5YGD";
 
+  home-manager.users.fanghr.home.packages = [
+    pkgs.handbrake
+  ];
+
   programs.steam = {
     protontricks.enable = true;
   };
@@ -67,12 +71,14 @@
 
   services.xserver.displayManager.startx.enable = true;
 
-  services.xserver.desktopManager.gnome.enable = true;
+  programs.kdeconnect.enable = true;
 
   environment.systemPackages = [
     pkgs.vulkan-tools
     pkgs.nvtopPackages.amd
   ];
+
+  services.ucodenix.enable = true;
 
   specialisation = {
     debug.configuration = {

@@ -6,14 +6,17 @@
 }: {
   imports = [
     ./boot.nix
+    ./calibre.nix
     ./fah.nix
-    ./jellyfin.nix
+    ./kerberos.nix
     ./migration.nix
     ./minidlna.nix
     ./networking.nix
+    ./nfs.nix
     ./prometheus.nix
     ./qbittorrent.nix
     ./samba.nix
+    ./security.nix
     ./tank.nix
     ./traefik.nix
     ./vault.nix

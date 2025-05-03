@@ -117,7 +117,7 @@ in {
 
   age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
-  powerManagement.cpuFreqGovernor = "ondemand";
+  powerManagement.cpuFreqGovernor = "performance";
 
   services = {
     tailscale.useRoutingFeatures = mkForce "both";

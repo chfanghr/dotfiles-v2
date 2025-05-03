@@ -25,6 +25,8 @@
       };
     };
 
+    home.file.${config.gtk.gtk2.configLocation}.force = lib.mkForce true;
+
     home.pointerCursor = {
       gtk.enable = true;
       # x11.enable = true;
@@ -75,10 +77,6 @@
       font-awesome
       noto-fonts-cjk-sans
       noto-fonts-cjk-serif
-
-      vlc
-      telegram-desktop
-
       nemo-with-extensions
       wofi
       lxqt.lxqt-policykit

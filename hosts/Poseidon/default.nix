@@ -1,13 +1,18 @@
 {
   lib,
   pkgs,
+  config,
   ...
 }: {
   imports = [
     ../../modules/nixos/common
   ];
 
-  networking.hostName = "Poseidon";
+  networking = {
+    hostName = "Poseidon";
+
+    nftables.enable = true;
+  };
 
   dotfiles.nixos = {
     props = {
@@ -111,5 +116,22 @@
 
       dotfiles.nixos.props.hardware.gpu.amd.enable = false;
     };
+
+    staticIP.configuration = {
+      networking = {
+        interfaces.enp7s0.ipv4.addresses = [
+          {
+            address = "10.41.0.230";
+            prefixLength = 16;
+          }
+        ];
+        defaultGateway = {
+          interface = "enp7s0";
+          address = config.dotfiles.shared.networking.home.gateway.address;
+        };
+      };
+    };
   };
+
+  powerManagement.cpuFreqGovernor = lib.mkForce "performance";
 }

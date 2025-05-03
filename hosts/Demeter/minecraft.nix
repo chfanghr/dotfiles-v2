@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   lib,
+  config,
   ...
 }: {
   imports = [inputs.nix-minecraft.nixosModules.minecraft-servers];
@@ -14,27 +15,53 @@
     servers.main = let
       mods = pkgs.linkFarmFromDrvs "mods" (builtins.attrValues {
         fabric-api = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/tAwdMmKY/fabric-api-0.97.1%2B1.20.4.jar";
-          sha512 = "161d5d8c67330cbda4ce825f92f23b96bfa884f881d5931c0375aba9ceef0f5e14b11c8607b5368fb6b72b796694a86a48271eecc3d9b63991f4b01352d66d5f";
+          url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/ZNwYCTsk/fabric-api-0.118.0%2B1.21.4.jar";
+          sha256 = "sha256-EDrLCs4eCeI4e8oe03vLVlYEESwRlhneCQ5vrjswPFM=";
         };
         fabric-carpet = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/yYzR60Xd/fabric-carpet-1.20.3-1.4.128%2Bv231205.jar";
-          sha512 = "6ca0bd328a76b7c3c10eb0253cb57eba8791087775467fbe2217c7f938c0064700bdca4cbf358e7f2f3427ae50a6d63f520f2b1a549cb36da1cc718812f86375";
+          url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/aVB2lYQQ/fabric-carpet-1.21.4-1.4.161%2Bv241203.jar";
+          sha256 = "sha256-AxFO/ZnFl6Y4ZD2OuXt9xIUxjAB3UHddil6MhmtE7XY=";
+        };
+        carpet-extra = pkgs.fetchurl {
+          url = "https://cdn.modrinth.com/data/VX3TgwQh/versions/jLwlJK0f/carpet-extra-1.21.4-1.4.161.jar";
+          sha256 = "sha256-b/7KVVsUNTGkzlru6ISSi/ZDBgLQi2kOvBb3iEHXrjE=";
         };
         lithium = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/nMhjKWVE/lithium-fabric-mc1.20.4-0.12.1.jar";
-          sha512 = "70bea154eaafb2e4b5cb755cdb12c55d50f9296ab4c2855399da548f72d6d24c0a9f77e3da2b2ea5f47fa91d1258df4d08c6c6f24a25da887ed71cea93502508";
+          url = "https://cdn.modrinth.com/data/gvQqBUqZ/versions/kLc5Oxr4/lithium-fabric-0.14.8%2Bmc1.21.4.jar";
+          sha256 = "sha256-tRIF9xDNCcY5scktZLxSG6bZD/pej0GVHspeo2kSFT0=";
         };
         no-chat-report = pkgs.fetchurl {
-          url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/Pjto4zdj/NoChatReports-FABRIC-1.20.4-v2.6.1.jar";
-          sha512 = "a2ca389f4024a2089dd1224713e23f356067fbfd27aaf6f3aa74ad28b75d6f0d19e0ed07e721035943964730a2d2a09473067d0d4db34ce7d5b7d6a15a6a5b42";
+          url = "https://cdn.modrinth.com/data/qQyHxfxd/versions/9xt05630/NoChatReports-FABRIC-1.21.4-v2.11.0.jar";
+          sha256 = "sha256-1jMJbw5wL/PwsNSEHs4MHJpjyvPVhbhiP59dnXRQJwI=";
+        };
+        simple-voice-chat = pkgs.fetchurl {
+          url = "https://cdn.modrinth.com/data/9eGKb6K1/versions/DWQCr1uB/voicechat-fabric-1.21.4-2.5.28.jar";
+          sha256 = "sha256-/MCQyBXPG+BPGKFQjtKAE0VNoZ2hEnpov/rco5wjWYE=";
+        };
+        advanced-backup = pkgs.fetchurl {
+          url = "https://cdn.modrinth.com/data/Jrmoreqs/versions/g1B8uoKN/AdvancedBackups-fabric-1.21.2-3.7.1.jar";
+          sha256 = "sha256-h/wKJEWqMP4531kMyNoj2CMblZx4v6Vrk1w/+ruHwRs=";
+        };
+        servux = pkgs.fetchurl {
+          url = "https://cdn.modrinth.com/data/zQhsx8KF/versions/EQhfaAYE/servux-fabric-1.21.4-0.5.2.jar";
+          sha256 = "sha256-2u8hPQGqt5PkndJWUBC0/ybqIO1XzC5fMvVTo43U7aE=";
         };
       });
+
+      carpetConf = pkgs.writeText "carpet.conf" ''
+        commandPlayer true
+        defaultLoggers mobcaps,tps
+        accurateBlockPlacement true
+      '';
     in {
       enable = true;
-      package = pkgs.fabricServers.fabric-1_20_4.override {loaderVersion = "0.15.11";};
+      package = pkgs.fabricServers.fabric-1_21_4.override {loaderVersion = "0.16.10";};
+      files = {
+        "world/carpet.conf" = "${carpetConf}";
+      };
       symlinks = {
         "mods" = "${mods}";
+        "server-icon.png" = ./server-icon.png;
       };
       jvmOpts = "-Xmx8192M";
       serverProperties = {
@@ -44,15 +71,29 @@
         "rcon.port" = 25575;
         "rcon.password" = 8964;
         level-seed = 8964;
-        motd = "Jesus Fucking Christ";
+        motd = "包蜜进";
         difficulty = "hard";
         force-gamemode = true;
         allow-flight = true;
+        view-distance = 16;
       };
     };
   };
 
-  networking.firewall.allowedTCPPorts = [25565];
+  networking.firewall = {
+    allowedTCPPorts = [
+      config.services.minecraft-servers.servers.main.serverProperties.server-port
+    ];
+    allowedUDPPorts = [
+      24454 # Simple Voice Chat
+    ];
+  };
+
+  fileSystems."/srv/minecraft/main/world" = {
+    device = "persephone.snow-dace.ts.net:/minecraft/main";
+    fsType = "nfs";
+    options = ["nfsvers=4.2" "x-systemd.automount" "noauto"];
+  };
 
   nixpkgs.config.allowUnfree = lib.mkForce true;
 }
