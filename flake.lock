@@ -2837,6 +2837,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-2411": {
+      "locked": {
+        "lastModified": 1746183838,
+        "narHash": "sha256-kwaaguGkAqTZ1oK0yXeQ3ayYjs8u/W7eEfrFpFfIDFA=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "bf3287dac860542719fe7554e21e686108716879",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-24.11",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1730504152,
@@ -3444,6 +3460,7 @@
         "nix-minecraft": "nix-minecraft",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_17",
+        "nixpkgs-2411": "nixpkgs-2411",
         "nixvim": [
           "my-nvim",
           "nixvim"
