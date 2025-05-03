@@ -5,6 +5,7 @@
 }: {
   containers.cardano-node-preprod = {
     privateNetwork = true;
+    autoStart = true;
     config = {
       imports = [
         inputs.cardano-nix.nixosModules.default
