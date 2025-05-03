@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  inputs,
   config,
   ...
 }: let
@@ -18,10 +17,6 @@
   };
 
   altUIPath = "${dataDir}/alt_ui";
-
-  pkgsUnstable = import inputs.nixpkgs-unstable {
-    inherit (pkgs.stdenv) system;
-  };
 
   p2pNic = "enp33s0f0";
   webServiceVeth = "ve-qbt";
@@ -126,7 +121,6 @@ in {
           enable = true;
           user = qbtUser;
           group = qbtGroup;
-          package = pkgsUnstable.qbittorrent-nox;
           inherit dataDir;
           openFilesLimit = 65536;
           port = webUIPort;
