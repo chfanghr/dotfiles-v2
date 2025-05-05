@@ -7,6 +7,7 @@
   imports = [
     ./boot.nix
     ./calibre.nix
+    ./cardano.nix
     ./fah.nix
     ./kerberos.nix
     ./migration.nix
