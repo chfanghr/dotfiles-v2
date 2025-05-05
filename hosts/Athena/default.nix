@@ -83,12 +83,23 @@ in {
       interfaces = ["enp1s0" "enp2s0" "enp3s0"];
       driverOptions.mode = "802.3ad";
     };
-    interfaces.${bondName}.ipv4.addresses = [
-      {
-        address = config.dotfiles.shared.networking.home.gateway.address;
-        prefixLength = 16;
-      }
-    ];
+    interfaces = {
+      ${bondName}.ipv4.addresses = [
+        {
+          address = config.dotfiles.shared.networking.home.gateway.address;
+          prefixLength = 16;
+        }
+      ];
+      enp6s0 = {
+        useDHCP = false;
+        ipv4.addresses = [
+          {
+            address = "192.168.255.3";
+            prefixLength = 24;
+          }
+        ];
+      };
+    };
     defaultGateway = {
       interface = bondName;
       address = config.dotfiles.shared.networking.home.router.address;
