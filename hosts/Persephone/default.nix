@@ -18,7 +18,6 @@
     ./prometheus.nix
     ./qbittorrent.nix
     ./samba.nix
-    ./security.nix
     ./tank.nix
     ./traefik.nix
     ./vault.nix
