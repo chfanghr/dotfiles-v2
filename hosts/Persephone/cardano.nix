@@ -1,11 +1,11 @@
 let
-  cardanoUser = "cardano-containerized";
-  cardanoGroup = "cardano-containerized";
+  cardanoUser = "cardano-node-containerized";
+  cardanoGroup = "cardano-node-containerized";
   cardanoUid = 987;
   cardanoGid = 984;
 
-  postgresqlUser = "postgresql-containerized";
-  postgresqlGroup = "postgresql-containerized";
+  postgresqlUser = "db-sync-containerized";
+  postgresqlGroup = "db-sync-containerized";
   postgresqlUid = 986;
   postgresqlGid = 983;
 
