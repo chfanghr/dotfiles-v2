@@ -82,7 +82,7 @@
       fsType = "zfs";
     };
     "/nix" = {
-      device = "rpool/enc/nix";
+      device = "rpool/nix";
       fsType = "zfs";
       options = ["noatime"];
     };
