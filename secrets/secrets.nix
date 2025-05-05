@@ -18,4 +18,5 @@ in {
   "demeter-default.keytab.age".publicKeys = [master demeter];
   "persephone-default.keytab.age".publicKeys = [master persephone];
   "minecraft.keytab.age".publicKeys = [master demeter];
+  "persephone-nix-cache-key.age".publicKeys = [persephone];
 }

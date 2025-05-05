@@ -14,6 +14,7 @@
     ./minidlna.nix
     ./networking.nix
     ./nfs.nix
+    ./nix.nix
     ./prometheus.nix
     ./qbittorrent.nix
     ./samba.nix
