@@ -111,6 +111,7 @@
   };
 
   networking = {
+    enableIPv6 = true;
     bonds.bond0 = {
       interfaces = ["enp6s0f0" "enp6s0f1"];
       driverOptions = {
@@ -136,6 +137,8 @@
       enableIPv6 = true;
     };
   };
+
+  systemd.network.networks."40-bond0".networkConfig.IPv6AcceptRA = true;
 
   # systemd.network.networks."40-eno1" = {
   #   matchConfig.Name = "eno1";
