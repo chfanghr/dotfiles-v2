@@ -8,4 +8,6 @@
     path = "/etc/nix/private-key";
     file = ../../secrets/persephone-nix-cache-key.age;
   };
+
+  nix.settings.download-buffer-size = 1000000000;
 }
