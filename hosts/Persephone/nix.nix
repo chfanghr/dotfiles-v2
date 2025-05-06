@@ -9,5 +9,8 @@
     file = ../../secrets/persephone-nix-cache-key.age;
   };
 
-  nix.settings.download-buffer-size = 1000000000;
+  nix.settings = {
+    download-buffer-size = 1000000000;
+    secret-key-files = "/etc/nix/private-key";
+  };
 }
