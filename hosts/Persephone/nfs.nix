@@ -8,6 +8,10 @@
       user = "nobody";
       group = "nogroup";
     };
+    "/export/minecraft/main".d = {
+      user = "minecraft-data";
+      group = "nogroup";
+    };
   };
 
   fileSystems = {
