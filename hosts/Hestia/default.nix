@@ -41,6 +41,9 @@
 
     enableIPv6 = true;
 
+    nftables.enable = true;
+    firewall.enable = true;
+
     interfaces = {
       enp195s0.useDHCP = true;
       enp198s0f3u1 = {
