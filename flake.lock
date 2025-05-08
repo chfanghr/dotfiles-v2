@@ -1953,16 +1953,15 @@
         ]
       },
       "locked": {
-        "lastModified": 1746171682,
-        "narHash": "sha256-EyXUNSa+H+YvGVuQJP1nZskXAowxKYp79RNUsNdQTj4=",
+        "lastModified": 1746243165,
+        "narHash": "sha256-DQycVmlyLQNLjLJ/FzpokVmbxGQ8HjQQ4zN4nyq2vII=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "50eee705bbdbac942074a8c120e8194185633675",
+        "rev": "c0962eeeabfb8127713f859ec8a5f0e86dead0f2",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-24.11",
         "repo": "home-manager",
         "type": "github"
       }
@@ -2214,11 +2213,11 @@
         "nixpkgs": "nixpkgs_14"
       },
       "locked": {
-        "lastModified": 1735330405,
-        "narHash": "sha256-MhXgu1oymyjhhZGY9yewNonJknNAjilzMGPY1FfMR7s=",
+        "lastModified": 1746158343,
+        "narHash": "sha256-i/1os9oEq0m/Da4FTdSqKUdI4+wzrvoDTuk1/dHSVDc=",
         "owner": "Jovian-Experiments",
         "repo": "Jovian-NixOS",
-        "rev": "a86d9cf841eff8b33a05d2bf25788abd8e018dbd",
+        "rev": "8b45a8efb2829adf2996b51965ada1e4620631ac",
         "type": "github"
       },
       "original": {
@@ -2838,18 +2837,18 @@
         "type": "github"
       }
     },
-    "nixpkgs-2405_2": {
+    "nixpkgs-2411": {
       "locked": {
-        "lastModified": 1735286948,
-        "narHash": "sha256-JMRV2RI58nV1UqLXqm+lcea1/dr92fYjWU5S+Rz3fmE=",
+        "lastModified": 1746183838,
+        "narHash": "sha256-kwaaguGkAqTZ1oK0yXeQ3ayYjs8u/W7eEfrFpFfIDFA=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "31ac92f9628682b294026f0860e14587a09ffb4b",
+        "rev": "bf3287dac860542719fe7554e21e686108716879",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-24.05",
+        "ref": "nixos-24.11",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -2957,22 +2956,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-unstable_3": {
-      "locked": {
-        "lastModified": 1737062831,
-        "narHash": "sha256-Tbk1MZbtV2s5aG+iM99U8FqwxU/YNArMcWAv6clcsBc=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "5df43628fdf08d642be8ba5b3625a6c70731c19c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
     "nixpkgs_10": {
       "locked": {
         "lastModified": 1731319897,
@@ -3039,11 +3022,11 @@
     },
     "nixpkgs_14": {
       "locked": {
-        "lastModified": 1735291276,
-        "narHash": "sha256-NYVcA06+blsLG6wpAbSPTCyLvxD/92Hy4vlY9WxFI1M=",
+        "lastModified": 1744932701,
+        "narHash": "sha256-fusHbZCyv126cyArUwwKrLdCkgVAIaa/fQJYFlCEqiU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "634fd46801442d760e09493a794c4f15db2d0cbb",
+        "rev": "b024ced1aac25639f8ca8fdfc2f8c4fbd66c48ef",
         "type": "github"
       },
       "original": {
@@ -3087,16 +3070,16 @@
     },
     "nixpkgs_17": {
       "locked": {
-        "lastModified": 1746183838,
-        "narHash": "sha256-kwaaguGkAqTZ1oK0yXeQ3ayYjs8u/W7eEfrFpFfIDFA=",
+        "lastModified": 1746141548,
+        "narHash": "sha256-IgBWhX7A2oJmZFIrpRuMnw5RAufVnfvOgHWgIdds+hc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "bf3287dac860542719fe7554e21e686108716879",
+        "rev": "f02fddb8acef29a8b32f10a335d44828d7825b78",
         "type": "github"
       },
       "original": {
         "owner": "nixos",
-        "ref": "nixos-24.11",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -3477,8 +3460,7 @@
         "nix-minecraft": "nix-minecraft",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_17",
-        "nixpkgs-2405": "nixpkgs-2405_2",
-        "nixpkgs-unstable": "nixpkgs-unstable_3",
+        "nixpkgs-2411": "nixpkgs-2411",
         "nixvim": [
           "my-nvim",
           "nixvim"

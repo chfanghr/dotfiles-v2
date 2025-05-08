@@ -41,9 +41,6 @@ lib.mkMerge [
       home.packages = with pkgs; [
         spotify
 
-        # fonts
-        nerdfonts
-
         signal-desktop
         telegram-desktop
         discord
