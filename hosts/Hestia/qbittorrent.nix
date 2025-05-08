@@ -23,6 +23,10 @@
     inherit (pkgs.stdenv) system;
   };
 
+  macVlanNic = "enp195s0";
+  p2pNic = "mv-${macVlanNic}";
+  p2pPort = 28721;
+
   webServiceVeth = "ve-qbt";
   webUIPort = 8080;
 
@@ -71,7 +75,7 @@ in {
         };
 
         privateNetwork = true;
-        macvlans = ["enp195s0"];
+        macvlans = [macVlanNic];
         extraVeths.${webServiceVeth} = {
           inherit hostAddress localAddress;
         };
@@ -82,7 +86,7 @@ in {
           networking = {
             enableIPv6 = true;
             useNetworkd = true;
-            interfaces."mv-enp195s0".useDHCP = true;
+            interfaces.${p2pNic}.useDHCP = true;
             useHostResolvConf = lib.mkForce false;
             firewall = {
               enable = true;
@@ -90,6 +94,10 @@ in {
                 webUIPort
                 config.services.prometheus.exporters.node.port
               ];
+              interfaces.${p2pNic} = {
+                allowedTCPPorts = [p2pPort];
+                allowedUDPPorts = [p2pPort];
+              };
             };
           };
 
@@ -112,6 +120,11 @@ in {
                   ln -s ${altUI} ${altUIPath}
                 '';
               };
+            };
+
+            network = {
+              wait-online.ignoredInterfaces = [p2pNic];
+              networks."40-${p2pNic}".networkConfig.IPv6AcceptRA = true;
             };
           };
 
@@ -140,6 +153,7 @@ in {
             uid = qbtUid;
             group = qbtGroup;
           };
+
           users.groups.${qbtGroup}.gid = qbtGid;
 
           time.timeZone = "Asia/Hong_Kong";
