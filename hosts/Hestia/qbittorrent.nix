@@ -33,171 +33,173 @@
 
   qbittorrentPrefix = "/qbittorrent";
 in {
-  users = {
-    users.${qbtUser} = {
-      uid = qbtUid;
-      group = qbtGroup;
-      isSystemUser = true;
-    };
-
-    groups.${qbtGroup}.gid = qbtGid;
-  };
-
-  services.samba.settings.qbittorrent.path = "${dataDir}/downloads";
-
-  systemd.tmpfiles.settings."10-qbittorrent-data".${dataDir}.d = {
-    user = qbtUser;
-    group = qbtGroup;
-    mode = "0775";
-  };
-
-  systemd.services."container@${containerName}".after = [
-    "mnt-qbittorrent.mount"
-  ];
-
-  containers.${containerName} = {
-    autoStart = true;
-    ephemeral = true;
-
-    bindMounts.qbt-data = {
-      hostPath = dataDir;
-      mountPoint = dataDir;
-      isReadOnly = false;
-    };
-
-    privateNetwork = true;
-    macvlans = ["enp195s0"];
-    extraVeths.${webServiceVeth} = {
-      inherit hostAddress localAddress;
-    };
-
-    config = {config, ...}: {
-      imports = [../../modules/nixos/common/services/qbittorrent.nix];
-
-      networking = {
-        enableIPv6 = true;
-        useNetworkd = true;
-        interfaces."mv-enp195s0".useDHCP = true;
-        useHostResolvConf = lib.mkForce false;
-        firewall = {
-          enable = true;
-          interfaces.${webServiceVeth}.allowedTCPPorts = [
-            webUIPort
-            config.services.prometheus.exporters.node.port
-          ];
+  imports = [
+    {
+      users = {
+        users.${qbtUser} = {
+          uid = qbtUid;
+          group = qbtGroup;
+          isSystemUser = true;
         };
+
+        groups.${qbtGroup}.gid = qbtGid;
       };
 
-      systemd = {
-        services = {
-          qbittorrent-alt-ui = {
-            wantedBy = ["multi-user.target"];
-            before = ["${config.services.qbittorrent.systemdServiceName}.service"];
-            serviceConfig = {
-              User = qbtUser;
-              Group = qbtGroup;
-              Type = "oneshot";
-              Restart = "no";
-            };
-            script = ''
-              if [ -L ${altUIPath} ]; then
-                unlink ${altUIPath}
-              fi
+      services.samba.settings.qbittorrent.path = "${dataDir}/downloads";
 
-              ln -s ${altUI} ${altUIPath}
-            '';
-          };
+      systemd.tmpfiles.settings."10-qbittorrent-data".${dataDir}.d = {
+        user = qbtUser;
+        group = qbtGroup;
+        mode = "0775";
+      };
+    }
+    (lib.mkIf (!config.dotfiles.shared.props.purposes.graphical.desktop) {
+      networking.useNetworkd = true;
+
+      systemd.services."container@${containerName}".after = [
+        "mnt-qbittorrent.mount"
+      ];
+
+      containers.${containerName} = {
+        autoStart = true;
+        ephemeral = true;
+
+        bindMounts.qbt-data = {
+          hostPath = dataDir;
+          mountPoint = dataDir;
+          isReadOnly = false;
         };
 
-        network = {
-          wait-online.anyInterface = true;
-          networks."40-mv-enp195s0".networkConfig.IPv6AcceptRA = true;
+        privateNetwork = true;
+        macvlans = ["enp195s0"];
+        extraVeths.${webServiceVeth} = {
+          inherit hostAddress localAddress;
+        };
+
+        config = {config, ...}: {
+          imports = [../../modules/nixos/common/services/qbittorrent.nix];
+
+          networking = {
+            enableIPv6 = true;
+            useNetworkd = true;
+            interfaces."mv-enp195s0".useDHCP = true;
+            useHostResolvConf = lib.mkForce false;
+            firewall = {
+              enable = true;
+              interfaces.${webServiceVeth}.allowedTCPPorts = [
+                webUIPort
+                config.services.prometheus.exporters.node.port
+              ];
+            };
+          };
+
+          systemd = {
+            services = {
+              qbittorrent-alt-ui = {
+                wantedBy = ["multi-user.target"];
+                before = ["${config.services.qbittorrent.systemdServiceName}.service"];
+                serviceConfig = {
+                  User = qbtUser;
+                  Group = qbtGroup;
+                  Type = "oneshot";
+                  Restart = "no";
+                };
+                script = ''
+                  if [ -L ${altUIPath} ]; then
+                    unlink ${altUIPath}
+                  fi
+
+                  ln -s ${altUI} ${altUIPath}
+                '';
+              };
+            };
+          };
+
+          services = {
+            resolved.enable = true;
+
+            qbittorrent = {
+              enable = true;
+              user = qbtUser;
+              group = qbtGroup;
+              package = pkgsUnstable.qbittorrent-nox;
+              inherit dataDir;
+              openFilesLimit = 65536;
+              port = webUIPort;
+              openFirewall = false;
+              confirmLegalNotice = true;
+            };
+
+            prometheus.exporters.node = {
+              enable = true;
+              listenAddress = localAddress;
+            };
+          };
+
+          users.users.${qbtUser} = {
+            uid = qbtUid;
+            group = qbtGroup;
+          };
+          users.groups.${qbtGroup}.gid = qbtGid;
+
+          time.timeZone = "Asia/Hong_Kong";
+
+          system.stateVersion = "24.11";
         };
       };
 
       services = {
-        resolved.enable = true;
-
-        qbittorrent = {
-          enable = true;
-          user = qbtUser;
-          group = qbtGroup;
-          package = pkgsUnstable.qbittorrent-nox;
-          inherit dataDir;
-          openFilesLimit = 65536;
-          port = webUIPort;
-          openFirewall = false;
-          confirmLegalNotice = true;
-        };
-
-        prometheus.exporters.node = {
-          enable = true;
-          listenAddress = localAddress;
-        };
-      };
-
-      users.users.${qbtUser} = {
-        uid = qbtUid;
-        group = qbtGroup;
-      };
-      users.groups.${qbtGroup}.gid = qbtGid;
-
-      time.timeZone = "Asia/Hong_Kong";
-
-      system.stateVersion = "24.11";
-    };
-  };
-
-  services = {
-    traefik.dynamicConfigOptions = {
-      http = {
-        routers = {
-          qbittorrent = {
-            service = "qbittorrent";
-            rule = "PathPrefix(`${qbittorrentPrefix}`)";
-            middlewares = [
-              "qbittorrentRedirect"
-              "qbittorrentStripPrefix"
-              "qbittorrentSetHeaders"
-            ];
+        traefik.dynamicConfigOptions = {
+          http = {
+            routers = {
+              qbittorrent = {
+                service = "qbittorrent";
+                rule = "PathPrefix(`${qbittorrentPrefix}`)";
+                middlewares = [
+                  "qbittorrentRedirect"
+                  "qbittorrentStripPrefix"
+                  "qbittorrentSetHeaders"
+                ];
+              };
+            };
+            middlewares = {
+              qbittorrentSetHeaders.headers.customRequestHeaders = {
+                X-Frame-Options = "SAMEORIGIN";
+                Referer = "";
+                Origin = "";
+              };
+              qbittorrentRedirect.redirectRegex = {
+                regex = "^(.*)${qbittorrentPrefix}$";
+                replacement = "$1${qbittorrentPrefix}/";
+              };
+              qbittorrentStripPrefix.stripPrefix.prefixes = ["${qbittorrentPrefix}/"];
+            };
+            services = {
+              qbittorrent.loadBalancer = {
+                passHostHeader = false;
+                servers = [
+                  {
+                    url = "http://${localAddress}:${builtins.toString webUIPort}";
+                  }
+                ];
+              };
+            };
           };
         };
-        middlewares = {
-          qbittorrentSetHeaders.headers.customRequestHeaders = {
-            X-Frame-Options = "SAMEORIGIN";
-            Referer = "";
-            Origin = "";
-          };
-          qbittorrentRedirect.redirectRegex = {
-            regex = "^(.*)${qbittorrentPrefix}$";
-            replacement = "$1${qbittorrentPrefix}/";
-          };
-          qbittorrentStripPrefix.stripPrefix.prefixes = ["${qbittorrentPrefix}/"];
-        };
-        services = {
-          qbittorrent.loadBalancer = {
-            passHostHeader = false;
-            servers = [
+        prometheus.scrapeConfigs = [
+          {
+            job_name = "${config.networking.hostName}-qbt-node";
+            static_configs = [
               {
-                url = "http://${localAddress}:${builtins.toString webUIPort}";
+                targets = [
+                  "${localAddress}:${toString config.containers.${containerName}.config.services.prometheus.exporters.node.port}"
+                ];
+                labels.instance = "${config.networking.hostName}-qbt";
               }
             ];
-          };
-        };
-      };
-    };
-    prometheus.scrapeConfigs = [
-      {
-        job_name = "${config.networking.hostName}-qbt-node";
-        static_configs = [
-          {
-            targets = [
-              "${localAddress}:${toString config.containers.${containerName}.config.services.prometheus.exporters.node.port}"
-            ];
-            labels.instance = "${config.networking.hostName}-qbt";
           }
         ];
-      }
-    ];
-  };
+      };
+    })
+  ];
 }

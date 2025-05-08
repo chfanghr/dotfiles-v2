@@ -15,28 +15,20 @@
     inputs.agenix.nixosModules.default
   ];
 
-  dotfiles = {
-    shared.props.purposes.graphical = {
-      gaming = true;
-      desktop = true;
+  dotfiles.nixos.props = {
+    hardware = {
+      audio = true;
+      bluetooth.enable = true;
+      cpu.amd = true;
+      gpu.amd.enable = true;
+      emulation = true;
+      vmHost = true;
     };
-    nixos = {
-      props = {
-        hardware = {
-          audio = true;
-          bluetooth.enable = true;
-          cpu.amd = true;
-          gpu.amd.enable = true;
-          emulation = true;
-          vmHost = true;
-        };
-        nix.roles = {
-          builder = true;
-          consumer = true;
-        };
-        ociHost = true;
-      };
+    nix.roles = {
+      builder = true;
+      consumer = true;
     };
+    ociHost = true;
   };
 
   time.timeZone = "Asia/Hong_Kong";
@@ -82,5 +74,18 @@
     };
     lldpd.enable = true;
     tailscale-traefik.enable = true;
+  };
+
+  specialisation.desktop.configuration = {
+    dotfiles.shared.props.purposes.graphical = {
+      gaming = true;
+      desktop = true;
+    };
+
+    home-manager.users.fanghr = {
+      home.packages = [
+        pkgs.qbittorrent
+      ];
+    };
   };
 }

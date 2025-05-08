@@ -1,21 +1,23 @@
-{config, ...}: {
-  # systemd.tmpfiles.settings."10-backup".${backupMountpoint}.d = {
-  #   user = "root";
-  #   group = "root";
-  #   mode = "0775";
-  # };
+{config, ...}: let
+  safeMountPoint = "/mnt/safe";
+in {
+  systemd.tmpfiles.settings."10-backup".${safeMountPoint}.d = {
+    user = "root";
+    group = "root";
+    mode = "0755";
+  };
 
   age.secrets."zrepl-hestia.snow-dace.ts.net.key".file = ../../secrets/zrepl-hestia.snow-dace.ts.net.key.age;
 
   services = {
-    # samba.settings = {
-    #   backup = {
-    #     path = backupMountpoint;
-    #     browsable = "no";
-    #     "force group" = "root";
-    #     "force user" = "fanghr";
-    #   };
-    # };
+    samba.settings = {
+      backup = {
+        path = safeMountPoint;
+        browsable = "no";
+        "force group" = "root";
+        "force user" = "fanghr";
+      };
+    };
 
     zrepl = {
       enable = true;
@@ -36,7 +38,10 @@
           interval = "10m";
           recv = {
             placeholder.encryption = "off";
-            properties.override.mountpoint = "legacy";
+            properties.override = {
+              mountpoint = "legacy";
+              "com.sun:auto-snapshot" = "false";
+            };
           };
           pruning = {
             keep_sender = [

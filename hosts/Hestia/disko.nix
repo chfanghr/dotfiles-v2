@@ -75,6 +75,12 @@
           mountpoint = "/var";
         };
         backup.type = "zfs_fs";
+        "backup/vault/safe" = {
+          type = "zfs_fs";
+          options.mountpoint = "legacy";
+          mountpoint = "/mnt/safe";
+          mountOptions = ["ro"];
+        };
         qbittorrent = {
           type = "zfs_fs";
           options = {
