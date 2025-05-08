@@ -7,16 +7,18 @@
   imports = [
     ./boot.nix
     ./calibre.nix
+    ./cardano.nix
     ./fah.nix
+    ./grafana.nix
     ./kerberos.nix
     ./migration.nix
     ./minidlna.nix
     ./networking.nix
     ./nfs.nix
+    ./nix.nix
     ./prometheus.nix
     ./qbittorrent.nix
     ./samba.nix
-    ./security.nix
     ./tank.nix
     ./traefik.nix
     ./vault.nix

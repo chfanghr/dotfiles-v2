@@ -5,7 +5,6 @@
     enable = true;
     staticConfigOptions = {
       global.sendAnonymousUsage = false;
-      # accessLog = {};
       certificatesResolvers.tailnetResolver.tailscale = {};
       entryPoints = {
         insecure = {

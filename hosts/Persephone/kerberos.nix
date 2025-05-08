@@ -1,4 +1,40 @@
-{config, ...}: {
+{config, ...}: let
+  stateDir = "/data/kerberos-server-state";
+in {
+  age.secrets = {
+    default-keytab = {
+      owner = "root";
+      file = ../../secrets/persephone-default.keytab.age;
+      path = "/etc/krb5.keytab";
+      mode = "600";
+    };
+  };
+
+  systemd.tmpfiles.settings."10-kerberos-server-state" = {
+    ${stateDir}.d = {
+      user = "root";
+      group = "root";
+      mode = "0700";
+    };
+    "/var/lib/krb5kdc".d = {
+      user = "root";
+      group = "root";
+      mode = "0600";
+    };
+  };
+
+  fileSystems = {
+    ${stateDir} = {
+      device = "tank/enc/kerberos-server-state";
+      fsType = "zfs";
+      options = ["noatime" "noexec"];
+    };
+    "/var/lib/krb5kdc" = {
+      device = stateDir;
+      options = ["bind"];
+    };
+  };
+
   security.krb5 = {
     enable = true;
     settings = {
@@ -32,6 +68,13 @@
         };
       };
     };
+  };
+
+  systemd.services.kdc = {
+    bindsTo = [
+      "data-kerberos\\x2dserver\\x2dstate.mount"
+      "var-lib-krb5kdc.mount"
+    ];
   };
 
   networking.firewall.interfaces.tailscale0 = {

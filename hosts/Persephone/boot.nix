@@ -70,31 +70,38 @@
 
   fileSystems = {
     "/" = {
-      device = "rpool/root";
+      device = "rpool/enc/root";
       fsType = "zfs";
     };
     "/var" = {
-      device = "rpool/var";
+      device = "rpool/enc/var";
       fsType = "zfs";
     };
     "/home" = {
-      device = "rpool/home";
+      device = "rpool/enc/home";
       fsType = "zfs";
     };
     "/nix" = {
-      device = "tank/nix";
+      device = "rpool/nix";
       fsType = "zfs";
       options = ["noatime"];
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/96CB-AEF3";
+      device = "/dev/disk/by-uuid/898A-B92A";
       fsType = "vfat";
       options = ["fmask=0022" "dmask=0022"];
     };
   };
 
   swapDevices = [
-    {device = "/dev/disk/by-uuid/ebbdd45a-ff71-4e5c-a4aa-ac604feb813d";}
+    {
+      device = "/dev/disk/by-partuuid/166e185c-9ccf-4b12-a1d7-d700268af9cf";
+      randomEncryption.enable = true;
+    }
+    {
+      device = "/dev/disk/by-partuuid/923b468b-b5d7-4ee8-b599-2afbd6476718";
+      randomEncryption.enable = true;
+    }
   ];
 
   services = {

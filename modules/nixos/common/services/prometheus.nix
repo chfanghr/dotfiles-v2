@@ -5,12 +5,18 @@
 }: let
   inherit (lib) mkIf mkOption types;
 in {
-  options.dotfiles.nixoss.props.services.prometheusReportToDemeter = mkOption {
-    type = types.bool;
-    default = true;
+  options.dotfiles.nixos.props.services.prometheus = {
+    pushToCollector = mkOption {
+      type = types.bool;
+      default = true;
+    };
+    collectorUrl = mkOption {
+      type = types.str;
+      default = "https://persephone.snow-dace.ts.net/prometheus/write";
+    };
   };
 
-  config = mkIf config.dotfiles.nixoss.props.services.prometheusReportToDemeter {
+  config = mkIf config.dotfiles.nixos.props.services.prometheus.pushToCollector {
     services.prometheus = {
       enable = true;
       enableReload = true;
@@ -34,8 +40,8 @@ in {
 
       remoteWrite = [
         {
-          name = "demeter";
-          url = "https://demeter.snow-dace.ts.net/prometheus/write";
+          name = "ts-remote-collector";
+          url = config.dotfiles.nixos.props.services.prometheus.collectorUrl;
         }
       ];
 

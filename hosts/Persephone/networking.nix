@@ -15,15 +15,31 @@
         mode = "802.3ad";
       };
     };
-    interfaces.bond0.useDHCP = true;
+
+    interfaces = {
+      bond0.useDHCP = true;
+
+      enp33s0f3 = {
+        useDHCP = false;
+        ipv4.addresses = [
+          {
+            address = "192.168.255.4";
+            prefixLength = 24;
+          }
+        ];
+      };
+    };
+
+    nat = {
+      enable = true;
+      internalInterfaces = ["ve-+"];
+      externalInterface = "bond0";
+      enableIPv6 = true;
+    };
+
+    nftables.enable = true;
 
     firewall.enable = true;
-  };
-
-  systemd.network.networks."40-enp33s0f3" = {
-    matchConfig.Name = "enp33s0f3";
-    dhcpV4Config.RouteMetric = 1025;
-    networkConfig.DHCP = "ipv4";
   };
 
   boot = {

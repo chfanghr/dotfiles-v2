@@ -7,11 +7,9 @@
     ./boot.nix
     ./cardano.nix
     ./file-systems.nix
-    ./grafana.nix
     ./hercules-ci-agent.nix
     ./minecraft.nix
     ./nfs.nix
-    ./prometheus.nix
     ./security.nix
     ./traefik.nix
     ../../modules/nixos/common
@@ -111,13 +109,25 @@
   };
 
   networking = {
+    enableIPv6 = true;
     bonds.bond0 = {
       interfaces = ["enp6s0f0" "enp6s0f1"];
       driverOptions = {
         mode = "802.3ad";
       };
     };
-    interfaces.bond0.useDHCP = false;
+    interfaces = {
+      bond0.useDHCP = false;
+      eno1 = {
+        useDHCP = false;
+        ipv4.addresses = [
+          {
+            address = "192.168.255.2";
+            prefixLength = 24;
+          }
+        ];
+      };
+    };
     nat = {
       enable = true;
       internalInterfaces = ["ve-+"];
@@ -126,22 +136,24 @@
     };
   };
 
-  systemd.network.networks."40-eno1" = {
-    matchConfig.Name = "eno1";
-    dhcpV4Config.RouteMetric = 1025;
-    networkConfig.DHCP = "ipv4";
-  };
+  systemd.network.networks."40-bond0".networkConfig.IPv6AcceptRA = true;
+
+  # systemd.network.networks."40-eno1" = {
+  #   matchConfig.Name = "eno1";
+  #   dhcpV4Config.RouteMetric = 1025;
+  #   networkConfig.DHCP = "ipv4";
+  # };
 
   services.lldpd.enable = true;
 
+  demeter.minecraft.enable = lib.mkDefault true;
+
   specialisation = {
     debug.configuration = {
-      boot = {
-        loader.systemd-boot.memtest86.enable = true;
-        plymouth.enable = false;
-      };
-
+      dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce false;
+      boot.plymouth.enable = false;
       dotfiles.shared.props.purposes.graphical.desktop = false;
+      demeter.minecraft.enable = false;
     };
     noProxy.configuration = {
       dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce false;
