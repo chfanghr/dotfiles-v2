@@ -81,7 +81,10 @@
         };
         qbittorrent = {
           type = "zfs_fs";
-          options.mountpoint = "legacy";
+          options = {
+            mountpoint = "legacy";
+            atime = "off";
+          };
           mountpoint = "/mnt/qbittorrent";
         };
         reserved = {
