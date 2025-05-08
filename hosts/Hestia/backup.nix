@@ -11,7 +11,7 @@ in {
 
   services = {
     samba.settings = {
-      backup = {
+      safe = {
         path = safeMountPoint;
         browsable = "no";
         "force group" = "root";
