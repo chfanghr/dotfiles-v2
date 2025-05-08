@@ -20,8 +20,8 @@
 
     remoteWrite = [
       {
-        name = "demeter";
-        url = "https://demeter.snow-dace.ts.net/prometheus/write";
+        name = "ts-remote-collector";
+        url = "https://persephone.snow-dace.ts.net/prometheus/write";
       }
     ];
 

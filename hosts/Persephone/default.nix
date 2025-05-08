@@ -9,6 +9,7 @@
     ./calibre.nix
     ./cardano.nix
     ./fah.nix
+    ./grafana.nix
     ./kerberos.nix
     ./migration.nix
     ./minidlna.nix

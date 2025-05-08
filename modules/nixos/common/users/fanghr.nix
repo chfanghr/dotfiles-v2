@@ -34,6 +34,7 @@ in {
         extraGroups = [
           "wheel"
           "docker"
+          "systemd-journal"
         ];
         shell = pkgs.zsh;
         home = "/home/${props.superUser}";

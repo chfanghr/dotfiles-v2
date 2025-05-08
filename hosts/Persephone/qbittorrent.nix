@@ -110,7 +110,10 @@ in {
         useNetworkd = true;
         firewall = {
           enable = true;
-          interfaces.${webServiceVeth}.allowedTCPPorts = [webUIPort];
+          interfaces.${webServiceVeth}.allowedTCPPorts = [
+            webUIPort
+            config.services.prometheus.exporters.node.port
+          ];
         };
         useHostResolvConf = lib.mkForce false;
         nameservers = [
@@ -132,6 +135,11 @@ in {
           port = webUIPort;
           openFirewall = false;
           confirmLegalNotice = true;
+        };
+
+        prometheus.exporters.node = {
+          enable = true;
+          listenAddress = localAddress;
         };
       };
 
@@ -174,41 +182,56 @@ in {
     };
   };
 
-  services.traefik.dynamicConfigOptions = {
-    http = {
-      routers = {
-        qbittorrent = {
-          service = "qbittorrent";
-          rule = "PathPrefix(`${qbittorrentPrefix}`)";
-          middlewares = [
-            "qbittorrentRedirect"
-            "qbittorrentStripPrefix"
-            "qbittorrentSetHeaders"
-          ];
+  services = {
+    traefik.dynamicConfigOptions = {
+      http = {
+        routers = {
+          qbittorrent = {
+            service = "qbittorrent";
+            rule = "PathPrefix(`${qbittorrentPrefix}`)";
+            middlewares = [
+              "qbittorrentRedirect"
+              "qbittorrentStripPrefix"
+              "qbittorrentSetHeaders"
+            ];
+          };
         };
-      };
-      middlewares = {
-        qbittorrentSetHeaders.headers.customRequestHeaders = {
-          X-Frame-Options = "SAMEORIGIN";
-          Referer = "";
-          Origin = "";
+        middlewares = {
+          qbittorrentSetHeaders.headers.customRequestHeaders = {
+            X-Frame-Options = "SAMEORIGIN";
+            Referer = "";
+            Origin = "";
+          };
+          qbittorrentRedirect.redirectRegex = {
+            regex = "^(.*)${qbittorrentPrefix}$";
+            replacement = "$1${qbittorrentPrefix}/";
+          };
+          qbittorrentStripPrefix.stripPrefix.prefixes = ["${qbittorrentPrefix}/"];
         };
-        qbittorrentRedirect.redirectRegex = {
-          regex = "^(.*)${qbittorrentPrefix}$";
-          replacement = "$1${qbittorrentPrefix}/";
-        };
-        qbittorrentStripPrefix.stripPrefix.prefixes = ["${qbittorrentPrefix}/"];
-      };
-      services = {
-        qbittorrent.loadBalancer = {
-          passHostHeader = false;
-          servers = [
-            {
-              url = "http://${localAddress}:${builtins.toString webUIPort}";
-            }
-          ];
+        services = {
+          qbittorrent.loadBalancer = {
+            passHostHeader = false;
+            servers = [
+              {
+                url = "http://${localAddress}:${builtins.toString webUIPort}";
+              }
+            ];
+          };
         };
       };
     };
+    prometheus.scrapeConfigs = [
+      {
+        job_name = "${config.networking.hostName}-qbt-node";
+        static_configs = [
+          {
+            targets = [
+              "${localAddress}:${toString config.containers.${containerName}.config.services.prometheus.exporters.node.port}"
+            ];
+            labels.instance = "${config.networking.hostName}-qbt";
+          }
+        ];
+      }
+    ];
   };
 }

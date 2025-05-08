@@ -7,11 +7,9 @@
     ./boot.nix
     ./cardano.nix
     ./file-systems.nix
-    ./grafana.nix
     ./hercules-ci-agent.nix
     ./minecraft.nix
     ./nfs.nix
-    ./prometheus.nix
     ./security.nix
     ./traefik.nix
     ../../modules/nixos/common
