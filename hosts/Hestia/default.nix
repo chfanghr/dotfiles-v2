@@ -7,6 +7,7 @@
     ./backup.nix
     ./boot.nix
     ./disko.nix
+    ./nix.nix
     ./qbittorrent.nix
     ./samba.nix
     ../../modules/nixos/common

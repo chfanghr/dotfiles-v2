@@ -22,4 +22,6 @@ in {
   "persephone-nix-cache-key.age".publicKeys = [master persephone];
   "zrepl-hestia.snow-dace.ts.net.key.age".publicKeys = [master hestia];
   "zrepl-persephone.snow-dace.ts.net.key.age".publicKeys = [master persephone];
+  "hestia-nix-cache-key.age".publicKeys = [master hestia];
+  "demeter-nix-cache-key.age".publicKeys = [master demeter];
 }

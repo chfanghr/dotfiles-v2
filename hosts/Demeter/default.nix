@@ -10,6 +10,7 @@
     ./hercules-ci-agent.nix
     ./minecraft.nix
     ./nfs.nix
+    ./nix.nix
     ./security.nix
     ../../modules/nixos/common
     inputs.agenix.nixosModules.default
