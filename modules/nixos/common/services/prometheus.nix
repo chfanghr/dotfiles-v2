@@ -17,6 +17,8 @@ in {
   };
 
   config = mkIf config.dotfiles.nixos.props.services.prometheus.pushToCollector {
+    systemd.services.prometheus.bindsTo = ["tailscaled.service"];
+
     services.prometheus = {
       enable = true;
       enableReload = true;

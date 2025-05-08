@@ -60,4 +60,6 @@ in
     };
 
     programs.xwayland.enable = true;
+
+    programs.kdeconnect.enable = true;
   }

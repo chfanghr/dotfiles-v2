@@ -25,6 +25,7 @@
     (mkX86_64Nixos "Dionysus")
     (mkX86_64Nixos "Eros")
     (mkX86_64Nixos "Jupiter")
+    (mkX86_64Nixos "Hestia")
     (mkX86_64Nixos "Persephone")
     (mkX86_64Nixos "Poseidon")
     (mkX86_64Nixos "Uranus")
