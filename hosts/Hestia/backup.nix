@@ -1,23 +1,21 @@
-{config, ...}: let
-  backupMountpoint = "/mnt/backup";
-in {
-  systemd.tmpfiles.settings."10-safe".${backupMountpoint}.d = {
-    user = "root";
-    group = "root";
-    mode = "0775";
-  };
+{config, ...}: {
+  # systemd.tmpfiles.settings."10-backup".${backupMountpoint}.d = {
+  #   user = "root";
+  #   group = "root";
+  #   mode = "0775";
+  # };
 
   age.secrets."zrepl-hestia.snow-dace.ts.net.key".file = ../../secrets/zrepl-hestia.snow-dace.ts.net.key.age;
 
   services = {
-    samba.settings = {
-      backup = {
-        path = backupMountpoint;
-        browsable = "no";
-        "force group" = "root";
-        "force user" = "fanghr";
-      };
-    };
+    # samba.settings = {
+    #   backup = {
+    #     path = backupMountpoint;
+    #     browsable = "no";
+    #     "force group" = "root";
+    #     "force user" = "fanghr";
+    #   };
+    # };
 
     zrepl = {
       enable = true;

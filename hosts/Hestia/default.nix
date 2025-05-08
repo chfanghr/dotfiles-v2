@@ -4,10 +4,10 @@
   ...
 }: {
   imports = [
+    ./backup.nix
     ./boot.nix
     ./disko.nix
     ./qbittorrent.nix
-    ./safe.nix
     ./samba.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
@@ -80,5 +80,6 @@
       openFirewall = true;
     };
     lldpd.enable = true;
+    tailscale-traefik.enable = true;
   };
 }

@@ -60,6 +60,7 @@
       enable = true;
       extraArgs = ["-I" "bond0"];
     };
+    tailscale-traefik.enable = true;
   };
 
   specialisation.staticIP.configuration = {

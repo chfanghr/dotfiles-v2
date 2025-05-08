@@ -33,7 +33,7 @@
               content = {
                 type = "swap";
                 discardPolicy = "both";
-                resumeDevice = true; # resume from hiberation from this device
+                randomEncryption = true;
               };
             };
           };
@@ -80,8 +80,6 @@
             mountpoint = "legacy";
             snapdir = "visible";
           };
-          mountpoint = "/mnt/backup";
-          mountOptions = ["ro"];
         };
         qbittorrent = {
           type = "zfs_fs";

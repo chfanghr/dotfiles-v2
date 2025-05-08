@@ -11,7 +11,6 @@
     ./minecraft.nix
     ./nfs.nix
     ./security.nix
-    ./traefik.nix
     ../../modules/nixos/common
     inputs.agenix.nixosModules.default
   ];
@@ -56,9 +55,13 @@
     };
   };
 
-  services.iperf3 = {
-    enable = true;
-    openFirewall = true;
+  services = {
+    iperf3 = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    tailscale-traefik.enable = true;
   };
 
   home-manager.users.fanghr = {

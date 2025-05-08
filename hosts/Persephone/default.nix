@@ -20,7 +20,6 @@
     ./qbittorrent.nix
     ./samba.nix
     ./tank.nix
-    ./traefik.nix
     ./vault.nix
     ../../modules/nixos/common
     inputs.agenix.nixosModules.default

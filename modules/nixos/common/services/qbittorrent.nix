@@ -110,6 +110,7 @@ in {
         Group = cfg.group;
         UMask = "022";
         LimitNOFILE = cfg.openFilesLimit;
+        StateDirectory = "qbittorrent";
       };
     };
 
