@@ -74,13 +74,7 @@
           options.mountpoint = "legacy";
           mountpoint = "/var";
         };
-        backup = {
-          type = "zfs_fs";
-          options = {
-            mountpoint = "legacy";
-            snapdir = "visible";
-          };
-        };
+        backup.type = "zfs_fs";
         qbittorrent = {
           type = "zfs_fs";
           options = {

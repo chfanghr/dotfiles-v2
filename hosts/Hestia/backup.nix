@@ -34,7 +34,10 @@
           };
           root_fs = "rpool/backup";
           interval = "10m";
-          recv.placeholder.encryption = "off";
+          recv = {
+            placeholder.encryption = "off";
+            properties.override.mountpoint = "legacy";
+          };
           pruning = {
             keep_sender = [
               {
