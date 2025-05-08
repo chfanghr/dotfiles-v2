@@ -48,14 +48,17 @@
 
     enableIPv6 = true;
 
-    interfaces.enp195s0 = {
-      useDHCP = true;
-      ipv4.addresses = [
-        {
-          address = "192.168.255.5";
-          prefixLength = 24;
-        }
-      ];
+    interfaces = {
+      enp195s0.useDHCP = true;
+      enp198s0f3u1 = {
+        useDHCP = false;
+        ipv4.addresses = [
+          {
+            address = "192.168.255.5";
+            prefixLength = 24;
+          }
+        ];
+      };
     };
   };
 

@@ -74,10 +74,14 @@
           options.mountpoint = "legacy";
           mountpoint = "/var";
         };
-        safe = {
+        backup = {
           type = "zfs_fs";
-          options.mountpoint = "legacy";
-          mountpoint = "/mnt/safe";
+          options = {
+            mountpoint = "legacy";
+            snapdir = "visible";
+          };
+          mountpoint = "/mnt/backup";
+          mountOptions = ["ro"];
         };
         qbittorrent = {
           type = "zfs_fs";

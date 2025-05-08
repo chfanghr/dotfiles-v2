@@ -5,6 +5,7 @@ let
   oizys = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDxg7xOUiwUYgizuVkUm9nogD5dpLAqiwkz9X8pYkb8z root@Oizys";
   demeter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC6nS/4X/8gD4nAVR1aQqbyxZXt2j22NQc4FkHq2aB2Z root@Demeter";
   eros = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICNZ6o5jRMSaO+tSh2kgJJGW8SdfZaaCxkoQnKq5CL5b root@Eros";
+  hestia = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbRbsi/M17Abse+SY5LVXAH9hoL5Z7GClbxNv44No8q root@Hestia";
 in {
   "athena-sing-box-default-out.age".publicKeys = [master athena];
   "oizys-sing-box-default-out.age".publicKeys = [master oizys eros];
@@ -18,5 +19,7 @@ in {
   "demeter-default.keytab.age".publicKeys = [master demeter];
   "persephone-default.keytab.age".publicKeys = [master persephone];
   "minecraft.keytab.age".publicKeys = [master demeter];
-  "persephone-nix-cache-key.age".publicKeys = [persephone];
+  "persephone-nix-cache-key.age".publicKeys = [master persephone];
+  "zrepl-hestia.snow-dace.ts.net.key.age".publicKeys = [master hestia];
+  "zrepl-persephone.snow-dace.ts.net.key.age".publicKeys = [master persephone];
 }

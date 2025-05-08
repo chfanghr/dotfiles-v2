@@ -1,24 +1,9 @@
-let
+{config, ...}: let
   safeMountPoint = "/data/safe";
   heraMountPoint = "/data/hera";
   heraOldMountPoint = "/data/hera-old";
   minecraftMainMountPoint = "/data/minecraft/main";
 in {
-  services.sanoid.datasets = {
-    "vault/minecraft/main" = {
-      daily = 30;
-      hourly = 48;
-      autosnap = true;
-      autoprune = true;
-    };
-    "vault/safe" = {
-      daily = 30;
-      hourly = 48;
-      autosnap = true;
-      autoprune = true;
-    };
-  };
-
   systemd.tmpfiles.settings."10-vault" = {
     ${minecraftMainMountPoint}.d = {
       user = "minecraft-data";
@@ -96,4 +81,76 @@ in {
       "vfs objects" = "catia fruit streams_xattr";
     };
   };
+
+  age.secrets."zrepl-persephone.snow-dace.ts.net.key".file = ../../secrets/zrepl-persephone.snow-dace.ts.net.key.age;
+
+  services.zrepl = {
+    enable = true;
+    settings = {
+      jobs = [
+        {
+          name = "safe-snapshots";
+          type = "snap";
+          filesystems = {
+            "vault/safe" = true;
+          };
+          snapshotting = {
+            type = "periodic";
+            interval = "10m";
+            prefix = "zrepl_";
+          };
+          pruning.keep = [
+            {
+              type = "regex";
+              regex = "^manual_.*";
+            }
+            {
+              type = "grid";
+              grid = "1x1h(keep=all) | 24x1h | 14x1d";
+              regex = "^zrepl_.*";
+            }
+          ];
+        }
+        {
+          name = "minecraft-worlds-snapshots";
+          type = "snap";
+          filesystems = {
+            "vault/minecraft<" = true;
+          };
+          snapshotting = {
+            type = "periodic";
+            interval = "1h";
+            prefix = "zrepl_";
+          };
+          pruning.keep = [
+            {
+              type = "regex";
+              regex = "^manual_.*";
+            }
+            {
+              type = "grid";
+              grid = "16x1h(keep=all) | 24x1h | 14x1d";
+              regex = "^zrepl_.*";
+            }
+          ];
+        }
+        {
+          name = "target_hestia";
+          type = "source";
+          serve = {
+            type = "tls";
+            listen = ":8888";
+            ca = ../../secrets/zrepl-hestia.snow-dace.ts.net.crt;
+            cert = ../../secrets/zrepl-persephone.snow-dace.ts.net.crt;
+            key = config.age.secrets."zrepl-persephone.snow-dace.ts.net.key".path;
+            client_cns = ["hestia.snow-dace.ts.net"];
+          };
+          filesystems."vault/safe" = true;
+          snapshotting.type = "manual";
+        }
+      ];
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [8888];
 }
