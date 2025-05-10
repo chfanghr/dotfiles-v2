@@ -58,6 +58,8 @@
     };
   };
 
+  systemd.network.networks."40-enp195s0".networkConfig.IPv6AcceptRA = true;
+
   environment.defaultPackages = [
     pkgs.vulkan-tools
     pkgs.nvtopPackages.amd
