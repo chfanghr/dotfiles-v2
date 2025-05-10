@@ -10,6 +10,7 @@
     ./nix.nix
     ./qbittorrent.nix
     ./samba.nix
+    ./stash.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
     inputs.agenix.nixosModules.default

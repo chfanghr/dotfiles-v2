@@ -89,6 +89,11 @@
           };
           mountpoint = "/mnt/qbittorrent";
         };
+        stash = {
+          type = "zfs_fs";
+          options.mountpoint = "legacy";
+          mountpoint = "/mnt/stash";
+        };
         reserved = {
           type = "zfs_volume";
           size = "32G";

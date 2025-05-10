@@ -11,12 +11,7 @@ in {
 
   services = {
     samba.settings = {
-      safe = {
-        path = safeMountPoint;
-        browsable = "no";
-        "force group" = "root";
-        "force user" = "fanghr";
-      };
+      safe-ro-mirror.path = safeMountPoint;
     };
 
     zrepl = {
