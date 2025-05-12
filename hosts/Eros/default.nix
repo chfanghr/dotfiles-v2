@@ -11,6 +11,7 @@
     ./nix.nix
     ./prometheus.nix
     ./router.nix
+    ./traefik.nix
     ./vpn-gateway.nix
     inputs.disko.nixosModules.default
     inputs.agenix.nixosModules.default

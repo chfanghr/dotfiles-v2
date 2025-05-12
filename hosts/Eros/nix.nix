@@ -18,6 +18,8 @@
         "hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ="
         "Demeter-1:st+mG+g+DIrAmwIz0DpkPD4XfLtzrElbMiKDR9Jf+Nw="
         "chfanghr.cachix.org-1:gt1W4ZP4F/kgsA2JtH+di/yBaUM2WPMqr0IrRyIIED0="
+        "Persephone-1:SlL2/HsC5uw1FvL+sdl4zm1cYpeFFyQLXNh9aKvKFQY="
+        "Hestia-1:paJxDGrmii5SP4/9AhYVXP4nFBNB/bz0Qc1YODDEf94="
       ];
     };
     gc = {
