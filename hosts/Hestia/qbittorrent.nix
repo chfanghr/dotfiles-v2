@@ -5,7 +5,7 @@
   config,
   ...
 }: let
-  dataDir = "/mnt/qbittorrent";
+  dataDir = "/data/qbittorrent";
 
   qbtUser = "qbittorrent";
   qbtGroup = "qbittorrent";

@@ -1,5 +1,5 @@
 let
-  stashMountpoint = "/mnt/stash";
+  stashMountpoint = "/data/stash";
 in {
   systemd.tmpfiles.settings."10-stash".${stashMountpoint}.d = {
     user = "fanghr";

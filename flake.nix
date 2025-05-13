@@ -36,6 +36,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     ucodenix.url = "github:e-tho/ucodenix";
+    nixos-anywhere.url = "github:nix-community/nixos-anywhere";
   };
 
   outputs = inputs @ {flake-parts, ...}:
@@ -46,7 +47,8 @@
         "x86_64-darwin"
       ];
       imports = [
-        ./flake-part-modules.nix
+        ./configurations.nix
+        ./dev-shells.nix
         ./hercules-ci.nix
         ./pre-commit.nix
       ];
