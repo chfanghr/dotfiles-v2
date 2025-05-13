@@ -11,7 +11,7 @@ in {
 
   services = {
     samba.settings = {
-      # safe-ro-mirror.path = safeMountPoint;
+      safe-ro-mirror.path = safeMountPoint;
     };
 
     zrepl = {

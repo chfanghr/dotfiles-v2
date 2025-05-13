@@ -130,6 +130,11 @@ in {
             mountpoint = "/data/qbittorrent";
           };
           "enc/zrepl".type = "zfs_fs";
+          "enc/zrepl/vault/safe" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = "/data/safe";
+          };
 
           nix = {
             type = "zfs_fs";
