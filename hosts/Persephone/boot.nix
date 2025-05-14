@@ -109,7 +109,6 @@
       autoScrub.enable = true;
       trim.enable = true;
     };
-    sanoid.enable = true;
   };
 
   powerManagement.cpuFreqGovernor = "ondemand";
