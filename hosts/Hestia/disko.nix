@@ -179,6 +179,16 @@ in {
             options.mountpoint = "legacy";
             mountpoint = "/data/stash";
           };
+          "enc/minecraft" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = "/data/minecraft";
+          };
+          "enc/minecraft/smp" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = "/data/minecraft/smp";
+          };
 
           reserved = {
             type = "zfs_volume";
@@ -188,4 +198,25 @@ in {
       };
     };
   };
+
+  # TODO: This should be handled by disko
+  boot.initrd.luks.devices.zfs-keys = {
+    preLVM = false;
+    yubikey = {
+      slot = 2;
+      twoFactor = false;
+      storage.device = "/dev/disk/by-partlabel/disk-ssd-1-esp";
+    };
+    postOpenCommands = ''
+      mkdir -p /zfs-keys
+      mount /dev/mapper/zfs-keys /zfs-keys
+      zpool import -f -a
+      zfs load-key zp-striped/enc
+      zfs load-key zp-mirrored/enc
+    '';
+  };
+
+  fileSystems."/data/minecraft/smp".depends = [
+    "/data/minecraft"
+  ];
 }

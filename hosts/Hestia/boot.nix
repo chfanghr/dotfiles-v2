@@ -24,25 +24,7 @@
 
       network.enable = true;
 
-      luks = {
-        yubikeySupport = true;
-        # TODO: This should be handled by disko
-        devices.zfs-keys = {
-          preLVM = false;
-          yubikey = {
-            slot = 2;
-            twoFactor = false;
-            storage.device = "/dev/disk/by-partlabel/disk-ssd-1-esp";
-          };
-          postOpenCommands = ''
-            mkdir -p /zfs-keys
-            mount /dev/mapper/zfs-keys /zfs-keys
-            zpool import -f -a
-            zfs load-key zp-striped/enc
-            zfs load-key zp-mirrored/enc
-          '';
-        };
-      };
+      luks.yubikeySupport = true;
     };
 
     loader = {

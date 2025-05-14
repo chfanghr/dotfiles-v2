@@ -7,6 +7,7 @@
     ./backup.nix
     ./boot.nix
     ./disko.nix
+    ./minecraft.nix
     ./qbittorrent.nix
     ./samba.nix
     ./stash.nix
