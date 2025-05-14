@@ -32,17 +32,20 @@
         proxy.useGateway = true;
       };
     };
-    nixos.props = {
-      hardware = {
-        cpu.amd = true;
-        emulation = true;
-        vmHost = true;
+    nixos = {
+      props = {
+        hardware = {
+          cpu.amd = true;
+          emulation = true;
+          vmHost = true;
+        };
+        nix.roles = {
+          builder = true;
+          consumer = true;
+        };
+        ociHost = true;
       };
-      nix.roles = {
-        builder = true;
-        consumer = true;
-      };
-      ociHost = true;
+      nix.builderPrivateKeyAgeSecret = ../../secrets/persephone-nix-cache-key.age;
     };
   };
 

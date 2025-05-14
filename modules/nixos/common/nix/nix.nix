@@ -21,9 +21,16 @@ in {
       builder = mkPropOption "builds nix derivations for other machines";
       consumer = mkPropOption "consumes nix derivations built by builders";
     };
-    nix.builderPubKeys = mkOption {
-      type = types.listOf types.str;
-      default = [];
+    nix = {
+      builderPrivateKeyAgeSecret = mkOption {
+        type = types.nullOr types.path;
+        default = null;
+      };
+
+      builderPubKeys = mkOption {
+        type = types.listOf types.str;
+        default = [];
+      };
     };
   };
 
@@ -59,13 +66,28 @@ in {
         services = {
           nix-serve = {
             enable = true;
-            secretKeyFile = config.services.generate-nix-cache-key.privateKeyPath;
+            secretKeyFile = config.nix.settings.secret-key-files;
             openFirewall = true;
             package = pkgs.nix-serve-ng;
           };
-
-          generate-nix-cache-key.enable = true;
         };
+      }
+    )
+    (
+      mkIf (nixRolesProps.builder && config.dotfiles.nixos.nix.builderPrivateKeyAgeSecret == null) {
+        services.generate-nix-cache-key.enable = true;
+      }
+    )
+    (
+      mkIf (nixRolesProps.builder && config.dotfiles.nixos.nix.builderPrivateKeyAgeSecret != null) {
+        age.secrets.nix-cache-key = {
+          file = config.dotfiles.nixos.nix.builderPrivateKeyAgeSecret;
+          owner = "root";
+          group = "root";
+          mode = "0400";
+        };
+
+        nix.settings.secret-key-files = config.age.secrets.nix-cache-key.path;
       }
     )
     (

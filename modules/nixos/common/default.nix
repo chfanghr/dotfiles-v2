@@ -13,6 +13,7 @@
     ./upgrade-diff.nix
     ../../shared
     inputs.home-manager.nixosModules.home-manager
+    inputs.agenix.nixosModules.default
   ];
 
   home-manager.extraSpecialArgs = {inherit inputs;};

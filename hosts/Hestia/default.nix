@@ -7,29 +7,30 @@
     ./backup.nix
     ./boot.nix
     ./disko.nix
-    ./nix.nix
     ./qbittorrent.nix
     ./samba.nix
     ./stash.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
-    inputs.agenix.nixosModules.default
   ];
 
-  dotfiles.nixos.props = {
-    hardware = {
-      audio = true;
-      bluetooth.enable = true;
-      cpu.amd = true;
-      gpu.amd.enable = true;
-      emulation = true;
-      vmHost = true;
+  dotfiles.nixos = {
+    props = {
+      hardware = {
+        audio = true;
+        bluetooth.enable = true;
+        cpu.amd = true;
+        gpu.amd.enable = true;
+        emulation = true;
+        vmHost = true;
+      };
+      nix.roles = {
+        builder = true;
+        consumer = true;
+      };
+      ociHost = true;
     };
-    nix.roles = {
-      builder = true;
-      consumer = true;
-    };
-    ociHost = true;
+    nix.builderPrivateKeyAgeSecret = ../../secrets/hestia-nix-cache-key.age;
   };
 
   time.timeZone = "Asia/Hong_Kong";
