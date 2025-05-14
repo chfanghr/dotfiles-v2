@@ -179,6 +179,11 @@ in {
             options.mountpoint = "legacy";
             mountpoint = "/data/stash";
           };
+          "enc/minecraft/smp" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = "/data/minecraft/smp";
+          };
 
           reserved = {
             type = "zfs_volume";
