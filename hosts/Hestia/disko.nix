@@ -109,6 +109,10 @@ in {
           };
           "enc/root" = {
             type = "zfs_fs";
+            options = {
+              mountpoint = "legacy";
+              canmount = "noauto";
+            };
             mountpoint = "/";
           };
           "enc/home" = {
