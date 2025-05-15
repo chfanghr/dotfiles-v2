@@ -1,6 +1,6 @@
-{pkgs, ...}: {
+{
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_12;
+    useLatestZfsCompatibleKernel = true;
 
     initrd = {
       availableKernelModules = [

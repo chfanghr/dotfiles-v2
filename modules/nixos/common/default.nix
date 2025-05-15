@@ -7,6 +7,7 @@
     ./users
     ./constants.nix
     ./gaming.nix
+    ./kernel.nix
     ./misc.nix
     ./networking.nix
     ./podman.nix

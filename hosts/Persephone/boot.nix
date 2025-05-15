@@ -11,7 +11,7 @@
       ${lib.getExe config.boot.zfs.package} load-key -a
     '';
   in {
-    kernelPackages = pkgs.linuxPackages_6_12;
+    useLatestZfsCompatibleKernel = true;
 
     initrd = {
       availableKernelModules = [

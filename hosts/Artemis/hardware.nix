@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{
   boot = {
     initrd.availableKernelModules = [
       "sdhci_pci"
@@ -15,7 +15,8 @@
       efi.canTouchEfiVariables = true;
     };
     supportedFilesystems.zfs = true;
-    kernelPackages = pkgs.linuxPackages_6_12;
+
+    useLatestZfsCompatibleKernel = true;
     kernelParams = ["nohibernate"];
   };
 
