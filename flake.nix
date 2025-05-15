@@ -37,6 +37,7 @@
     };
     ucodenix.url = "github:e-tho/ucodenix";
     nixos-anywhere.url = "github:nix-community/nixos-anywhere";
+    impermanence.url = "github:nix-community/impermanence";
   };
 
   outputs = inputs @ {flake-parts, ...}:

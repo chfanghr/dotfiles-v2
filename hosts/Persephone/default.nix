@@ -59,8 +59,6 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;

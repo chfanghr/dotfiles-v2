@@ -219,4 +219,9 @@ in {
   fileSystems."/data/minecraft/smp".depends = [
     "/data/minecraft"
   ];
+
+  services.zfs = {
+    trim.enable = true;
+    autoScrub.enable = true;
+  };
 }

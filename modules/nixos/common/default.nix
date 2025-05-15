@@ -5,6 +5,7 @@
     ./nix
     ./services
     ./users
+    ./agenix.nix
     ./constants.nix
     ./gaming.nix
     ./kernel.nix
@@ -14,7 +15,6 @@
     ./upgrade-diff.nix
     ../../shared
     inputs.home-manager.nixosModules.home-manager
-    inputs.agenix.nixosModules.default
   ];
 
   home-manager.extraSpecialArgs = {inherit inputs;};

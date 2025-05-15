@@ -73,8 +73,6 @@
     defaultEditor = true;
   };
 
-  age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-
   services = {
     iperf3 = {
       enable = true;
