@@ -14,6 +14,10 @@
         directory = "/var/lib/nixos-containers/";
         mode = "u=rwx,g=,o=";
       }
+      {
+        directory = "/var/lib/sing-box/";
+        mode = "u=rwx,g=,o=";
+      }
     ];
 
     files = [

@@ -79,7 +79,14 @@
         ];
       };
 
-      services.resolved.enable = true;
+      services = {
+        resolved.enable = true;
+        tailscale = {
+          useRoutingFeatures = "server";
+
+          extraSetFlags = ["--advertise-routes" "10.31.0.0/16"];
+        };
+      };
 
       systemd.network = {
         wait-online.enable = false;

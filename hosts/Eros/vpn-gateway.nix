@@ -1,5 +1,6 @@
 {config, ...}: {
-  age.secrets."oizys-sing-box-default-out".file = ../../secrets/oizys-sing-box-default-out.age;
+  age.secrets."oizys-sing-box-default-out".file =
+    ../../secrets/oizys-sing-box-default-out.age;
 
   containers.vpn-gateway = let
     defaultOutPathInContainer = "/tmp/default-out.json";
@@ -12,14 +13,24 @@
     enableTun = true;
     hostBridge = "br0";
 
-    bindMounts.${defaultOutPathInContainer}.hostPath =
-      config.age.secrets."oizys-sing-box-default-out".path;
+    bindMounts = {
+      ${defaultOutPathInContainer}.hostPath =
+        config.age.secrets."oizys-sing-box-default-out".path;
+      "/var/lib/sing-box/" = {
+        hostPath = "/var/lib/sing-box/";
+        isReadOnly = false;
+      };
+    };
 
     config = {
       lib,
       pkgs,
       ...
-    }: {
+    }: let
+      tunInterfaceName = "tun0";
+      lanInterfaceName = "eth0";
+      gatewayAddress = "10.31.0.2/16";
+    in {
       networking = {
         useNetworkd = true;
 
@@ -119,6 +130,7 @@
                 strict_route = true;
                 tag = "tun-in";
                 type = "tun";
+                interface_name = tunInterfaceName;
               }
             ];
             log = {
@@ -201,37 +213,40 @@
           DUIDRawData = "00:00:ab:11:2a:8f:c6:3e:89:37:a4:bc";
         };
         networks = {
-          "40-eth0" = {
-            matchConfig.Name = "eth0";
+          "40-${lanInterfaceName}" = {
+            matchConfig.Name = lanInterfaceName;
             networkConfig = {
-              DHCP = "ipv4";
+              DHCP = "no";
+              Address = gatewayAddress;
+              DefaultRouteOnDevice = true;
               IPv6AcceptRA = true;
+              Gateway = "10.31.0.1";
             };
             dhcpV4Config.IAID = lib.fromHexString "0x93f4cce6";
           };
-          "40-tun0" = {
-            matchConfig.Name = "tun0";
+          "40-${tunInterfaceName}" = {
+            matchConfig.Name = tunInterfaceName;
             linkConfig = {
               ActivationPolicy = "manual";
               Unmanaged = true;
             };
-            networkConfig.IPMasquerade = "ipv4";
           };
         };
       };
 
-      networking.nftables.ruleset = ''
-        table ip nat {
+      networking.nftables.tables.nat = {
+        family = "ip";
+        content = ''
           chain prerouting {
               type nat hook prerouting priority filter; policy accept;
           }
 
           chain postrouting {
               type nat hook postrouting priority srcnat; policy accept;
-              iifname "eth0" oifname "tun0" masquerade
+              iifname ${lanInterfaceName} oifname ${tunInterfaceName} masquerade
           }
-        }
-      '';
+        '';
+      };
 
       boot.kernel.sysctl = {
         "net.ipv4.ip_forward" = 1;
@@ -241,6 +256,7 @@
       };
 
       time.timeZone = "Asia/Hong_Kong";
+
       system.stateVersion = "24.11";
     };
   };
