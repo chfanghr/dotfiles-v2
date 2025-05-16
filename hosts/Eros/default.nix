@@ -3,6 +3,8 @@
     ./boot.nix
     ./disko.nix
     ./impermanence.nix
+    ./networking.nix
+    ./vpn-gateway.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
     inputs.impermanence.nixosModules.default
@@ -17,24 +19,7 @@
     ociHost = true;
   };
 
-  networking = {
-    hostName = "Eros";
-
-    enableIPv6 = true;
-
-    useDHCP = true;
-
-    nftables.enable = true;
-    firewall.enable = true;
-  };
-
-  services = {
-    iperf3 = {
-      enable = true;
-      openFirewall = true;
-    };
-    lldpd.enable = true;
-  };
+  networking.hostName = "Eros";
 
   time.timeZone = "Asia/Hong_Kong";
 

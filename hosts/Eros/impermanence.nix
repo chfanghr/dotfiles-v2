@@ -10,6 +10,10 @@
         directory = "/var/lib/tailscale/";
         mode = "u=rwx,g=,o=";
       }
+      {
+        directory = "/var/lib/nixos-containers/";
+        mode = "u=rwx,g=,o=";
+      }
     ];
 
     files = [
