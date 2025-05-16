@@ -15,7 +15,11 @@
     bindMounts.${defaultOutPathInContainer}.hostPath =
       config.age.secrets."oizys-sing-box-default-out".path;
 
-    config = {lib, ...}: {
+    config = {
+      lib,
+      pkgs,
+      ...
+    }: {
       networking = {
         useNetworkd = true;
 
@@ -45,16 +49,16 @@
                   outbound = "any";
                   server = "dns_resolver";
                 }
-                # {
-                #   query_type = ["A" "AAAA"];
-                #   rule_set = "geosite-geolocation-!cn";
-                #   server = "dns_fakeip";
-                # }
-                # {
-                #   query_type = ["CNAME"];
-                #   rule_set = "geosite-geolocation-!cn";
-                #   server = "dns_proxy";
-                # }
+                {
+                  query_type = ["A" "AAAA"];
+                  rule_set = "geosite-geolocation-!cn";
+                  server = "dns_fakeip";
+                }
+                {
+                  query_type = ["CNAME"];
+                  rule_set = "geosite-geolocation-!cn";
+                  server = "dns_proxy";
+                }
                 {
                   disable_cache = true;
                   invert = true;
@@ -143,20 +147,20 @@
             route = {
               auto_detect_interface = true;
               final = "proxy";
-              # rule_set = [
-              #   {
-              #     format = "binary";
-              #     path = "geosite-geolocation-!cn.srs";
-              #     tag = "geosite-geolocation-!cn";
-              #     type = "local";
-              #   }
-              #   {
-              #     format = "binary";
-              #     path = "geoip-cn.srs";
-              #     tag = "geoip-cn";
-              #     type = "local";
-              #   }
-              # ];
+              rule_set = [
+                {
+                  format = "binary";
+                  path = "${pkgs.sing-geosite}/share/sing-box/rule-set/geosite-geolocation-!cn.srs";
+                  tag = "geosite-geolocation-!cn";
+                  type = "local";
+                }
+                {
+                  format = "binary";
+                  path = "${pkgs.sing-geoip}/share/sing-box/rule-set/geoip-cn.srs";
+                  tag = "geoip-cn";
+                  type = "local";
+                }
+              ];
               rules = [
                 {
                   outbound = "dns-out";
@@ -172,14 +176,14 @@
                   outbound = "block";
                   port = 443;
                 }
-                # {
-                #   outbound = "proxy";
-                #   rule_set = "geosite-geolocation-!cn";
-                # }
-                # {
-                #   outbound = "direct";
-                #   rule_set = "geoip-cn";
-                # }
+                {
+                  outbound = "proxy";
+                  rule_set = "geosite-geolocation-!cn";
+                }
+                {
+                  outbound = "direct";
+                  rule_set = "geoip-cn";
+                }
                 {
                   ip_is_private = true;
                   outbound = "direct";
@@ -211,9 +215,23 @@
               ActivationPolicy = "manual";
               Unmanaged = true;
             };
+            networkConfig.IPMasquerade = "ipv4";
           };
         };
       };
+
+      networking.nftables.ruleset = ''
+        table ip nat {
+          chain prerouting {
+              type nat hook prerouting priority filter; policy accept;
+          }
+
+          chain postrouting {
+              type nat hook postrouting priority srcnat; policy accept;
+              iifname "eth0" oifname "tun0" masquerade
+          }
+        }
+      '';
 
       boot.kernel.sysctl = {
         "net.ipv4.ip_forward" = 1;

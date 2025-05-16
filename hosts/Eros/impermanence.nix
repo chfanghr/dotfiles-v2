@@ -22,4 +22,6 @@
       "/etc/ssh/ssh_host_rsa_key"
     ];
   };
+
+  age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
 }
