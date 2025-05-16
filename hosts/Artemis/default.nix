@@ -1,6 +1,7 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
 }: {
   imports = [
@@ -47,4 +48,6 @@
     };
     lldpd.enable = true;
   };
+
+  services.prometheus.enable = lib.mkForce false;
 }
