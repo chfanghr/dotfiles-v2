@@ -218,7 +218,6 @@
             networkConfig = {
               DHCP = "no";
               Address = gatewayAddress;
-              DefaultRouteOnDevice = true;
               IPv6AcceptRA = true;
               Gateway = "10.31.0.1";
             };
