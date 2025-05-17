@@ -6,9 +6,10 @@ let
   demeter = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC6nS/4X/8gD4nAVR1aQqbyxZXt2j22NQc4FkHq2aB2Z root@Demeter";
   eros = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK//i91fqmujtuzzRG7VrL3Hx+MsPWwSyNpbHdVYIRUH root@Eros";
   hestia = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbRbsi/M17Abse+SY5LVXAH9hoL5Z7GClbxNv44No8q root@Hestia";
+  artemis = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILa7DkensLy34eSaK3tBtaYNxxbkF6KBAnEEiwnEiBX4 root@Artemis";
 in {
   "athena-sing-box-default-out.age".publicKeys = [master athena];
-  "oizys-sing-box-default-out.age".publicKeys = [master oizys eros];
+  "oizys-sing-box-default-out.age".publicKeys = [master eros artemis];
   "artemis-cifs-credential.age".publicKeys = [master persephone];
   "yotsuba.key.age".publicKeys = [master persephone];
   "oizys-pap-password.age".publicKeys = [master oizys eros];

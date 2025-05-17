@@ -7,30 +7,29 @@
   imports = [
     ./disko.nix
     ./hardware.nix
+    ./networking.nix
     ./samba.nix
     ./tank.nix
+    ./vpn-gateway.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
   ];
 
   dotfiles.nixos.props = {
     nix.roles.consumer = true;
-    users = {
-      fanghr.disableHm = true;
-      guests.fry = true;
+    users.guests.fry = true;
+    hardware = {
+      cpu.intel = true;
+      vmHost = true;
     };
-    hardware.cpu.intel = true;
+    ociHost = true;
   };
 
   time.timeZone = "Asia/Hong_Kong";
 
   users.users.fanghr.hashedPassword = "$y$j9T$tn5fAVwNCepbQ4xrimozH0$FhC1TMwwwcKFfDFtX4qx23AUhHRee9o2GviL5dM35b.";
 
-  networking = {
-    hostName = "Artemis";
-    useNetworkd = true;
-    nftables.enable = true;
-  };
+  networking.hostName = "Artemis";
 
   environment.defaultPackages = [
     pkgs.zellij
