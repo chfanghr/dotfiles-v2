@@ -111,5 +111,67 @@ in {
         };
       };
     };
+
+    containers.sim-lan-host = {
+      autoStart = true;
+
+      ephemeral = true;
+
+      privateNetwork = true;
+      hostBridge = cfg.lanBridge.interface;
+
+      config = {
+        lib,
+        pkgs,
+        ...
+      }: {
+        networking = {
+          useNetworkd = true;
+
+          nftables.enable = true;
+          firewall.enable = true;
+
+          useHostResolvConf = lib.mkForce false;
+
+          enableIPv6 = true;
+
+          nameservers = [
+            "1.1.1.1"
+            "233.5.5.5"
+            "114.114.114.114"
+          ];
+        };
+
+        services.resolved.enable = true;
+
+        systemd.network = {
+          wait-online.enable = false;
+          config.dhcpV4Config = {
+            DUIDType = "vendor";
+            DUIDRawData = "00:00:ab:11:30:a8:a9:28:56:de:e9:8e";
+          };
+          networks."40-eth0" = {
+            matchConfig.Name = "eth0";
+            networkConfig = {
+              DHCP = "ipv4";
+              IPv6AcceptRA = true;
+            };
+            dhcpV4Config.IAID = lib.fromHexString "0x313149f";
+          };
+        };
+
+        environment.systemPackages = with pkgs; [
+          dig
+          curl
+          trippy
+          ethtool
+          speedtest-cli
+          fast-cli
+        ];
+
+        time.timeZone = "Asia/Hong_Kong";
+        system.stateVersion = "24.11";
+      };
+    };
   };
 }

@@ -2,11 +2,16 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }: let
   inherit (lib) mkOption types mkForce;
 
   cfg = config.artemis.networking.vpnGateway;
+
+  pkgsUnstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs.stdenv) system;
+  };
 in {
   options.artemis.networking.vpnGateway = {
     address = mkOption {type = types.str;};
@@ -52,8 +57,8 @@ in {
 
   config = {
     artemis.networking.vpnGateway = {
-      address = "10.31.0.100";
-      vpnServerConfig.encryptedFile = ../../secrets/oizys-sing-box-default-out.age;
+      address = "10.31.0.100/16";
+      vpnServerConfig.encryptedFile = ../../secrets/vpn-gateway-experimental-proxy-out.age;
       persistentState.hostPath = "/var/lib/sing-box/";
     };
 
@@ -102,124 +107,117 @@ in {
 
         services.sing-box = {
           enable = true;
+          package = pkgsUnstable.sing-box;
           settings = {
-            dns = {
-              fakeip = {
-                enabled = true;
-                inet4_range = "198.18.0.0/15";
-                inet6_range = "fc00::/18";
-              };
-              final = "dns_direct";
-              independent_cache = true;
-              rules = [
-                {
-                  outbound = "any";
-                  server = "dns_resolver";
-                }
-                {
-                  query_type = ["A" "AAAA"];
-                  rule_set = "geosite-geolocation-!cn";
-                  server = "dns_fakeip";
-                }
-                {
-                  query_type = ["CNAME"];
-                  rule_set = "geosite-geolocation-!cn";
-                  server = "dns_proxy";
-                }
-                {
-                  disable_cache = true;
-                  invert = true;
-                  query_type = ["A" "AAAA" "CNAME"];
-                  server = "dns_refused";
-                }
-              ];
-              servers = [
-                {
-                  address = "tcp://1.1.1.1";
-                  address_resolver = "dns_resolver";
-                  detour = "proxy";
-                  strategy = "ipv4_only";
-                  tag = "dns_proxy";
-                }
-                {
-                  address = "https://dns.alidns.com/dns-query";
-                  address_resolver = "dns_resolver";
-                  detour = "direct";
-                  strategy = "ipv4_only";
-                  tag = "dns_direct";
-                }
-                {
-                  address = "223.5.5.5";
-                  detour = "direct";
-                  tag = "dns_resolver";
-                }
-                {
-                  address = "rcode://success";
-                  tag = "dns_success";
-                }
-                {
-                  address = "rcode://refused";
-                  tag = "dns_refused";
-                }
-                {
-                  address = "fakeip";
-                  tag = "dns_fakeip";
-                }
-              ];
-            };
+            log.level = "info";
             experimental = {
               cache_file = {
                 enabled = true;
                 path = "cache.db";
-                store_fakeip = true;
                 store_rdrc = true;
               };
             };
+            dns = {
+              servers = [
+                {
+                  tag = "dns-bootstrap";
+                  address = "223.5.5.5";
+                  detour = "direct-out";
+                }
+                {
+                  tag = "dns-direct";
+                  address = "https://dns.alidns.com/dns-query";
+                  address_resolver = "dns-bootstrap";
+                  detour = "direct-out";
+                }
+                {
+                  tag = "dns-proxy";
+                  address = "https://1.1.1.1/dns-query";
+                  address_resolver = "dns-direct";
+                  detour = "proxy-out";
+                  strategy = "ipv4_only";
+                }
+              ];
+              rules = [
+                {
+                  outbound = "any";
+                  server = "dns-bootstrap";
+                }
+                {
+                  rule_set = "geosite-geolocation-cn";
+                  server = "dns-direct";
+                }
+              ];
+              final = "dns-proxy";
+              independent_cache = true;
+            };
             inbounds = [
               {
-                address = ["172.16.0.1/30" "fd00::1/126"];
-                auto_route = true;
-                mtu = 1492;
-                sniff = true;
-                sniff_override_destination = false;
-                stack = "system";
-                strict_route = true;
-                tag = "tun-in";
                 type = "tun";
+                tag = "tun-in";
                 interface_name = cfg.tunInterface;
+                address = ["172.18.0.1/30" "fd00::1/126"];
+                mtu = 9000;
+                auto_route = true;
+                auto_redirect = true;
+                strict_route = true;
+                stack = "system";
+                sniff = true;
+                sniff_override_destination = true;
               }
             ];
-            log = {
-              level = "info";
-              timestamp = true;
-            };
             outbounds = [
               {
-                # tag = "proxy";
+                # tag = "proxy-out";
                 _secret = cfg.vpnServerConfig.mountPoint;
                 quote = false;
               }
               {
-                tag = "direct";
                 type = "direct";
-              }
-              {
-                tag = "block";
-                type = "block";
-              }
-              {
-                tag = "dns-out";
-                type = "dns";
+                tag = "direct-out";
               }
             ];
             route = {
-              auto_detect_interface = true;
-              final = "proxy";
+              rules = [
+                {
+                  action = "sniff";
+                }
+                {
+                  protocol = "dns";
+                  action = "hijack-dns";
+                }
+                {
+                  protocol = "bittorrent";
+                  action = "reject";
+                }
+                {
+                  protocol = "stun";
+                  outbound = "direct-out";
+                }
+                {
+                  network = ["udp"];
+                  source_port = [41641];
+                  outbound = "direct-out";
+                }
+                {
+                  network = ["udp"];
+                  port = [41641];
+                  outbound = "direct-out";
+                }
+                {
+                  rule_set = ["geoip-cn"];
+                  outbound = "direct-out";
+                }
+                {
+                  ip_is_private = true;
+                  action = "reject";
+                }
+              ];
               rule_set = [
                 {
                   format = "binary";
-                  path = "${pkgs.sing-geosite}/share/sing-box/rule-set/geosite-geolocation-!cn.srs";
-                  tag = "geosite-geolocation-!cn";
+                  path = "${pkgs.sing-geosite}/share/sing-box/rule-set/geosite-geolocation-cn.srs";
+                  tag = "geosite-geolocation-cn";
                   type = "local";
                 }
                 {
@@ -229,34 +227,8 @@ in {
                   type = "local";
                 }
               ];
-              rules = [
-                {
-                  outbound = "dns-out";
-                  protocol = "dns";
-                }
-                {
-                  network = "tcp";
-                  outbound = "block";
-                  port = 853;
-                }
-                {
-                  network = "udp";
-                  outbound = "block";
-                  port = 443;
-                }
-                {
-                  outbound = "proxy";
-                  rule_set = "geosite-geolocation-!cn";
-                }
-                {
-                  outbound = "direct";
-                  rule_set = "geoip-cn";
-                }
-                {
-                  ip_is_private = true;
-                  outbound = "direct";
-                }
-              ];
+              final = "proxy-out";
+              default_interface = "eth0";
             };
           };
         };
@@ -281,20 +253,6 @@ in {
               };
             };
           };
-        };
-
-        networking.nftables.tables.nat = {
-          family = "ip";
-          content = ''
-            chain prerouting {
-                type nat hook prerouting priority filter; policy accept;
-            }
-
-            chain postrouting {
-                type nat hook postrouting priority srcnat; policy accept;
-                iifname ${cfg.lanInterface} oifname ${cfg.tunInterface} masquerade
-            }
-          '';
         };
 
         boot.kernel.sysctl = {
