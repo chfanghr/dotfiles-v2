@@ -1,5 +1,5 @@
-{
+{pkgs, ...}: {
   services.foldingathome.enable = true;
 
-  hardware.amdgpu.opencl.enable = true;
+  systemd.services.foldingathome.environment.OCL_ICD_VENDORS = "${pkgs.pocl}/etc/OpenCL/vendors/";
 }

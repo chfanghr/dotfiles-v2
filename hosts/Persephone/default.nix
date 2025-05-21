@@ -11,6 +11,7 @@
     ./fah.nix
     ./grafana.nix
     ./kerberos.nix
+    ./loki.nix
     ./migration.nix
     ./minidlna.nix
     ./networking.nix
@@ -64,10 +65,5 @@
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-  };
-
-  services.smartd = {
-    enable = true;
-    autodetect = true;
   };
 }

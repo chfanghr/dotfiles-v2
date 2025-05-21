@@ -102,6 +102,14 @@
         {url = with config.services.prometheus; "http://127.0.0.1:${builtins.toString port}/";}
       ];
     };
+
+    grafana.provision.datasources.settings.datasources = [
+      {
+        name = "Prometheus";
+        url = "http://127.0.0.1:${builtins.toString config.services.prometheus.port}";
+        type = "prometheus";
+      }
+    ];
   };
 
   systemd.services.prometheus.bindsTo = ["data-prometheus.mount"];
