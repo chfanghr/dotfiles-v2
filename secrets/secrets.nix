@@ -26,4 +26,5 @@ in {
   "hestia-nix-cache-key.age".publicKeys = [master hestia];
   "demeter-nix-cache-key.age".publicKeys = [master demeter];
   "vpn-gateway-experimental-proxy-out.age".publicKeys = [master artemis];
+  "hestia-ap-password.age".publicKeys = [master hestia];
 }

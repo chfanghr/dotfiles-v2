@@ -10,6 +10,7 @@
         "usbhid"
         "usb_storage"
         "sd_mod"
+        "mt7925e"
       ];
 
       kernelModules = [
@@ -34,4 +35,6 @@
 
     plymouth.enable = false;
   };
+
+  services.hardware.bolt.enable = true;
 }

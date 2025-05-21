@@ -1,14 +1,21 @@
 {
   inputs,
   pkgs,
+  lib,
   ...
-}: {
+}: let
+  inherit (lib) mkDefault;
+in {
   imports = [
+    ./containers
+    ./desktop
+    ./server
     ./backup.nix
     ./boot.nix
     ./disko.nix
     ./minecraft.nix
-    ./qbittorrent.nix
+    ./mode.nix
+    ./networking.nix
     ./samba.nix
     ./stash.nix
     ../../modules/nixos/common
@@ -38,30 +45,7 @@
 
   users.users.fanghr.hashedPassword = "$y$j9T$JK4s34tHJmsXrZkf/VUXt.$rokP.46N.fjjjxBjD/sD9XUyFkF18PPChA4Yviq5uGB";
 
-  networking = {
-    hostName = "Hestia";
-    hostId = "5dc9aa9c";
-
-    enableIPv6 = true;
-
-    nftables.enable = true;
-    firewall.enable = true;
-
-    interfaces = {
-      enp195s0.useDHCP = true;
-      enp198s0f3u1 = {
-        useDHCP = false;
-        ipv4.addresses = [
-          {
-            address = "192.168.255.5";
-            prefixLength = 24;
-          }
-        ];
-      };
-    };
-  };
-
-  systemd.network.networks."40-enp195s0".networkConfig.IPv6AcceptRA = true;
+  networking.hostName = "Hestia";
 
   environment.defaultPackages = [
     pkgs.vulkan-tools
@@ -73,25 +57,9 @@
     defaultEditor = true;
   };
 
-  services = {
-    iperf3 = {
-      enable = true;
-      openFirewall = true;
-    };
-    lldpd.enable = true;
-    tailscale-traefik.enable = true;
-  };
+  services.tailscale-traefik.enable = true;
 
-  specialisation.desktop.configuration = {
-    dotfiles.shared.props.purposes.graphical = {
-      gaming = true;
-      desktop = true;
-    };
+  hestia.mode = mkDefault "server";
 
-    home-manager.users.fanghr = {
-      home.packages = [
-        pkgs.qbittorrent
-      ];
-    };
-  };
+  specialisation.desktop.configuration.hestia.mode = "desktop";
 }

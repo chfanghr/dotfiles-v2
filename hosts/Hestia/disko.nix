@@ -231,4 +231,6 @@ in {
     trim.enable = true;
     autoScrub.enable = true;
   };
+
+  networking.hostId = "5dc9aa9c";
 }
