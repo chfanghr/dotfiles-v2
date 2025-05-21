@@ -46,17 +46,21 @@ in {
 
   networking.hostName = "Hestia";
 
-  environment.defaultPackages = [
-    pkgs.vulkan-tools
-    pkgs.nvtopPackages.amd
+  environment.systemPackages = with pkgs; [
+    vulkan-tools
+    nvtopPackages.amd
+    libimobiledevice
+    ifuse
   ];
 
-  programs.vim = {
-    enable = true;
-    defaultEditor = true;
-  };
+  services = {
+    tailscale-traefik.enable = true;
 
-  services.tailscale-traefik.enable = true;
+    usbmuxd = {
+      enable = true;
+      package = pkgs.usbmuxd2;
+    };
+  };
 
   hestia.mode = mkDefault "server";
 
