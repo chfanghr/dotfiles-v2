@@ -29,12 +29,10 @@ in {
     lan = {
       veth = "ve-mc-lan";
       hostBridge =
-        (
-          if config.hestia.mode == "server"
-          then config.hestia.server
-          else config.hestia.desktop
-        )
+        config
+        .hestia
         .networking
+        .${config.hestia.mode}
         .lanBridge
         .interface;
     };

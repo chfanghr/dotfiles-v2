@@ -8,14 +8,13 @@
 in {
   imports = [
     ./containers
-    ./desktop
-    ./server
     ./backup.nix
     ./boot.nix
     ./disko.nix
     ./minecraft.nix
     ./mode.nix
     ./networking.nix
+    ./qbittorrent.nix
     ./samba.nix
     ./stash.nix
     ../../modules/nixos/common
