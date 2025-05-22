@@ -38,6 +38,28 @@ in {
             }
           ];
         }
+        {
+          job_name = "${config.networking.hostName}-smartctl";
+          static_configs = [
+            {
+              targets = [
+                "127.0.0.1:${toString config.services.prometheus.exporters.smartctl.port}"
+              ];
+              labels.instance = config.networking.hostName;
+            }
+          ];
+        }
+        {
+          job_name = "${config.networking.hostName}-systemd";
+          static_configs = [
+            {
+              targets = [
+                "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}"
+              ];
+              labels.instance = config.networking.hostName;
+            }
+          ];
+        }
       ];
 
       remoteWrite = [
@@ -53,6 +75,8 @@ in {
           enabledCollectors = ["systemd"];
           listenAddress = "127.0.0.1";
         };
+        smartctl.enable = true;
+        systemd.enable = true;
       };
     };
   };

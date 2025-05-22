@@ -1,5 +1,5 @@
 {config, ...}: let
-  safeMountPoint = "/mnt/safe";
+  safeMountPoint = "/data/safe";
 in {
   systemd.tmpfiles.settings."10-backup".${safeMountPoint}.d = {
     user = "root";
@@ -11,12 +11,7 @@ in {
 
   services = {
     samba.settings = {
-      safe = {
-        path = safeMountPoint;
-        browsable = "no";
-        "force group" = "root";
-        "force user" = "fanghr";
-      };
+      safe-ro-mirror.path = safeMountPoint;
     };
 
     zrepl = {
@@ -34,14 +29,11 @@ in {
             key = config.age.secrets."zrepl-hestia.snow-dace.ts.net.key".path;
             server_cn = "persephone.snow-dace.ts.net";
           };
-          root_fs = "rpool/backup";
+          root_fs = "zp-striped/enc/zrepl";
           interval = "10m";
           recv = {
-            placeholder.encryption = "off";
-            properties.override = {
-              mountpoint = "legacy";
-              "com.sun:auto-snapshot" = "false";
-            };
+            placeholder.encryption = "inherit";
+            properties.override.mountpoint = "legacy";
           };
           pruning = {
             keep_sender = [

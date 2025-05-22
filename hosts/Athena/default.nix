@@ -28,7 +28,6 @@ in {
     ./sing-box.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
-    inputs.agenix.nixosModules.default
   ];
 
   dotfiles.nixos.props = {
@@ -125,8 +124,6 @@ in {
     enable = true;
     defaultEditor = true;
   };
-
-  age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
 
   powerManagement.cpuFreqGovernor = "performance";
 

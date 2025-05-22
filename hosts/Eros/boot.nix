@@ -1,17 +1,35 @@
-{
+{config, ...}: {
   boot = {
-    initrd.availableKernelModules = [
-      "xhci_pci"
-      "nvme"
-      "usbhid"
-      "usb_storage"
-      "sd_mod"
-      "sdhci_pci"
-      "igc" # enp1s0 enp3s0 enp4s0
-      "r8152" # enp0s20f0u4
-    ];
+    useLatestZfsCompatibleKernel = true;
 
-    kernelModules = ["kvm-intel"];
+    initrd = {
+      availableKernelModules = [
+        "xhci_pci"
+        "nvme"
+        "usbhid"
+        "usb_storage"
+        "sd_mod"
+        "sdhci_pci"
+        "igc"
+      ];
+
+      systemd = {
+        enable = true;
+
+        services.rollback = {
+          description = "Rollback root filesystem to a pristine state";
+          wantedBy = ["initrd.target"];
+          after = ["zfs-import-rpool.service"];
+          before = ["sysroot.mount"];
+          path = [config.boot.zfs.package];
+          unitConfig.DefaultDependencies = "no";
+          serviceConfig.Type = "oneshot";
+          script = ''
+            zfs rollback -r rpool/root@blank && echo " >> >> Rollback Complete << <<"
+          '';
+        };
+      };
+    };
 
     loader = {
       systemd-boot.enable = true;
@@ -19,12 +37,5 @@
     };
   };
 
-  hardware.cpu.intel.updateMicrocode = true;
-
   powerManagement.cpuFreqGovernor = "performance";
-
-  services = {
-    btrfs.autoScrub.enable = true;
-    fstrim.enable = true;
-  };
 }

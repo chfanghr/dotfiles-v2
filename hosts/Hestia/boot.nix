@@ -1,6 +1,6 @@
-{pkgs, ...}: {
+{
   boot = {
-    kernelPackages = pkgs.linuxPackages_6_12;
+    useLatestZfsCompatibleKernel = true;
 
     initrd = {
       availableKernelModules = [
@@ -10,6 +10,7 @@
         "usbhid"
         "usb_storage"
         "sd_mod"
+        "mt7925e"
       ];
 
       kernelModules = [
@@ -24,19 +25,7 @@
 
       network.enable = true;
 
-      luks = {
-        yubikeySupport = true;
-        devices = {
-          enc_root = {
-            preLVM = false;
-            yubikey = {
-              slot = 2;
-              twoFactor = false;
-              storage.device = "/dev/disk/by-uuid/E0DF-130A";
-            };
-          };
-        };
-      };
+      luks.yubikeySupport = true;
     };
 
     loader = {
@@ -47,12 +36,5 @@
     plymouth.enable = false;
   };
 
-  services.zfs = {
-    trim.enable = true;
-
-    autoScrub = {
-      enable = true;
-      pools = ["rpool"];
-    };
-  };
+  services.hardware.bolt.enable = true;
 }

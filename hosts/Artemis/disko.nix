@@ -58,4 +58,8 @@
       };
     };
   };
+
+  services.zfs.autoScrub.enable = true;
+
+  networking.hostId = "f12cb296";
 }

@@ -11,6 +11,7 @@
     ./fah.nix
     ./grafana.nix
     ./kerberos.nix
+    ./loki.nix
     ./migration.nix
     ./minidlna.nix
     ./networking.nix
@@ -32,17 +33,20 @@
         proxy.useGateway = true;
       };
     };
-    nixos.props = {
-      hardware = {
-        cpu.amd = true;
-        emulation = true;
-        vmHost = true;
+    nixos = {
+      props = {
+        hardware = {
+          cpu.amd = true;
+          emulation = true;
+          vmHost = true;
+        };
+        nix.roles = {
+          builder = true;
+          consumer = true;
+        };
+        ociHost = true;
       };
-      nix.roles = {
-        builder = true;
-        consumer = true;
-      };
-      ociHost = true;
+      nix.builderPrivateKeyAgeSecret = ../../secrets/persephone-nix-cache-key.age;
     };
   };
 
@@ -56,17 +60,10 @@
 
   nixpkgs.config.allowUnfree = true;
 
-  age.identityPaths = ["/etc/ssh/ssh_host_ed25519_key"];
-
   programs.neovim = {
     enable = true;
     defaultEditor = true;
     viAlias = true;
     vimAlias = true;
-  };
-
-  services.smartd = {
-    enable = true;
-    autodetect = true;
   };
 }
