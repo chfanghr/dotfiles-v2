@@ -42,6 +42,7 @@
     firewall.enable = true;
   };
 
+  systemd.network.networks."40-bond0".networkConfig.IPv6AcceptRA = true;
   boot = {
     kernelModules = ["tcp_bbr"];
 
