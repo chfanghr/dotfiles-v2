@@ -38,6 +38,7 @@
     ucodenix.url = "github:e-tho/ucodenix";
     nixos-anywhere.url = "github:nix-community/nixos-anywhere";
     impermanence.url = "github:nix-community/impermanence";
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   outputs = inputs @ {flake-parts, ...}:

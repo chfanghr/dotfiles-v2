@@ -16,6 +16,7 @@
           inputs'.agenix.packages.default
           inputs'.disko.packages.default
           inputs'.nixos-anywhere.packages.default
+          inputs'.deploy-rs.packages.default
           pkgs.nurl
         ];
     });
