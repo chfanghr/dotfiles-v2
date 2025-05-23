@@ -23,6 +23,7 @@
     hostname = fqdn;
     profiles.system = {
       sshUser = "fanghr";
+      user = "root";
       path = deploy-rs.lib.x86_64-linux.activate.nixos nixos;
       interactiveSudo = true;
       fastConnection = true;
