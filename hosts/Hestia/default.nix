@@ -65,4 +65,6 @@ in {
   hestia.mode = mkDefault "server";
 
   specialisation.desktop.configuration.hestia.mode = "desktop";
+
+  nixpkgs.localSystem.system = "x86_64-linux";
 }

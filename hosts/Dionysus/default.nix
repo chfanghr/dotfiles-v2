@@ -104,4 +104,6 @@
       boot.kernelPackages = pkgs.linuxPackages_latest;
     };
   };
+
+  nixpkgs.localSystem.system = "x86_64-linux";
 }

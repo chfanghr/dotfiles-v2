@@ -134,4 +134,6 @@
   };
 
   powerManagement.cpuFreqGovernor = lib.mkForce "performance";
+
+  nixpkgs.localSystem.system = "x86_64-linux";
 }

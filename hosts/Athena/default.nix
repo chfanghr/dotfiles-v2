@@ -135,4 +135,6 @@ in {
     };
     lldpd.enable = true;
   };
+
+  nixpkgs.localSystem.system = "x86_64-linux";
 }
