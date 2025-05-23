@@ -29,8 +29,6 @@
     root.hashedPassword = "$y$j9T$LclEAQG.FK8eoV2.mc6ku1$dDc7MUikq2gi7Jpbo4AeQsnkdUjEFsfJ0XbhMY3yedA";
   };
 
-  specialisation.plasma.configuration = {
-    jovian.steam.desktopSession = lib.mkForce "plasma";
-    services.desktopManager.plasma6.enable = true;
-  };
+  services.desktopManager.plasma6.enable = true;
+  jovian.steam.desktopSession = lib.mkForce "plasma";
 }
