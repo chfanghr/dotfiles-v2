@@ -55,7 +55,7 @@
     map (h: nameValuePair h.name h.nixos) (filter (h: h.kind == "nixos") hosts)
   );
 
-  deploy = {nodes = listToAttrs (map (h: h.name h.node) hosts);};
+  deploy = {nodes = listToAttrs (map (h: nameValuePair h.name h.node) hosts);};
 in {
   flake = {
     inherit nixosConfigurations deploy;
