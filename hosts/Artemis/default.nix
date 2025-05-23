@@ -48,5 +48,13 @@
     lldpd.enable = true;
   };
 
-  services.prometheus.enable = lib.mkForce false;
+  services.prometheus = {
+    enable = lib.mkForce false;
+    exporters = {
+      node.enable = true;
+      systemd.enable = true;
+      smartctl.enable = true;
+      zfs.enable = true;
+    };
+  };
 }
