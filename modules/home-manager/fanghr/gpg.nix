@@ -5,7 +5,7 @@
     enableSshSupport = true;
     enableZshIntegration = true;
     enableScDaemon = true;
-    pinentryPackage = pkgs.pinentry-curses;
+    pinentry.package = pkgs.pinentry-curses;
   };
 
   programs.gpg = {
