@@ -23,7 +23,7 @@
     hostname = fqdn;
     profiles.system = {
       sshUser = "fanghr";
-      path = deploy-rs.${nixos.config.nixpkgs.system}.activate.nixos nixos;
+      path = deploy-rs.lib.x86_64-linux.activate.nixos nixos;
       interactiveSudo = true;
       fastConnection = true;
     };
