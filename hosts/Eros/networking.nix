@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   networking = {
     useNetworkd = true;
 
@@ -28,6 +28,12 @@
     enableIPv6 = true;
   };
 
+  services.tailscale = {
+    useRoutingFeatures = lib.mkForce "both";
+
+    extraSetFlags = ["--advertise-routes" "10.31.0.0/16"];
+  };
+
   systemd.network.networks = {
     "40-enp2s0".networkConfig.IPv6AcceptRA = true;
     "40-br0" = {
@@ -49,7 +55,7 @@
     openFirewall = true;
   };
 
-  containers.sim-lan-host = {
+  containers.sim-lan-host-ero = {
     autoStart = true;
 
     ephemeral = true;
@@ -81,11 +87,6 @@
 
       services = {
         resolved.enable = true;
-        tailscale = {
-          useRoutingFeatures = "server";
-
-          extraSetFlags = ["--advertise-routes" "10.31.0.0/16"];
-        };
       };
 
       systemd.network = {
