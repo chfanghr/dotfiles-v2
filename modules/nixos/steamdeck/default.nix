@@ -22,7 +22,7 @@ in {
     ./decky.nix
   ];
 
-  nixpkgs.localSystem.system = "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   boot = {
     plymouth.enable = true;

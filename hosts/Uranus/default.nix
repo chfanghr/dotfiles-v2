@@ -33,6 +33,4 @@
     jovian.steam.desktopSession = lib.mkForce "plasma";
     services.desktopManager.plasma6.enable = true;
   };
-
-  nixpkgs.localSystem.system = "x86_64-linux";
 }

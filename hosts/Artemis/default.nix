@@ -31,7 +31,7 @@
 
   networking.hostName = "Artemis";
 
-  nixpkgs.localSystem.system = "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 
   environment.defaultPackages = [
     pkgs.zellij

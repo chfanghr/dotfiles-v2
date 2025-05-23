@@ -66,5 +66,5 @@ in {
 
   specialisation.desktop.configuration.hestia.mode = "desktop";
 
-  nixpkgs.localSystem.system = "x86_64-linux";
+  nixpkgs.hostPlatform = "x86_64-linux";
 }
