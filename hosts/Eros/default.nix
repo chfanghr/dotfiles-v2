@@ -1,5 +1,6 @@
 {inputs, ...}: {
   imports = [
+    ./artemis-telemetry.nix
     ./boot.nix
     ./disko.nix
     ./impermanence.nix
@@ -23,4 +24,6 @@
   time.timeZone = "Asia/Hong_Kong";
 
   users.users.fanghr.hashedPassword = "$y$j9T$zOPTGKuw0I7uCBkW1Y3pV1$cm7EDph6molwLwx2iGrD2frPvADEzExs7jwDQaCVOn0";
+
+  security.sudo-rs.enable = true;
 }
