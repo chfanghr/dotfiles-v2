@@ -5,7 +5,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-2411.url = "github:nixos/nixpkgs/nixos-24.11";
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "github:nix-community/home-manager/release-25.05";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vscode-server = {
@@ -37,6 +37,7 @@
     ucodenix.url = "github:e-tho/ucodenix";
     nixos-anywhere.url = "github:nix-community/nixos-anywhere";
     impermanence.url = "github:nix-community/impermanence";
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   outputs = inputs @ {flake-parts, ...}:

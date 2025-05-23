@@ -66,4 +66,6 @@
     viAlias = true;
     vimAlias = true;
   };
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 }

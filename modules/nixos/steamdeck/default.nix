@@ -22,6 +22,8 @@ in {
     ./decky.nix
   ];
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   boot = {
     plymouth.enable = true;
     loader = {

@@ -31,6 +31,8 @@
 
   networking.hostName = "Artemis";
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+
   environment.defaultPackages = [
     pkgs.zellij
   ];
@@ -48,5 +50,16 @@
     lldpd.enable = true;
   };
 
-  services.prometheus.enable = lib.mkForce false;
+  services.prometheus = {
+    enable = lib.mkForce false;
+    exporters = {
+      node = {
+        enable = true;
+        listenAddress = lib.mkForce "0.0.0.0";
+      };
+      systemd.enable = true;
+      smartctl.enable = true;
+      zfs.enable = true;
+    };
+  };
 }

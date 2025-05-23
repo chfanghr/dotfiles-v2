@@ -18,6 +18,10 @@
         directory = "/var/lib/sing-box/";
         mode = "u=rwx,g=,o=";
       }
+      {
+        directory = "/var/db/sudo/lectured";
+        mode = "u=rwx,g=,o=";
+      }
     ];
 
     files = [

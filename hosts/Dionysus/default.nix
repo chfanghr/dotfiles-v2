@@ -104,4 +104,6 @@
       boot.kernelPackages = pkgs.linuxPackages_latest;
     };
   };
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 }

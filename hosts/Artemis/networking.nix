@@ -36,6 +36,12 @@ in {
       enableIPv6 = true;
       useNetworkd = true;
       nftables.enable = true;
+
+      firewall.interfaces.${config.services.tailscale.interfaceName}.allowedTCPPorts = with config.services.prometheus.exporters; [
+        node.port
+        systemd.port
+        smartctl.port
+      ];
     };
 
     artemis.networking = {

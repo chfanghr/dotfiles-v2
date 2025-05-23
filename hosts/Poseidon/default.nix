@@ -134,4 +134,6 @@
   };
 
   powerManagement.cpuFreqGovernor = lib.mkForce "performance";
+
+  nixpkgs.hostPlatform = "x86_64-linux";
 }
