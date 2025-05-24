@@ -151,6 +151,7 @@ in {
                   IPv4Forwarding = "yes";
                   IPv6Forwarding = "yes";
                   IPv6AcceptRA = true;
+                  IPv6PrivacyExtensions = "kernel";
                 };
                 bridgeConfig.UseBPDU = true;
               };
