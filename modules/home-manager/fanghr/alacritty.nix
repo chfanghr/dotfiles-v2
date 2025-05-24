@@ -33,6 +33,6 @@ lib.mkIf config.dotfiles.shared.props.purposes.graphical.desktop {
   };
 
   home.packages = [
-    pkgs.nerdfonts
+    pkgs.nerd-fonts.caskaydia-mono
   ];
 }

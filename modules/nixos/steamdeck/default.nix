@@ -32,13 +32,15 @@ in {
     };
   };
 
+  services.desktopManager.plasma6.enable = true;
+
   jovian = {
     devices.steamdeck.enable = true;
     steam = {
       enable = true;
       autoStart = true;
       user = "fanghr";
-      desktopSession = "hyprland";
+      desktopSession = "plasma";
     };
   };
 

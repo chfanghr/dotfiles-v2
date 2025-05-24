@@ -4,6 +4,7 @@
   ...
 }: {
   containers.cardano-node-preprod = {
+    nixpkgs = inputs.nixpkgs-2411;
     privateNetwork = true;
     autoStart = true;
     hostAddress = "172.16.0.1";
