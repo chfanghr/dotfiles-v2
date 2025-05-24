@@ -160,7 +160,16 @@ in {
 
               network = {
                 wait-online.ignoredInterfaces = [cfg.lan.veth];
-                networks."40-${cfg.lan.veth}".networkConfig.IPv6AcceptRA = true;
+                networks = {
+                  "40-${cfg.lan.veth}".networkConfig = {
+                    IPv6AcceptRA = true;
+                    IPv6PrivacyExtensions = "kernel";
+                  };
+                  "40-${cfg.monitoring.veth}" = {
+                    matchConfig.Name = cfg.monitoring.veth;
+                    linkConfig.Unmanaged = true;
+                  };
+                };
               };
             };
 

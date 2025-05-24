@@ -35,8 +35,8 @@
 
     monitoring = {
       veth = "ve-qbt-mon";
-      hostAddress = "172.16.0.1";
-      localAddress = "172.16.0.2";
+      hostAddress = "172.17.0.1";
+      localAddress = "172.17.0.2";
       uiPort = 8080;
     };
 

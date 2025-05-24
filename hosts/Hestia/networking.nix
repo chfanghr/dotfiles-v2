@@ -164,6 +164,13 @@ in {
                 matchConfig.Name = cfg.lanBridge.dummy.interface;
                 networkConfig.Bridge = cfg.lanBridge.interface;
               };
+              "40-dont-touch-veth" = {
+                matchConfig = {
+                  Name = "ve-*";
+                  Kind = "veth";
+                };
+                linkConfig.Unmanaged = true;
+              };
             };
           };
 

@@ -102,12 +102,13 @@ in {
 
             useNetworkd = true;
 
-            useDHCP = false;
-
-            interfaces.${cfg.p2p.veth}.useDHCP = true;
+            interfaces = {
+              ${cfg.p2p.veth}.useDHCP = true;
+            };
 
             useHostResolvConf = mkForce false;
 
+            nftables.enable = true;
             firewall = {
               enable = true;
               interfaces.${cfg.monitoring.veth}.allowedTCPPorts = [
@@ -143,7 +144,16 @@ in {
             network = {
               wait-online.ignoredInterfaces = [cfg.p2p.veth];
               # HACK: SLAAC doesn't work unless this is set to true
-              networks."40-${cfg.p2p.veth}".networkConfig.IPv6AcceptRA = true;
+              networks = {
+                "40-${cfg.p2p.veth}".networkConfig = {
+                  IPv6AcceptRA = true;
+                  IPv6PrivacyExtensions = "kernel";
+                };
+                "40-${cfg.monitoring.veth}" = {
+                  matchConfig.Name = cfg.monitoring.veth;
+                  linkConfig.Unmanaged = true;
+                };
+              };
             };
           };
 
