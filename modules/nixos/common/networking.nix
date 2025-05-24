@@ -22,7 +22,6 @@ in {
           "9.9.9.9"
           "233.5.5.5"
           "114.114.114.114"
-          config.dotfiles.shared.networking.home.router.address
         ];
       };
     }
