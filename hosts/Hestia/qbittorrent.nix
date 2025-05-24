@@ -1,5 +1,4 @@
 {
-  inputs,
   pkgs,
   config,
   ...
@@ -7,12 +6,7 @@
   hestia.containers.qbittorrent = {
     containerName = "qbt";
 
-    qbtPackage = let
-      pkgsUnstable = import inputs.nixpkgs-unstable {
-        inherit (pkgs.stdenv) system;
-      };
-    in
-      pkgsUnstable.qbittorrent-nox;
+    qbtPackage = pkgs.qbittorrent-nox;
 
     dataDir = "/data/qbittorrent";
 

@@ -2,16 +2,11 @@
   lib,
   config,
   pkgs,
-  inputs,
   ...
 }: let
   inherit (lib) mkOption types mkForce;
 
   cfg = config.artemis.networking.vpnGateway;
-
-  pkgsUnstable = import inputs.nixpkgs-unstable {
-    inherit (pkgs.stdenv) system;
-  };
 in {
   options.artemis.networking.vpnGateway = {
     address = mkOption {type = types.str;};
@@ -107,7 +102,6 @@ in {
 
         services.sing-box = {
           enable = true;
-          package = pkgsUnstable.sing-box;
           settings = {
             log.level = "info";
             experimental = {
