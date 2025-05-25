@@ -48,7 +48,19 @@
         firewall.enable = true;
       };
 
-      systemd.network.networks."40-bond0".networkConfig.IPv6AcceptRA = true;
+      systemd.network.networks = {
+        "40-bond0".networkConfig = {
+          IPv6AcceptRA = true;
+          IPv6PrivacyExtensions = "kernel";
+        };
+        "40-veth" = {
+          matchConfig = {
+            Name = "ve-*";
+            Kind = "veth";
+          };
+          linkConfig.Unmanaged = false;
+        };
+      };
 
       boot = {
         kernelModules = ["tcp_bbr"];

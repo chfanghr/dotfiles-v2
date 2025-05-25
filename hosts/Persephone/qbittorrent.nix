@@ -166,7 +166,13 @@ in {
 
         network = {
           wait-online.ignoredInterfaces = [p2pNic];
-          networks."40-${p2pNic}".networkConfig.IPv6AcceptRA = true;
+          networks = {
+            "40-${p2pNic}".networkConfig.IPv6AcceptRA = true;
+            "40-${webServiceVeth}" = {
+              matchConfig.Name = webServiceVeth;
+              linkConfig.Unmanaged = true;
+            };
+          };
         };
       };
 
