@@ -30,7 +30,6 @@
     shared.props = {
       networking.home = {
         onLanNetwork = true;
-        proxy.useGateway = true;
       };
     };
     nixos = {

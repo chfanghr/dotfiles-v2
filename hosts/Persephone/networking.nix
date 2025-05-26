@@ -62,6 +62,8 @@
         };
       };
 
+      systemd.services.tailscaled.serviceConfig.UnsetEnvironment = ["http_proxy" "https_proxy" "all_proxy"];
+
       boot = {
         kernelModules = ["tcp_bbr"];
 
@@ -104,7 +106,7 @@
     {
       specialisation.useDHCP.configuration = {
         persephone.networking.useStaticIP = false;
-        networking.useDHCP = true;
+        networking.interfaces.bond0.useDHCP = true;
       };
     }
   ];

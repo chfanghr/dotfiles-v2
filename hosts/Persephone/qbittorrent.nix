@@ -18,7 +18,7 @@
 
   altUIPath = "${dataDir}/alt_ui";
 
-  p2pNic = "enp33s0f0";
+  p2pNic = "ens1f0";
   webServiceVeth = "ve-qbt";
 
   webUIPort = 8080;
@@ -81,7 +81,7 @@ in {
     };
     # NOTE(chfanghr): When stuck on "no such device", run `sudo lsns --type=net`
     # and kill the nsenter process.
-    interfaces = [p2pNic];
+    interfaces = ["enp33s0f0"];
     autoStart = true;
 
     config = {config, ...}: {
