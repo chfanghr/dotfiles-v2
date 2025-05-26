@@ -31,6 +31,7 @@ lib.mkIf (config.dotfiles.shared.props.purposes.graphical.gaming) (lib.mkMerge [
     nixpkgs.config.allowUnfree = true;
   }
   (lib.mkIf (!config.dotfiles.shared.props.hardware.steamdeck) {
+    boot.initrd.availableKernelModules = ["ntsync"];
     programs.steam = {
       enable = true;
       remotePlay.openFirewall = true;

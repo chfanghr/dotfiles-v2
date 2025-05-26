@@ -97,12 +97,6 @@
     useProxy.configuration = {
       dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce true;
     };
-    zenKernel.configuration = {
-      boot.kernelPackages = pkgs.linuxPackages_zen;
-    };
-    latestKernel.configuration = {
-      boot.kernelPackages = pkgs.linuxPackages_latest;
-    };
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";
