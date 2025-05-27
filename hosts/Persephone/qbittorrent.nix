@@ -54,10 +54,6 @@ in {
     options = ["noatime" "noexec"];
   };
 
-  systemd.services."container@${containerName}".after = [
-    "data-qbittorrent.mount"
-  ];
-
   services.samba.settings = {
     qbittorrent = {
       path = "${dataDir}/downloads";
@@ -233,5 +229,18 @@ in {
         ];
       }
     ];
+  };
+
+  systemd.services."container@${containerName}" = {
+    after = [
+      "data-qbittorrent.mount"
+    ];
+    postStart = ''
+      # Don't let tailscale hijack the traffic
+      ip route add throw 172.16.0.0/28 table 52
+    '';
+    preStop = ''
+      ip route delete throw 172.16.0.0/28 table 52 || true
+    '';
   };
 }

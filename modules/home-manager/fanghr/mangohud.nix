@@ -1,4 +1,9 @@
 {
+  lib,
+  config,
+  ...
+}:
+lib.mkIf config.dotfiles.shared.props.purposes.graphical.gaming {
   programs.mangohud = {
     enable = true;
     enableSessionWide = true;

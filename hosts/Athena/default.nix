@@ -34,11 +34,11 @@ in {
     nix.roles.consumer = true;
     users = {
       rootAccess = true;
-      fanghr.disableHm = true;
+      # fanghr.disableHm = true;
     };
     hardware = {
       cpu.intel = true;
-      # vmHost = true;
+      vmHost = true;
     };
   };
 
