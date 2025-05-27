@@ -6,7 +6,6 @@
   ...
 }: let
   bondName = "bond0";
-  inherit (lib) mkForce;
 
   mkEnableInterfaceFeatureScript = interface: feature:
     pkgs.writeShellApplication {
@@ -26,8 +25,10 @@ in {
   imports = [
     ./disko.nix
     ./sing-box.nix
+    ./impermanence.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
+    inputs.impermanence.nixosModules.default
   ];
 
   dotfiles.nixos.props = {
@@ -128,7 +129,12 @@ in {
   powerManagement.cpuFreqGovernor = "performance";
 
   services = {
-    tailscale.useRoutingFeatures = mkForce "both";
+    tailscale = {
+      useRoutingFeatures = lib.mkForce "both";
+
+      extraSetFlags = ["--advertise-routes" "10.31.0.0/16"];
+    };
+
     iperf3 = {
       enable = true;
       openFirewall = true;
