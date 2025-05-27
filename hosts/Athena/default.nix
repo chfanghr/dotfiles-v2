@@ -33,14 +33,8 @@ in {
 
   dotfiles.nixos.props = {
     nix.roles.consumer = true;
-    users = {
-      rootAccess = true;
-      # fanghr.disableHm = true;
-    };
-    hardware = {
-      cpu.intel = true;
-      vmHost = true;
-    };
+    users.rootAccess = true;
+    hardware.cpu.intel = true;
   };
 
   time.timeZone = "Asia/Hong_Kong";
