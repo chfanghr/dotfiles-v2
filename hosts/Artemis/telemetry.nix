@@ -7,6 +7,7 @@
   cfg = config.artemis.telemetry;
   artemisHostname = config.networking.hostName;
   exporterPorts = genAttrs cfg.enabledExporters (name: config.services.prometheus.exporters.${name}.port);
+  tailscalePackage = config.services.tailscale.package;
 in {
   options.artemis.telemetry = {
     containerName = mkOption {type = types.str;};
@@ -40,7 +41,7 @@ in {
       enabledExporters = ["node" "systemd" "smartctl" "zfs"];
     };
 
-    firewall.interfaces.${cfg.monitoring.veth}.allowedTCPPorts =
+    networking.firewall.interfaces.${cfg.monitoring.veth}.allowedTCPPorts =
       attrValues exporterPorts;
 
     containers.${cfg.containerName} = {
@@ -70,6 +71,7 @@ in {
           resolved.enable = true;
           tailscale = {
             enable = true;
+            package = tailscalePackage;
             useRoutingFeatures = lib.mkForce "both";
             extraSetFlags = ["--advertise-routes" "10.31.0.0/16"];
           };
@@ -87,25 +89,24 @@ in {
               ];
             })
             exporterPorts;
+        };
 
-          systemd.network = {
-            networkd = {
-              "40-${cfg.lan.veth}" = {
-                matchConfig.Name = cfg.lan.veth;
-                networkingConfig = {
-                  DHCP = true;
-                  IPv6AcceptRA = true;
-                  IPv6PrivacyExtensions = "kernel";
-                };
-                "40-${cfg.monitoring.veth}" = {
-                  matchConfig.Name = cfg.monitoring.veth;
-                  linkConfig.Unmanaged = true;
-                };
+        systemd.network = {
+          wait-online.ignoredInterfaces = [cfg.lan.veth];
+          networks = {
+            "40-${cfg.lan.veth}" = {
+              matchConfig.Name = cfg.lan.veth;
+              networkConfig = {
+                DHCP = true;
+                IPv6AcceptRA = true;
+                IPv6PrivacyExtensions = "kernel";
               };
             };
+            "40-${cfg.monitoring.veth}" = {
+              matchConfig.Name = cfg.monitoring.veth;
+              linkConfig.Unmanaged = true;
+            };
           };
-
-          wait-online.ignoredInterfaces = [cfg.lan.veth];
         };
 
         system.stateVersion = "24.11";

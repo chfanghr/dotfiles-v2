@@ -10,6 +10,7 @@
     ./networking.nix
     ./samba.nix
     ./tank.nix
+    ./telemetry.nix
     ./vpn-gateway.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
