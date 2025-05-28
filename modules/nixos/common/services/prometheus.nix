@@ -73,7 +73,6 @@ in {
         node = {
           enable = true;
           enabledCollectors = ["systemd"];
-          listenAddress = "127.0.0.1";
         };
         smartctl.enable = true;
         systemd.enable = true;

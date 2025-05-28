@@ -53,10 +53,7 @@
   services.prometheus = {
     enable = lib.mkForce false;
     exporters = {
-      node = {
-        enable = true;
-        listenAddress = lib.mkForce "0.0.0.0";
-      };
+      node.enable = true;
       systemd.enable = true;
       smartctl.enable = true;
       zfs.enable = true;

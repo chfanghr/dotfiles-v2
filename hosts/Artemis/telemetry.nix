@@ -4,7 +4,7 @@
   ...
 }: let
   inherit (lib) mkOption types mkForce attrValues mapAttrsToList genAttrs;
-  cfg = config.artemis.spy;
+  cfg = config.artemis.telemetry;
   artemisHostname = config.networking.hostName;
   exporterPorts = genAttrs cfg.enabledExporters (name: config.services.prometheus.exporters.${name}.port);
 in {
@@ -37,6 +37,7 @@ in {
         hostAddress = "172.16.0.1";
         localAddress = "172.16.0.2";
       };
+      enabledExporters = ["node" "systemd" "smartctl" "zfs"];
     };
 
     firewall.interfaces.${cfg.monitoring.veth}.allowedTCPPorts =
