@@ -10,12 +10,6 @@
 in {
   options.artemis.networking.vpnGateway = {
     address = mkOption {type = types.str;};
-    mainRouterAddress = mkOption {
-      type = types.str;
-      default = "10.31.0.1";
-      readOnly = true;
-      internal = true;
-    };
 
     vpnServerConfig = {
       encryptedFile = mkOption {type = types.pathInStore;};
@@ -236,7 +230,7 @@ in {
                 DHCP = "no";
                 Address = cfg.address;
                 IPv6AcceptRA = true;
-                Gateway = cfg.mainRouterAddress;
+                Gateway = config.artemis.networking.mainRouterAddress;
               };
             };
             "40-${cfg.tunInterface}" = {

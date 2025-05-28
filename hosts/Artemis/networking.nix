@@ -28,6 +28,13 @@ in {
         networkProfile = mkOption {type = types.str;};
       };
     };
+
+    mainRouterAddress = mkOption {
+      type = types.str;
+      default = "10.31.0.1";
+      readOnly = true;
+      internal = true;
+    };
   };
 
   config = {
@@ -36,12 +43,6 @@ in {
       enableIPv6 = true;
       useNetworkd = true;
       nftables.enable = true;
-
-      firewall.interfaces.${config.services.tailscale.interfaceName}.allowedTCPPorts = with config.services.prometheus.exporters; [
-        node.port
-        systemd.port
-        smartctl.port
-      ];
     };
 
     artemis.networking = {
