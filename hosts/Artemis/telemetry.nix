@@ -106,6 +106,8 @@ in {
 
           wait-online.ignoredInterfaces = [cfg.lan.veth];
         };
+
+        system.stateVersion = "24.11";
       };
     };
 
