@@ -197,9 +197,22 @@ in {
         ];
 
         # HACK
-        systemd.services."container@minecraft" = {
-          after = ["data-minecraft-smp.mount"];
-          bindsTo = ["data-minecraft-smp.mount"];
+        systemd = {
+          services."container@minecraft" = {
+            after = ["data-minecraft-smp.mount"];
+            bindsTo = ["data-minecraft-smp.mount"];
+            postStart = ''
+              # Don't let tailscale hijack the traffic in and out of the monitoring veth
+              ip route add throw ${cfg.monitoring.localAddress} table 52
+            '';
+            preStop = ''
+              ip route delete throw ${cfg.monitoring.localAddress} table 52
+            '';
+          };
+          network.networks."40-${cfg.monitoring.veth}" = {
+            matchConfig.Name = cfg.monitoring.veth;
+            linkConfig.Unmanaged = true;
+          };
         };
       }
     )

@@ -65,9 +65,23 @@ in {
     }
     (mkIf cfg.enable {
       # HACK
-      systemd.services."container@${cfg.containerName}".bindsTo = [
-        "data-qbittorrent.mount"
-      ];
+      systemd = {
+        services."container@${cfg.containerName}" = {
+          after = ["data-qbittorrent.mount"];
+          bindsTo = ["data-qbittorrent.mount"];
+          postStart = ''
+            # Don't let tailscale hijack the traffic in and out of the monitoring veth
+            ip route add throw ${cfg.monitoring.localAddress} table 52
+          '';
+          preStop = ''
+            ip route delete throw ${cfg.monitoring.localAddress} table 52
+          '';
+        };
+        network.networks."40-${cfg.monitoring.veth}" = {
+          matchConfig.Name = cfg.monitoring.veth;
+          linkConfig.Unmanaged = true;
+        };
+      };
 
       containers.${cfg.containerName} = {
         autoStart = true;
