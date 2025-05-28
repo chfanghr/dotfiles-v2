@@ -94,6 +94,7 @@ in {
             LLDP = true;
             EmitLLDP = "yes";
             IPv6AcceptRA = "yes";
+            IPv6PrivacyExtensions = "kernel";
           };
         };
         ${cfg.lanBridge.networkProfile} = {
