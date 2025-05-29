@@ -62,11 +62,11 @@
             Name = "ve-*";
             Kind = "veth";
           };
-          linkConfig.Unmanaged = false;
+          linkConfig.Unmanaged = true;
         };
         "40-enp33s0f0" = {
           matchConfig.Name = "enp33s0f0";
-          linkConfig.Unmanaged = false;
+          linkConfig.Unmanaged = true;
         };
       };
 
@@ -98,7 +98,7 @@
         interfaces.bond0 = {
           ipv4.addresses = [
             {
-              address = "10.41.255.234";
+              address = "10.41.1.4";
               prefixLength = 16;
             }
           ];
