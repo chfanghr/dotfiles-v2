@@ -46,6 +46,8 @@
         nftables.enable = true;
 
         firewall.enable = true;
+
+        nameservers = lib.mkForce ["223.5.5.5"];
       };
 
       systemd.network.networks = {
