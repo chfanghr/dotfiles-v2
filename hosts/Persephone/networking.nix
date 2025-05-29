@@ -52,6 +52,8 @@
         nameservers = lib.mkForce ["223.5.5.5"];
       };
 
+      systemd.network.wait-online.anyInterface = true;
+
       systemd.network.networks = {
         "40-bond0".networkConfig = {
           IPv6AcceptRA = true;
