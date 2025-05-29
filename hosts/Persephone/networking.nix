@@ -62,6 +62,10 @@
           };
           linkConfig.Unmanaged = false;
         };
+        "40-enp33s0f0" = {
+          matchConfig.Name = "enp33s0f0";
+          linkConfig.Unmanaged = false;
+        };
       };
 
       systemd.services.tailscaled.serviceConfig.UnsetEnvironment = ["http_proxy" "https_proxy" "all_proxy"];
