@@ -15,6 +15,8 @@
         hostName = "Persephone";
         hostId = "9ce62f33"; # Required by zfs
 
+        useDHCP = false;
+
         useNetworkd = true;
 
         bonds.bond0 = {
@@ -93,8 +95,6 @@
     }
     (lib.mkIf config.persephone.networking.useStaticIP {
       networking = {
-        useDHCP = false;
-
         interfaces.bond0 = {
           ipv4.addresses = [
             {
