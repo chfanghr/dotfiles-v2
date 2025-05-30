@@ -38,13 +38,6 @@
           };
         };
 
-        nat = {
-          enable = true;
-          internalInterfaces = ["ve-+"];
-          externalInterface = "bond0";
-          enableIPv6 = true;
-        };
-
         nftables.enable = true;
 
         firewall.enable = true;
