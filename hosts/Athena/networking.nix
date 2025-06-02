@@ -130,12 +130,7 @@ in {
             bridgeConfig.STP = true;
           };
         };
-        links = {
-          "40-enable-gro" = {
-            matchConfig.OriginalName = "*";
-            linkConfig.GenericReceiveOffload = true;
-          };
-        };
+
         networks = {
           ${cfg.mlag.slave.networkProfile} = {
             matchConfig.Name = cfg.mlag.slave.interfaces;
