@@ -110,5 +110,10 @@
         networking.interfaces.bond0.useDHCP = true;
       };
     }
+    {
+      specialisation.useProxy.configuration = {
+        networking.proxy.default = "http://10.41.0.101:1086";
+      };
+    }
   ];
 }
