@@ -207,5 +207,9 @@ in {
         "net.core.default_qdisc" = "fq";
       };
     };
+
+    specialisation.recovery.configuration = {
+      networking.interfaces.enp5s0.useDHCP = true;
+    };
   };
 }
