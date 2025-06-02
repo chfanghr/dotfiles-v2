@@ -105,14 +105,21 @@
       };
     })
     {
-      specialisation.useDHCP.configuration = {
-        persephone.networking.useStaticIP = false;
-        networking.interfaces.bond0.useDHCP = true;
-      };
-    }
-    {
-      specialisation.useProxy.configuration = {
-        networking.proxy.default = "http://10.41.0.101:1086";
+      specialisation = {
+        useDHCP.configuration = {
+          persephone.networking.useStaticIP = false;
+          networking.interfaces.bond0.useDHCP = true;
+        };
+        useProxy.configuration = {
+          networking.proxy.default = "http://10.41.0.101:1086";
+        };
+        nixDaemonUseProxy.configuration = {
+          systemd.services.nix-daemon.environment = {
+            http_proxy = "http://10.41.0.101:1086";
+            https_proxy = "http://10.41.0.101:1086";
+            all_proxy = "http://10.41.0.101:1086";
+          };
+        };
       };
     }
   ];

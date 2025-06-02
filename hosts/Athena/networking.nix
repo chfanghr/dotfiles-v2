@@ -103,12 +103,11 @@ in {
     };
 
     systemd = {
-      # services.tailscaled.serviceConfig.RestrictNetworkInterfaces = [
-      #   cfg.lanBridge.interface
-      #   "lo"
-      # ];
-
       network = {
+        wait-online.ignoredInterfaces = [
+          cfg.mgmt.interface
+        ];
+
         netdevs = {
           ${cfg.mlag.netdevProfile} = {
             netdevConfig = {
@@ -132,7 +131,10 @@ in {
           };
         };
         links = {
-          "40-enable-gro".linkConfig.GenericReceiveOffload = true;
+          "40-enable-gro" = {
+            matchConfig.OriginalName = "*";
+            linkConfig.GenericReceiveOffload = true;
+          };
         };
         networks = {
           ${cfg.mlag.slave.networkProfile} = {
