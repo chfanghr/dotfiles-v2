@@ -191,7 +191,7 @@ in {
       tailscale = {
         useRoutingFeatures = lib.mkForce "both";
 
-        extraSetFlags = ["--advertise-routes" "10.31.0.0/16"];
+        extraSetFlags = ["--advertise-routes" "10.41.0.0/16"];
       };
 
       iperf3 = {
