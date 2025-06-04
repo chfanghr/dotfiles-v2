@@ -45,7 +45,6 @@
     (mkNixosAndNode "Athena" "athena.snow-dace.ts.net")
     (mkNixosAndNode "Demeter" "demeter.snow-dace.ts.net")
     (mkNixosAndNode "Dionysus" "dionysus.snow-dace.ts.net")
-    # (mkNixosAndNode "Eros" "eros.snow-dace.ts.net")
     (mkNixosAndNode "Hestia" "hestia.snow-dace.ts.net")
     (mkNixosAndNode "Jupiter" "jupiter.snow-dace.ts.net")
     (mkNixosAndNode "Persephone" "persephone.snow-dace.ts.net")

@@ -43,6 +43,8 @@ in {
       enableIPv6 = true;
       useNetworkd = true;
       nftables.enable = true;
+      # WORKAROUND: use these two inside gfw
+      nameservers = mkForce ["223.5.5.5" "1.1.1.1"];
     };
 
     artemis.networking = {

@@ -99,7 +99,8 @@ in {
       firewall.enable = true;
       nftables.enable = true;
       useDHCP = false;
-      nameservers = mkForce ["223.5.5.5"];
+      # WORKAROUND: use these two inside gfw
+      nameservers = mkForce ["223.5.5.5" "1.1.1.1"];
     };
 
     systemd = {

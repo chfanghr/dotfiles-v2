@@ -39,10 +39,10 @@
         };
 
         nftables.enable = true;
-
         firewall.enable = true;
 
-        nameservers = lib.mkForce ["223.5.5.5"];
+        # WORKAROUND: use these two inside gfw
+        nameservers = lib.mkForce ["223.5.5.5" "1.1.1.1"];
       };
 
       systemd.network.wait-online.anyInterface = true;
