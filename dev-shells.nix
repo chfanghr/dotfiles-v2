@@ -18,6 +18,7 @@
           inputs'.nixos-anywhere.packages.default
           inputs'.deploy-rs.packages.default
           pkgs.nurl
+          pkgs.nixos-facter
         ];
     });
   };

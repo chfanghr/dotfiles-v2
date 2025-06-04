@@ -39,6 +39,7 @@
     nixos-anywhere.url = "github:nix-community/nixos-anywhere";
     impermanence.url = "github:nix-community/impermanence";
     deploy-rs.url = "github:serokell/deploy-rs";
+    nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
   };
 
   outputs = inputs @ {flake-parts, ...}:
