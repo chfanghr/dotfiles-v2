@@ -135,7 +135,6 @@ in {
                   Kind = "bridge";
                   Name = cfg.lanBridge.interface;
                 };
-                bridgeConfig.STP = true;
               };
               ${cfg.lanBridge.dummy.netdevProfile}.netdevConfig = {
                 Kind = "dummy";

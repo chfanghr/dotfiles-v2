@@ -84,7 +84,7 @@ in {
       };
 
       containers.${cfg.containerName} = {
-        autoStart = true;
+        autoStart = false;
         ephemeral = true;
 
         bindMounts.qbt-data = {
