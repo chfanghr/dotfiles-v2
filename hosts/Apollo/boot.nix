@@ -1,5 +1,7 @@
 {config, ...}: {
   boot = {
+    kernelParams = ["i915.force_probe=4680"];
+
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
