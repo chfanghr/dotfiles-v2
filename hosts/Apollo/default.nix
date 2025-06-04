@@ -12,6 +12,7 @@
     inputs.disko.nixosModules.default
     inputs.nixos-facter-modules.nixosModules.facter
     inputs.impermanence.nixosModules.default
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   networking.hostName = "Apollo";

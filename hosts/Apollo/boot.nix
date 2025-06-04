@@ -2,10 +2,17 @@
   boot = {
     kernelParams = ["i915.force_probe=4680"];
 
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
+
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot.enable = false; # secure boot with lanzaboote
       efi.canTouchEfiVariables = true;
     };
+
+    supportedFilesystems = {btrfs = true;};
 
     useLatestZfsCompatibleKernel = true;
 
