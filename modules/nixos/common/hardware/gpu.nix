@@ -26,6 +26,7 @@ in {
       enable = mkPropOption "has amd graphics cards";
       amdvlk.enable = mkPropOption "use amdvlk driver";
     };
+    intel = mkPropOption "has intel graphics cards";
   };
 
   config = mkMerge [
@@ -93,6 +94,14 @@ in {
           }
         )
       ])
+    )
+    (
+      mkIf gpuProps.intel {
+        hardware.graphics.extraPackages = [
+          pkgs.vpl-gpu-rt
+          pkgs.intel-compute-runtime
+        ];
+      }
     )
   ];
 }

@@ -25,10 +25,5 @@
     root.hashedPassword = "$y$j9T$LclEAQG.FK8eoV2.mc6ku1$dDc7MUikq2gi7Jpbo4AeQsnkdUjEFsfJ0XbhMY3yedA";
   };
 
-  programs.vim = {
-    enable = true;
-    defaultEditor = true;
-  };
-
   nixpkgs.hostPlatform = "x86_64-linux";
 }
