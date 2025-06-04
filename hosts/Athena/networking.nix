@@ -128,7 +128,6 @@ in {
               Kind = "bridge";
               Name = cfg.lanBridge.interface;
             };
-            bridgeConfig.STP = true;
           };
         };
 
