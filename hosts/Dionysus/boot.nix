@@ -17,6 +17,7 @@
         "usbhid"
         "usb_storage"
         "sd_mod"
+        "i40e"
       ];
       kernelModules = [
         "dm-snapshot"
