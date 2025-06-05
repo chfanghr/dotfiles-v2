@@ -111,13 +111,13 @@
           networking.interfaces.bond0.useDHCP = true;
         };
         useProxy.configuration = {
-          networking.proxy.default = "http://10.41.0.101:1086";
+          networking.proxy.default = "http://10.41.0.3:8080";
         };
         nixDaemonUseProxy.configuration = {
           systemd.services.nix-daemon.environment = {
-            http_proxy = "http://10.41.0.101:1086";
-            https_proxy = "http://10.41.0.101:1086";
-            all_proxy = "http://10.41.0.101:1086";
+            http_proxy = "http://10.41.0.3:8080";
+            https_proxy = "http://10.41.0.3:8080";
+            all_proxy = "http://10.41.0.3:8080";
           };
         };
       };

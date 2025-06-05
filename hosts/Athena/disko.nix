@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   disko.devices = {
     disk.main = {
       type = "disk";
@@ -74,7 +74,7 @@
         persist = {
           type = "zfs_fs";
           options.mountpoint = "legacy";
-          mountpoint = "/persist";
+          mountpoint = config.athena.persistPath;
         };
         reserved = {
           type = "zfs_volume";

@@ -2,12 +2,15 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
 }: let
   inherit (lib) types mkOption mkForce;
   inherit (builtins) toString;
 
   cfg = config.athena.networking;
+
+  pkgsUnstable = import inputs.nixpkgs-unstable {inherit (pkgs.stdenv) system;};
 in {
   options.athena.networking = {
     mlag = {
@@ -21,19 +24,22 @@ in {
       };
     };
 
-    lanBridge = {
+    lan = {
       interface = mkOption {type = types.str;};
-      netdevProfile = mkOption {type = types.str;};
       networkProfile = mkOption {type = types.str;};
-
       ipv4 = {
         address = {
           address = mkOption {type = types.str;};
           prefixLength = mkOption {type = types.ints.unsigned;};
         };
-
         defaultGateway = mkOption {type = types.str;};
       };
+    };
+
+    lanBridge = {
+      interface = mkOption {type = types.str;};
+      netdevProfile = mkOption {type = types.str;};
+      networkProfile = mkOption {type = types.str;};
     };
 
     mgmt = {
@@ -59,18 +65,15 @@ in {
         };
       };
 
+      lan = {
+        interface = "enp4s0";
+        networkProfile = "10-enp4s0";
+      };
+
       lanBridge = {
         interface = "br0";
         netdevProfile = "10-br0";
         networkProfile = "10-br0";
-
-        ipv4 = {
-          address = {
-            address = "10.41.0.101";
-            prefixLength = 16;
-          };
-          defaultGateway = "10.41.0.1";
-        };
       };
 
       mgmt = {
@@ -131,14 +134,17 @@ in {
             networkConfig.Bridge = cfg.lanBridge.interface;
           };
 
-          ${cfg.lanBridge.networkProfile} = {
-            matchConfig.Name = cfg.lanBridge.interface;
+          ${cfg.lan.networkProfile} = {
+            matchConfig.Name = cfg.lan.interface;
             networkConfig = {
               IPv6PrivacyExtensions = "kernel";
               IPv6AcceptRA = true;
-              Address = with cfg.lanBridge.ipv4.address; "${address}/${toString prefixLength}";
+              DHCP = "ipv4";
             };
-            routes = [{Gateway = cfg.lanBridge.ipv4.defaultGateway;}];
+          };
+
+          ${cfg.lanBridge.networkProfile} = {
+            matchConfig.Name = cfg.lanBridge.interface;
           };
 
           ${cfg.mgmt.networkProfile} = {
@@ -169,6 +175,8 @@ in {
 
     services = {
       tailscale = {
+        package = pkgsUnstable.tailscale;
+
         useRoutingFeatures = lib.mkForce "both";
 
         extraSetFlags = ["--advertise-routes" "10.41.0.0/16"];

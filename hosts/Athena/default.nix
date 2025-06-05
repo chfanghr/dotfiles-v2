@@ -2,9 +2,9 @@
   imports = [
     ./boot.nix
     ./disko.nix
-    ./sing-box.nix
     ./impermanence.nix
     ./networking.nix
+    ./vpn-servers.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
     inputs.impermanence.nixosModules.default
