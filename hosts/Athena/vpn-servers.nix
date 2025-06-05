@@ -5,13 +5,17 @@
   ...
 }: let
   inherit (lib) mkOption types mkForce mkMerge;
+  inherit (builtins) toString;
 
   vpnServerCfg = config.athena.networking.vpnServerConfig;
   gatewayCfg = config.athena.networking.vpnGateway;
+  gatewayDPCfg = config.athena.networking.vpnGatewayDebugProbe;
   proxyCfg = config.athena.networking.vpnProxy;
 in {
   options.athena.networking = {
     mainRouterAddress = mkOption {type = types.str;};
+
+    lanAddressPrefixLen = mkOption {type = types.ints.unsigned;};
 
     vpnServerConfig = {
       encryptedFile = mkOption {type = types.pathInStore;};
@@ -71,6 +75,19 @@ in {
 
       persistentState.hostPath = mkOption {type = types.path;};
     };
+
+    vpnGatewayDebugProbe = {
+      containerName = mkOption {type = types.str;};
+
+      address = mkOption {type = types.str;};
+
+      lanInterface = mkOption {
+        type = types.str;
+        default = "eth0";
+        readOnly = true;
+        internal = true;
+      };
+    };
   };
 
   config = mkMerge [
@@ -78,21 +95,28 @@ in {
       athena.networking = {
         mainRouterAddress = "10.41.0.1";
 
+        lanAddressPrefixLen = 16;
+
         vpnServerConfig.encryptedFile = ../../secrets/athena-sing-box-default-out.age;
 
         vpnGateway = {
           containerName = "vpn-gateway";
-          address = "10.41.0.2/16";
+          address = "10.41.0.2";
           persistentState.hostPath = "/var/lib/vpn-gateway";
         };
 
         vpnProxy = {
           containerName = "vpn-proxy";
-          address = "10.41.0.3/16";
+          address = "10.41.0.3";
           dnsPort = 53;
           socksPort = 1080;
           httpPort = 8080;
           persistentState.hostPath = "/var/lib/vpn-proxy";
+        };
+
+        vpnGatewayDebugProbe = {
+          containerName = "vpn-gateway-debug-probe";
+          address = "10.41.0.110";
         };
       };
     }
@@ -313,7 +337,7 @@ in {
               matchConfig.Name = proxyCfg.lanInterface;
               networkConfig = {
                 DHCP = "no";
-                Address = proxyCfg.address;
+                Address = "${proxyCfg.address}/${toString config.athena.networking.lanAddressPrefixLen}";
                 IPv6AcceptRA = true;
                 Gateway = config.athena.networking.mainRouterAddress;
               };
@@ -365,7 +389,7 @@ in {
 
             nftables.enable = true;
 
-            firewall.enable = true;
+            firewall.enable = false;
 
             useHostResolvConf = mkForce false;
 
@@ -517,7 +541,7 @@ in {
                 matchConfig.Name = gatewayCfg.lanInterface;
                 networkConfig = {
                   DHCP = "no";
-                  Address = gatewayCfg.address;
+                  Address = "${gatewayCfg.address}/${toString config.athena.networking.lanAddressPrefixLen}";
                   IPv6AcceptRA = true;
                   Gateway = config.athena.networking.mainRouterAddress;
                 };
@@ -548,6 +572,62 @@ in {
       systemd.services."container@${gatewayCfg.containerName}".restartTriggers = [
         config.age.secrets.${vpnServerCfg.secretName}.file
       ];
+    }
+    {
+      containers.${gatewayDPCfg.containerName} = {
+        autoStart = true;
+
+        ephemeral = true;
+
+        privateNetwork = true;
+        hostBridge = config.athena.networking.lanBridge.interface;
+
+        config = {
+          lib,
+          pkgs,
+          ...
+        }: {
+          networking = {
+            useNetworkd = true;
+
+            nftables.enable = true;
+            firewall.enable = true;
+
+            useHostResolvConf = lib.mkForce false;
+
+            enableIPv6 = true;
+
+            nameservers = [
+              "1.1.1.1"
+              "8.8.8.8"
+            ];
+          };
+
+          services.resolved.enable = true;
+
+          systemd.network = {
+            wait-online.enable = false;
+            networks."40-eth0" = {
+              matchConfig.Name = gatewayDPCfg.lanInterface;
+              networkConfig = {
+                DHCP = false;
+                Address = "${gatewayDPCfg.address}/${toString config.athena.networking.lanAddressPrefixLen}";
+                Gateway = gatewayCfg.address;
+              };
+            };
+          };
+
+          environment.systemPackages = with pkgs; [
+            dig
+            curl
+            trippy
+            ethtool
+          ];
+
+          time.timeZone = "Asia/Hong_Kong";
+          system.stateVersion = "25.05";
+        };
+      };
     }
   ];
 }
