@@ -26,12 +26,6 @@ in {
       netdevProfile = mkOption {type = types.str;};
       networkProfile = mkOption {type = types.str;};
 
-      dummy = {
-        interface = mkOption {type = types.str;};
-        netdevProfile = mkOption {type = types.str;};
-        networkProfile = mkOption {type = types.str;};
-      };
-
       ipv4 = {
         address = {
           address = mkOption {type = types.str;};
@@ -69,11 +63,7 @@ in {
         interface = "br0";
         netdevProfile = "10-br0";
         networkProfile = "10-br0";
-        dummy = {
-          interface = "dummy0";
-          netdevProfile = "10-dummy0";
-          networkProfile = "10-dummy0";
-        };
+
         ipv4 = {
           address = {
             address = "10.41.0.101";
@@ -118,11 +108,6 @@ in {
             bondConfig.Mode = "802.3ad";
           };
 
-          ${cfg.lanBridge.dummy.netdevProfile}.netdevConfig = {
-            Kind = "dummy";
-            Name = cfg.lanBridge.dummy.interface;
-          };
-
           ${cfg.lanBridge.netdevProfile} = {
             netdevConfig = {
               Kind = "bridge";
@@ -143,11 +128,6 @@ in {
 
           ${cfg.mlag.networkProfile} = {
             matchConfig.Name = cfg.mlag.interface;
-            networkConfig.Bridge = cfg.lanBridge.interface;
-          };
-
-          ${cfg.lanBridge.dummy.networkProfile} = {
-            matchConfig.Name = cfg.lanBridge.dummy.interface;
             networkConfig.Bridge = cfg.lanBridge.interface;
           };
 
