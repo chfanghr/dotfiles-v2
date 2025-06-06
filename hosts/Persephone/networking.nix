@@ -65,7 +65,10 @@
         };
       };
 
-      systemd.services.tailscaled.serviceConfig.UnsetEnvironment = ["http_proxy" "https_proxy" "all_proxy"];
+      systemd.services.tailscaled.serviceConfig = {
+        RestrictNetworkInterfaces = ["bond0" "lo" config.services.tailscale.interfaceName];
+        UnsetEnvironment = ["http_proxy" "https_proxy" "all_proxy"];
+      };
 
       boot = {
         kernelModules = ["tcp_bbr"];
