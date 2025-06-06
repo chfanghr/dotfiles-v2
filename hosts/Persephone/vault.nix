@@ -1,5 +1,6 @@
 {config, ...}: let
   safeMountPoint = "/data/safe";
+  manualBackupMountPoint = "/data/manual-backup";
   heraMountPoint = "/data/hera";
   heraOldMountPoint = "/data/hera-old";
   minecraftMainMountPoint = "/data/minecraft/main";
@@ -11,6 +12,11 @@ in {
       mode = "0700";
     };
     ${safeMountPoint}.d = {
+      user = "fanghr";
+      group = "root";
+      mode = "0700";
+    };
+    ${manualBackupMountPoint}.d = {
       user = "fanghr";
       group = "root";
       mode = "0700";
@@ -33,6 +39,11 @@ in {
       fsType = "zfs";
       options = ["noexec"];
     };
+    ${manualBackupMountPoint} = {
+      device = "vault/manual-backup";
+      fsType = "zfs";
+      options = ["noexec"];
+    };
     ${heraMountPoint} = {
       device = "vault/tm/hera";
       fsType = "zfs";
@@ -50,6 +61,14 @@ in {
   services.samba.settings = {
     safe = {
       path = safeMountPoint;
+      browsable = "no";
+      "read only" = "no";
+      "force create mode" = "0600";
+      "force directory mode" = "0700";
+      "force group" = "root";
+    };
+    manual-backup = {
+      path = manualBackupMountPoint;
       browsable = "no";
       "read only" = "no";
       "force create mode" = "0600";

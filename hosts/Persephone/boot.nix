@@ -7,9 +7,45 @@
   dotfiles.nixos.props.hardware.cpu.tweaks.amd.noPstate = true;
 
   boot = let
-    loadAllZfsKeys = pkgs.writeScript "load-all-zfs-keys" ''
-      ${lib.getExe config.boot.zfs.package} load-key -a
-    '';
+    mkLoadZfsKeys = pools: keysDataset: encRoots: let
+      keysMP = "/zfs-keys";
+    in
+      pkgs.writeShellApplication
+      {
+        name = "load-zfs-keys";
+        text = ''
+          ${lib.concatMapStringsSep "\n" (p: "zpool import ${p} || true") pools}
+          zfs load-key -L prompt ${keysDataset}
+          mkdir -p ${keysMP}
+          mount -t zfs -o ro ${keysDataset} ${keysMP}
+          ${lib.pipe encRoots [
+            (lib.mapAttrsToList (
+              ds: k: "zfs load-key -L file://${keysMP}/${k} ${ds}"
+            ))
+            (lib.concatStringsSep "\n")
+          ]}
+          umount ${keysMP}
+          zfs unload-key ${keysDataset}
+          systemctl restart zfs-import-rpool.service
+        '';
+        meta.description = ''
+          import all `pools`, load all keys required by `encRoots` from `keysDataset`
+
+          `pools` should have type `listOf str`.
+
+          `encRoots` should have type `attrsOf str`, where the keys are
+          dataset to be unlocked, and their values are relative paths to the key
+          files, in the `keysDataset` dataset.
+        '';
+      };
+
+    loadZfsKeys = mkLoadZfsKeys config.boot.zfs.extraPools "rpool/zfs-keys" encryptionRoots;
+
+    encryptionRoots = {
+      "rpool/enc" = "rpool-enc-key";
+      "vault" = "vault-key";
+      "tank/enc" = "tank-enc-key";
+    };
   in {
     useLatestZfsCompatibleKernel = true;
 
@@ -30,8 +66,25 @@
 
       systemd = {
         enable = true;
-        network.enable = true;
-        users.root.shell = "${loadAllZfsKeys}";
+        network = {
+          enable = true;
+          networks."40-enp33s0f0" = {
+            matchConfig.Name = "enp33s0f0";
+            networkConfig.Address = "10.41.0.29/16";
+          };
+        };
+
+        storePaths = [loadZfsKeys.outPath];
+
+        services.zfs-remote-unlock = {
+          description = "Prepare for ZFS remote unlock";
+          wantedBy = ["initrd.target"];
+          after = ["systemd-networkd.service"];
+          serviceConfig.Type = "oneshot";
+          script = ''
+            echo "${lib.getExe loadZfsKeys}" >> /var/empty/.profile
+          '';
+        };
       };
 
       network.ssh = {
@@ -63,7 +116,18 @@
       btrfs = true;
     };
 
-    zfs.forceImportAll = true;
+    zfs = {
+      extraPools = [
+        "rpool"
+        "tank"
+        "vault"
+      ];
+      requestEncryptionCredentials = [
+        "rpool/enc"
+        "tank/enc"
+        "vault"
+      ];
+    };
 
     plymouth.enable = false;
   };
