@@ -137,7 +137,6 @@ in {
           "enc/zrepl/vault/safe" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
-            mountpoint = "/data/safe";
           };
 
           nix = {
