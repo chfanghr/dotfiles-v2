@@ -26,10 +26,11 @@
           ]}
           umount ${keysMP}
           zfs unload-key ${keysDataset}
-          systemctl restart zfs-import-rpool.service
+          systemctl restart zfs-import-\*.service
         '';
         meta.description = ''
-          import all `pools`, load all keys required by `encRoots` from `keysDataset`
+          Import all `pools`, then load all keys required by `encRoots`
+          from `keysDataset`.
 
           `pools` should have type `listOf str`.
 
@@ -46,6 +47,12 @@
       "vault" = "vault-key";
       "tank/enc" = "tank-enc-key";
     };
+
+    zfsPools = [
+      "rpool"
+      "tank"
+      "vault"
+    ];
   in {
     useLatestZfsCompatibleKernel = true;
 
@@ -82,7 +89,7 @@
           after = ["systemd-networkd.service"];
           serviceConfig.Type = "oneshot";
           script = ''
-            echo "${lib.getExe loadZfsKeys}" >> /var/empty/.profile
+            echo "${lib.getExe loadZfsKeys}; exit 0" >> /var/empty/.profile
           '';
         };
       };
@@ -117,16 +124,8 @@
     };
 
     zfs = {
-      extraPools = [
-        "rpool"
-        "tank"
-        "vault"
-      ];
-      requestEncryptionCredentials = [
-        "rpool/enc"
-        "tank/enc"
-        "vault"
-      ];
+      extraPools = zfsPools;
+      requestEncryptionCredentials = builtins.attrNames encryptionRoots;
     };
 
     plymouth.enable = false;
