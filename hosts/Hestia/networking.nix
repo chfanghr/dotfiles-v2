@@ -113,6 +113,7 @@ in {
         mkIf cfg.enable {
           networking = {
             useNetworkd = false;
+            networkmanager.enable = true;
 
             bridges.${cfg.lanBridge.interface}.interfaces =
               cfg.lanBridge.slave.interfaces;

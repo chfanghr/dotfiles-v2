@@ -623,7 +623,6 @@ in {
             trippy
             ethtool
             speedtest-cli
-            fast-cli
           ];
 
           time.timeZone = "Asia/Hong_Kong";
