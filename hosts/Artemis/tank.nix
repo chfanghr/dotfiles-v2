@@ -1,8 +1,16 @@
 {
-  users.groups.smb-users.members = [
-    "fanghr"
-    "fry"
-  ];
+  users = {
+    users.cjx = {
+      isNormalUser = true;
+      hashedPassword = "$y$j9T$mBAUblVg0KsB1rTSQDmPZ/$JELfuNvhO99smI.pRnUvBogk1gZWw3c/4jM6TDWdxiB";
+    };
+
+    groups.smb-users.members = [
+      "fanghr"
+      "fry"
+      "cjx"
+    ];
+  };
 
   systemd.tmpfiles.settings."10-tank" = {
     "/data/tank/main".d = {
@@ -11,6 +19,11 @@
       mode = "0770";
     };
     "/data/tank/subterranean".d = {
+      user = "root";
+      group = "smb-users";
+      mode = "0770";
+    };
+    "/data/tank/cjx".d = {
       user = "root";
       group = "smb-users";
       mode = "0770";
@@ -28,6 +41,11 @@
       fsType = "zfs";
       options = ["noexec"];
     };
+    "/data/tank/cjx" = {
+      device = "tank/cjx";
+      fsType = "zfs";
+      options = ["noexec"];
+    };
   };
 
   services.samba.settings = {
@@ -38,6 +56,11 @@
     };
     subterranean = {
       path = "/data/tank/subterranean";
+      "read only" = "no";
+      "create mask" = "0755";
+    };
+    cjx = {
+      path = "/data/tank/cjx";
       "read only" = "no";
       "create mask" = "0755";
     };
