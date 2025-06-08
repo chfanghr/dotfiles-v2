@@ -12,6 +12,7 @@ in {
         curl
         coreutils
         file
+        rsync
       ];
 
       programs = {
