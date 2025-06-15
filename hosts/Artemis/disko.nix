@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   disko.devices = {
     disk = {
       main = {
@@ -59,7 +59,10 @@
     };
   };
 
-  services.zfs.autoScrub.enable = true;
+  services = {
+    zfs.autoScrub.enable = true;
+    zrepl.enable = config.services.zrepl.settings.jobs != [];
+  };
 
   networking.hostId = "f12cb296";
 }
