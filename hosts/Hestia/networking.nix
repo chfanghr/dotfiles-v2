@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkIf mkOption types concatStringsSep mkEnableOption;
+  inherit (lib) mkIf mkOption types concatStringsSep mkEnableOption mkForce;
 in {
   options.hestia.networking = {
     server = {
@@ -212,6 +212,8 @@ in {
               };
             };
           };
+
+          services.tailscale.useRoutingFeatures = mkForce "both";
 
           systemd.services.hostapd.bindsTo = [
             "sys-devices-virtual-net-${cfg.lanBridge.interface}.device"
