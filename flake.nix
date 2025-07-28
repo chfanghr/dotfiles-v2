@@ -25,7 +25,7 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     cardano-nix.url = "github:mlabs-haskell/cardano.nix";
-    jovian.url = "github:Jovian-Experiments/Jovian-NixOS";
+    jovian.url = "github:Jovian-Experiments/Jovian-NixOS?rev=f31df4cb6b2eeef6cf0113edb687297be72a69df";
     disko.url = "github:nix-community/disko";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     agenix.url = "github:ryantm/agenix";
