@@ -85,6 +85,8 @@
     openFirewall = true;
   };
 
+  nix.settings.download-buffer-size = 524288000;
+
   specialisation = {
     debug.configuration = {
       dotfiles.shared.props.purposes.graphical = {
