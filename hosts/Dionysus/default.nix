@@ -80,6 +80,11 @@
 
   services.ucodenix.enable = true;
 
+  services.iperf3 = {
+    enable = true;
+    openFirewall = true;
+  };
+
   specialisation = {
     debug.configuration = {
       dotfiles.shared.props.purposes.graphical = {
