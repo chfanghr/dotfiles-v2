@@ -34,6 +34,11 @@
     };
 
     plymouth.enable = false;
+
+    binfmt.emulatedSystems = [
+      "loongarch64-linux"
+      "aarch64-linux"
+    ];
   };
 
   services.hardware.bolt.enable = true;

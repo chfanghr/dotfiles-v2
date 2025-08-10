@@ -9,7 +9,7 @@
   configDir = "${cfg.dataDir}/.config";
   openFilesLimit = 4096;
 in {
-  options.services.qbittorrent = {
+  options.services.qbittorrent-custom = {
     enable = mkOption {
       type = types.bool;
       default = false;

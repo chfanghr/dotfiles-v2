@@ -140,7 +140,7 @@ in {
             services = {
               qbittorrent-alt-ui = {
                 wantedBy = ["multi-user.target"];
-                before = ["${config.services.qbittorrent.systemdServiceName}.service"];
+                before = ["${config.services.qbittorrent-custom.systemdServiceName}.service"];
                 serviceConfig = {
                   User = cfg.user.name;
                   Group = cfg.group.name;
@@ -173,7 +173,7 @@ in {
 
           services = {
             resolved.enable = true;
-            qbittorrent = {
+            qbittorrent-custom = {
               enable = true;
               user = cfg.user.name;
               group = cfg.group.name;
