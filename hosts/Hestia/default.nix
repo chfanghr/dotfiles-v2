@@ -62,6 +62,8 @@ in {
     };
   };
 
+  nix.settings.download-buffer-size = 524288000;
+
   hestia.mode = mkDefault "server";
 
   specialisation.desktop.configuration.hestia.mode = "desktop";
