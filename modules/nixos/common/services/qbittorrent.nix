@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) mkOption types mkIf mkDefault;
-  cfg = config.services.qbittorrent;
+  cfg = config.services.qbittorrent-custom;
   configDir = "${cfg.dataDir}/.config";
   openFilesLimit = 4096;
 in {
