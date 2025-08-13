@@ -44,6 +44,7 @@ lib.mkMerge [
         signal-desktop
         telegram-desktop
         discord
+        whatsie
 
         vlc
 
