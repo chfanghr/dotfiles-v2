@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   boot = {
     kernelPackages = pkgs.linuxPackages_zen;
 
@@ -9,6 +13,8 @@
 
     plymouth.enable = false;
 
+    extraModulePackages = with config.boot.kernelPackages; [zenpower];
+
     initrd = {
       availableKernelModules = [
         "xhci_pci"
@@ -18,6 +24,7 @@
         "usb_storage"
         "sd_mod"
         "i40e"
+        "zenpower"
       ];
       kernelModules = [
         "dm-snapshot"
