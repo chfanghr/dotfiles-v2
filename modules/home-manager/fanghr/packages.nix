@@ -49,6 +49,8 @@ lib.mkMerge [
         vlc
 
         zed-editor
+
+        thunderbolt
       ];
       nixpkgs.config.allowUnfreePredicate = pkg:
         builtins.elem (lib.getName pkg) [
