@@ -5,8 +5,6 @@
   lib,
   ...
 }: let
-  inherit (lib) mkDefault;
-
   pkgsUnstable = import inputs.nixpkgs-unstable {inherit (pkgs.stdenv) system;};
 in {
   # HACK: fix xhci_pci missing
@@ -24,7 +22,7 @@ in {
       efi.canTouchEfiVariables = true;
     };
 
-    plymouth.enable = mkDefault true;
+    plymouth.enable = false;
 
     extraModulePackages = [
       config.boot.kernelPackages.zenergy
