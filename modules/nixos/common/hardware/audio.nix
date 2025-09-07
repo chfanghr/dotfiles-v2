@@ -39,5 +39,16 @@ in {
         ];
       }
     )
+    (
+      mkIf config.services.avahi.enable {
+        services.pipewire = {
+          raopOpenFirewall = true;
+
+          extraConfig.pipewire."10-airplay"."context.modules" = [
+            {name = "libpipewire-module-raop-discover";}
+          ];
+        };
+      }
+    )
   ]);
 }

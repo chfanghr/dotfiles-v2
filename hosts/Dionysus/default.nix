@@ -54,36 +54,48 @@
     pkgs.handbrake
   ];
 
-  programs.steam = {
-    protontricks.enable = true;
-  };
-
-  services.sunshine = {
-    enable = true;
-    capSysAdmin = true;
-    openFirewall = true;
-  };
-
   systemd.tmpfiles.settings."10-game-backup"."/data/game-backup".d = {
     user = "fanghr";
     mode = "0700";
   };
 
-  services.xserver.displayManager.startx.enable = true;
+  programs = {
+    steam = {
+      protontricks.enable = true;
+    };
 
-  programs.kdeconnect.enable = true;
+    kdeconnect.enable = true;
+  };
+
+  services = {
+    sunshine = {
+      enable = true;
+      capSysAdmin = true;
+      openFirewall = true;
+    };
+
+    xserver.displayManager.startx.enable = true;
+
+    ucodenix.enable = true;
+
+    iperf3 = {
+      enable = true;
+      openFirewall = true;
+    };
+
+    avahi = {
+      enable = true;
+      allowInterfaces = [
+        "enp6s0f1np1"
+        "enp6s0f1np0"
+      ];
+    };
+  };
 
   environment.systemPackages = [
     pkgs.vulkan-tools
     pkgs.nvtopPackages.amd
   ];
-
-  services.ucodenix.enable = true;
-
-  services.iperf3 = {
-    enable = true;
-    openFirewall = true;
-  };
 
   nix.settings.download-buffer-size = 524288000;
 
