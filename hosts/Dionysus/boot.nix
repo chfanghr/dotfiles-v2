@@ -18,7 +18,11 @@ in {
     kernelPackages = pkgsUnstable.linuxPackages_zen;
 
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        extraFiles."crypt-storage/default" =
+          pkgs.writeText "dionysus-yubikey-salt" "2ac3d3cbf23517076ac9720a30a83428\n1000000";
+      };
       efi.canTouchEfiVariables = true;
     };
 

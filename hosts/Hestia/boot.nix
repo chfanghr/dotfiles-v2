@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   boot = {
     useLatestZfsCompatibleKernel = true;
 
@@ -29,7 +29,11 @@
     };
 
     loader = {
-      systemd-boot.enable = true;
+      systemd-boot = {
+        enable = true;
+        extraFiles."crypt-storage/default" =
+          pkgs.writeText "hestia-yubikey-salt" "213c912cc567929a2df2f368291abb1d\n1000000";
+      };
       efi.canTouchEfiVariables = true;
     };
 
