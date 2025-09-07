@@ -108,6 +108,7 @@
 
       boot = {
         loader.systemd-boot.memtest86.enable = true;
+        plymouth.enable = false;
       };
     };
     amdvlk.configuration = {

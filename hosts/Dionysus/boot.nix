@@ -1,19 +1,34 @@
 {
   pkgs,
   config,
+  inputs,
+  lib,
   ...
-}: {
+}: let
+  inherit (lib) mkDefault;
+
+  pkgsUnstable = import inputs.nixpkgs-unstable {inherit (pkgs.stdenv) system;};
+in {
+  # HACK: fix xhci_pci missing
+  system.modulesTree = let
+    inherit (config.boot.kernelPackages) kernel;
+  in [
+    (lib.getOutput "modules" kernel)
+  ];
+
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = pkgsUnstable.linuxPackages_zen;
 
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
 
-    plymouth.enable = false;
+    plymouth.enable = mkDefault true;
 
-    extraModulePackages = with config.boot.kernelPackages; [zenpower];
+    extraModulePackages = [
+      config.boot.kernelPackages.zenergy
+    ];
 
     initrd = {
       availableKernelModules = [
@@ -24,7 +39,6 @@
         "usb_storage"
         "sd_mod"
         "i40e"
-        "zenpower"
       ];
       kernelModules = [
         "dm-snapshot"
@@ -34,6 +48,7 @@
         "nls_iso8859-1"
         "usbhid"
         "r8169"
+        "zenergy"
       ];
       network = {
         enable = true;
