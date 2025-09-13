@@ -24,7 +24,7 @@ in {
 
     altUI.package = pkgs.fetchzip {
       url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.29.0/vuetorrent.zip";
-      hash = "sha256-Z+N1RgcF67R6hWEfmfBls1+YLWkhEJQuOVqXXJCyptE=";
+      hash = "sha256-L0C17iT5S5Kdk8RRdUeWVYQu0ucch6zAyfyzc9Esa/c=";
     };
 
     p2p = {
