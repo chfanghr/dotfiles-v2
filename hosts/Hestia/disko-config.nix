@@ -173,6 +173,7 @@ in {
             options = {
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
+              compression = "lz4";
               keylocation = "file:///${zfsKeysMountpoint}/zp-mirrored-enc-key";
               # keylocation = "prompt";
             };
