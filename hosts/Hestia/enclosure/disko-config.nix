@@ -35,14 +35,14 @@
     mountPoints;
 
   mkEncDataset = name: options: mountPoint:
-    nameValuePair name {
-      type = "zfs_fs";
-      options = {mountpoint = "legacy";} // options;
-    }
-    // optionalAttrs (mountPoint != null) {
-      inherit mountPoint;
-      mountOptions = ["x-systemd.automount" "noauto"];
-    };
+    nameValuePair name ({
+        type = "zfs_fs";
+        options = {mountpoint = "legacy";} // options;
+      }
+      // optionalAttrs (mountPoint != null) {
+        mountpoint = mountPoint;
+        mountOptions = ["x-systemd.automount" "noauto"];
+      });
 in {
   disko.devices = {
     disk = listToAttrs [
