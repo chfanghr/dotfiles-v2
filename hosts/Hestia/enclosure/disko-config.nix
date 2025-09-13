@@ -51,6 +51,7 @@ in {
     ];
     zpool.${poolName} = {
       type = "zpool";
+      mode = "mirror";
       rootFsOptions = {
         mountpoint = "none";
         compression = "zstd";
