@@ -69,13 +69,9 @@ in {
           hardware.amdgpu = {
             initrd.enable = true;
             opencl.enable = true;
+            overdrive.enable = mkDefault true;
           };
           # services.xserver.videoDrivers = mkDefault ["modesetting"];
-
-          programs.corectrl = {
-            enable = true;
-            gpuOverclock.enable = true;
-          };
         }
         (
           mkIf gpuProps.amd.amdvlk.enable {
