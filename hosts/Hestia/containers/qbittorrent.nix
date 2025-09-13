@@ -5,6 +5,8 @@
 }: let
   inherit (lib) types mkOption mkIf mkForce mkEnableOption;
   cfg = config.hestia.containers.qbittorrent;
+
+  dataDirContainerPath = "/data/qbittorrent";
 in {
   options.hestia.containers.qbittorrent = {
     enable = mkEnableOption "qbittorrent container";
@@ -14,6 +16,11 @@ in {
     qbtPackage = mkOption {type = types.package;};
 
     dataDir = mkOption {type = types.path;};
+    dataDirContainer = mkOption {
+      type = types.path;
+      default = dataDirContainerPath;
+      readOnly = true;
+    };
 
     user = {
       name = mkOption {type = types.str;};
@@ -26,7 +33,11 @@ in {
 
     altUI = {
       package = mkOption {type = types.package;};
-      mountPoint = mkOption {type = types.path;};
+      mountPoint = mkOption {
+        type = types.path;
+        default = "${dataDirContainerPath}/alt_ui";
+        readOnly = true;
+      };
     };
 
     p2p = {
@@ -89,7 +100,7 @@ in {
 
         bindMounts.qbt-data = {
           hostPath = cfg.dataDir;
-          mountPoint = cfg.dataDir;
+          mountPoint = cfg.dataDirContainer;
           isReadOnly = false;
         };
 
@@ -178,7 +189,7 @@ in {
               user = cfg.user.name;
               group = cfg.group.name;
               package = cfg.qbtPackage;
-              inherit (cfg) dataDir;
+              dataDir = cfg.dataDirContainer;
               openFilesLimit = 65536;
               port = cfg.monitoring.uiPort;
               openFirewall = false;

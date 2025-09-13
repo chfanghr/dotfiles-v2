@@ -1,11 +1,10 @@
 {
   poolName,
-  qbtMountPoint,
-  safeMountPoint,
+  mountPoints ? {},
   lib,
   ...
 }: let
-  inherit (lib) nameValuePair;
+  inherit (lib) nameValuePair optionalAttrs;
   inherit (builtins) toString listToAttrs;
 
   mkDiskInEnclosure = i:
@@ -23,6 +22,27 @@
         };
       };
     };
+
+  mountPointsFinal =
+    ({
+      qbittorrent ? null,
+      safe ? null,
+      slowStash ? null,
+      ...
+    }: {
+      inherit qbittorrent safe slowStash;
+    })
+    mountPoints;
+
+  mkEncDataset = name: options: mountPoint:
+    nameValuePair name {
+      type = "zfs_fs";
+      options = {mountpoint = "legacy";} // options;
+    }
+    // optionalAttrs (mountPoint != null) {
+      inherit mountPoint;
+      mountOptions = ["x-systemd.automount" "noauto"];
+    };
 in {
   disko.devices = {
     disk = listToAttrs [
@@ -37,35 +57,26 @@ in {
         acltype = "posixacl";
         xattr = "sa";
       };
-      datasets = {
-        enc = {
-          type = "zfs_fs";
-          options = {
-            encryption = "aes-256-gcm";
-            keyformat = "passphrase";
-            keylocation = "prompt";
+      datasets =
+        {
+          enc = {
+            type = "zfs_fs";
+            options = {
+              encryption = "aes-256-gcm";
+              keyformat = "passphrase";
+              keylocation = "prompt";
+            };
           };
-        };
-        "enc/qbittorrent" = {
-          type = "zfs_fs";
-          options = {
-            mountpoint = "legacy";
-            atime = "off";
+          reserved = {
+            type = "zfs_volume";
+            size = "32G";
           };
-          mountpoint = qbtMountPoint;
-          mountOptions = ["x-systemd.automount" "noauto"];
-        };
-        "enc/safe" = {
-          type = "zfs_fs";
-          options.mountpoint = "legacy";
-          mountpoint = safeMountPoint;
-          mountOptions = ["x-systemd.automount" "noauto"];
-        };
-        reserved = {
-          type = "zfs_volume";
-          size = "32G";
-        };
-      };
+        }
+        // (listToAttrs [
+          (mkEncDataset "enc/qbittorrent" {atime = "off";} mountPointsFinal.qbittorrent)
+          (mkEncDataset "enc/safe" {} mountPointsFinal.safe)
+          (mkEncDataset "enc/slow_stash" {} mountPointsFinal.slowStash)
+        ]);
     };
   };
 }

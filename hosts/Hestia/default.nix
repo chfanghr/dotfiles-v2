@@ -71,7 +71,7 @@ in {
 
   specialisation.server-with-enclosure-attached.configuration.hestia = {
     mode = "server";
-    withEnclosureAttached = true;
+    enclosure.attached = true;
   };
 
   nixpkgs.hostPlatform = "x86_64-linux";

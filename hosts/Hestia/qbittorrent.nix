@@ -22,12 +22,9 @@ in {
       id = 992;
     };
 
-    altUI = {
-      package = pkgs.fetchzip {
-        url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.18.0/vuetorrent.zip";
-        hash = "sha256-Z+N1RgcF67R6hWEfmfBls1+YLWkhEJQuOVqXXJCyptE=";
-      };
-      mountPoint = "${config.hestia.containers.qbittorrent.dataDir}/alt_ui";
+    altUI.package = pkgs.fetchzip {
+      url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.29.0/vuetorrent.zip";
+      hash = "sha256-Z+N1RgcF67R6hWEfmfBls1+YLWkhEJQuOVqXXJCyptE=";
     };
 
     p2p = {
