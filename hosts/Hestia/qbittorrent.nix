@@ -1,14 +1,17 @@
 {
   pkgs,
   config,
+  lib,
   ...
-}: {
+}: let
+  inherit (lib) mkDefault;
+in {
   hestia.containers.qbittorrent = {
     containerName = "qbt";
 
     qbtPackage = pkgs.qbittorrent-nox;
 
-    dataDir = "/data/qbittorrent";
+    dataDir = mkDefault "/data/qbittorrent";
 
     user = {
       name = "qbittorrent";

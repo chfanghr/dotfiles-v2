@@ -11,6 +11,7 @@ in {
     ./backup.nix
     ./boot.nix
     ./disko.nix
+    ./with-enclosure-attached.nix
     ./minecraft.nix
     ./mode.nix
     ./networking.nix
@@ -67,6 +68,11 @@ in {
   hestia.mode = mkDefault "server";
 
   specialisation.desktop.configuration.hestia.mode = "desktop";
+
+  specialisation.server-with-enclosure-attached.configuration.hestia = {
+    mode = "server";
+    withEnclosureAttached = true;
+  };
 
   nixpkgs.hostPlatform = "x86_64-linux";
 }
