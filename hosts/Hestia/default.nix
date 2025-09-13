@@ -8,10 +8,10 @@
 in {
   imports = [
     ./containers
+    ./enclosure
     ./backup.nix
     ./boot.nix
     ./disko.nix
-    ./with-enclosure-attached.nix
     ./minecraft.nix
     ./mode.nix
     ./networking.nix

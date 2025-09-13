@@ -1,4 +1,4 @@
-o @ {
+{
   lib,
   config,
   ...
@@ -42,6 +42,6 @@ in {
         "force group" = "root";
       };
     }
-    (import ./disko-enclosure.nix {inherit qbtMountPoint safeMountPoint poolName;} o)
+    (import ./disko-enclosure.nix {inherit qbtMountPoint safeMountPoint poolName lib;})
   ]);
 }

@@ -2,7 +2,9 @@
   poolName,
   qbtMountPoint,
   safeMountPoint,
-}: {lib, ...}: let
+  lib,
+  ...
+}: let
   inherit (lib) nameValuePair;
   inherit (builtins) toString listToAttrs;
 
