@@ -11,7 +11,7 @@ in {
     ./enclosure
     ./backup.nix
     ./boot.nix
-    ./disko.nix
+    ./disko-config.nix
     ./minecraft.nix
     ./mode.nix
     ./networking.nix

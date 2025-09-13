@@ -86,7 +86,7 @@ in {
       };
       mode = "0700";
     })
-    (import ./disko-enclosure.nix {
+    (import ./disko-config.nix {
       inherit (enclosure) poolName mountPoints;
       inherit lib;
     })
