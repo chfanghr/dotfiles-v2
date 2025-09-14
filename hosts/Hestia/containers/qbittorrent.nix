@@ -3,10 +3,13 @@
   config,
   ...
 }: let
-  inherit (lib) types mkOption mkIf mkForce mkEnableOption;
+  inherit (lib) types mkOption mkIf mkForce mkEnableOption optionalAttrs nameValuePair listToAttrs;
   cfg = config.hestia.containers.qbittorrent;
 
   dataDirContainerPath = "/data/qbittorrent";
+  mkPathInDataDir = rel: "${dataDirContainerPath}/${rel}";
+  incompletePath = mkPathInDataDir "incomplete";
+  mkCatPathInDataDir = cat: mkPathInDataDir "downloads/${cat}";
 in {
   options.hestia.containers.qbittorrent = {
     enable = mkEnableOption "qbittorrent container";
@@ -31,15 +34,6 @@ in {
       id = mkOption {type = types.int;};
     };
 
-    altUI = {
-      package = mkOption {type = types.package;};
-      mountPoint = mkOption {
-        type = types.path;
-        default = "${dataDirContainerPath}/alt_ui";
-        readOnly = true;
-      };
-    };
-
     p2p = {
       veth = mkOption {type = types.str;};
       port = mkOption {type = types.port;};
@@ -50,10 +44,31 @@ in {
       veth = mkOption {type = types.str;};
       hostAddress = mkOption {type = types.str;};
       localAddress = mkOption {type = types.str;};
-      uiPort = mkOption {type = types.port;};
+      ui = {
+        port = mkOption {type = types.port;};
+        passwordHash = mkOption {
+          type = types.str;
+          description = "Password_PBKDF2";
+        };
+        altPackage = mkOption {
+          type = types.nullOr types.package;
+          default = null;
+        };
+      };
     };
 
     reverseProxyPrefix = mkOption {type = types.str;};
+
+    systemdServiceName = mkOption {
+      type = types.str;
+      default = "qbittorrent";
+      readOnly = true;
+    };
+
+    categories = mkOption {
+      type = types.listOf types.str;
+      default = [];
+    };
   };
   imports = [
     {
@@ -111,8 +126,6 @@ in {
         };
 
         config = {config, ...}: {
-          imports = [../../../modules/nixos/common/services/qbittorrent.nix];
-
           users = {
             users.${cfg.user.name} = {
               uid = cfg.user.id;
@@ -137,7 +150,7 @@ in {
             firewall = {
               enable = true;
               interfaces.${cfg.monitoring.veth}.allowedTCPPorts = [
-                cfg.monitoring.uiPort
+                cfg.monitoring.ui.port
                 config.services.prometheus.exporters.node.port
               ];
               interfaces.${cfg.p2p.veth} = {
@@ -149,22 +162,7 @@ in {
 
           systemd = {
             services = {
-              qbittorrent-alt-ui = {
-                wantedBy = ["multi-user.target"];
-                before = ["${config.services.qbittorrent-custom.systemdServiceName}.service"];
-                serviceConfig = {
-                  User = cfg.user.name;
-                  Group = cfg.group.name;
-                  Type = "oneshot";
-                  Restart = "no";
-                };
-                script = ''
-                  if [ -L ${cfg.altUI.mountPoint} ]; then
-                    unlink ${cfg.altUI.mountPoint}
-                  fi
-                  ln -s ${cfg.altUI.package} ${cfg.altUI.mountPoint}
-                '';
-              };
+              ${cfg.systemdServiceName}.serviceConfig.LimitNOFILE = 65536;
             };
             network = {
               wait-online.ignoredInterfaces = [cfg.p2p.veth];
@@ -182,18 +180,73 @@ in {
             };
           };
 
+          systemd.tmpfiles.settings."10-qbt-categories" = let
+            genCfg = cat:
+              nameValuePair (mkCatPathInDataDir cat) {
+                d = {
+                  user = cfg.user.name;
+                  group = cfg.group.name;
+                  mode = 0755;
+                };
+              };
+          in
+            listToAttrs (map genCfg cfg.categories);
+
           services = {
             resolved.enable = true;
-            qbittorrent-custom = {
+            qbittorrent = {
               enable = true;
               user = cfg.user.name;
               group = cfg.group.name;
               package = cfg.qbtPackage;
-              dataDir = cfg.dataDirContainer;
-              openFilesLimit = 65536;
-              port = cfg.monitoring.uiPort;
+              profileDir = cfg.dataDirContainer;
+              webuiPort = cfg.monitoring.ui.port;
+              torrentingPort = cfg.p2p.port;
+              # NOTE: this is handled ourselves. We need to open the ports on different interfaces.
               openFirewall = false;
-              confirmLegalNotice = true;
+
+              # TODO: Manage category, generate a json file
+              serverConfig = {
+                LegalNotice.Accepted = true;
+                BitTorrent = {
+                  Session = {
+                    GlobalDLSpeedLimit = 0;
+                    # TODO: expose this as an option?
+                    GlobalUPSpeedLimit = 10240;
+                    IgnoreLimitsOnLan = true;
+                    Interface = cfg.p2p.veth;
+                    InterfaceName = cfg.p2p.veth;
+                    Port = cfg.p2p.port;
+                    TempPathEnabled = true;
+                    TempPath = incompletePath;
+                  };
+                };
+                Core.AutoDeleteAddedTorrentFile = "Never";
+                Preferences = {
+                  General.Locale = "en";
+                  WebUI =
+                    {
+                      Password_PBKDF2 = ''"@ByteArray(${cfg.monitoring.ui.passwordHash})"'';
+                      UseUPnP = false;
+                    }
+                    // (optionalAttrs (cfg.monitoring.ui.altPackage != null) {
+                      AlternativeUIEnabled = true;
+                      RootFolder = "${toString cfg.monitoring.ui.altPackage}";
+                    });
+                };
+                RSS = {
+                  Session = {
+                    EnableProcessing = true;
+                    RefreshInterval = 10;
+                  };
+                  AutoDownloader = {
+                    EnableProcessing = true;
+                    DownloadRepacks = true;
+                    # TODO: expose this as an option? It doesn't make sense to hardcode this but I never used it.
+                    SmartEpisodeFilters = ''s(\\d+)e(\\d+), (\\d+)x(\\d+), "(\\d{4}[.\\-]\\d{1,2}[.\\-]\\d{1,2})", "(\\d{1,2}[.\\-]\\d{1,2}[.\\-]\\d{4})"'';
+                  };
+                };
+              };
             };
             prometheus.exporters.node.enable = true;
           };
@@ -235,7 +288,7 @@ in {
                 passHostHeader = false;
                 servers = [
                   {
-                    url = "http://${cfg.monitoring.localAddress}:${builtins.toString cfg.monitoring.uiPort}";
+                    url = "http://${cfg.monitoring.localAddress}:${builtins.toString cfg.monitoring.ui.port}";
                   }
                 ];
               };

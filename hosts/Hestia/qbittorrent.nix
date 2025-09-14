@@ -22,11 +22,6 @@ in {
       id = 992;
     };
 
-    altUI.package = pkgs.fetchzip {
-      url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.29.0/vuetorrent.zip";
-      hash = "sha256-L0C17iT5S5Kdk8RRdUeWVYQu0ucch6zAyfyzc9Esa/c=";
-    };
-
     p2p = {
       veth = "ve-qbt-p2p";
       port = 28721;
@@ -37,9 +32,18 @@ in {
       veth = "ve-qbt-mon";
       hostAddress = "172.17.0.1";
       localAddress = "172.17.0.2";
-      uiPort = 8080;
+      ui = {
+        port = 8080;
+        passwordHash = "YsnDMfnpnTgcF0oRqLK/pQ==:OJmY+fOw/4Bl7RCSt+HAJEtX3H2oqq4TmV8NjiWQUI5I4JKMTO6JOU5e85RXtk0s3+uX2V7PCz/5zFslCOgspA==";
+        altPackage = pkgs.fetchzip {
+          url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.29.0/vuetorrent.zip";
+          hash = "sha256-L0C17iT5S5Kdk8RRdUeWVYQu0ucch6zAyfyzc9Esa/c=";
+        };
+      };
     };
 
     reverseProxyPrefix = "/qbittorrent";
+
+    categories = ["Misc" "Anime"];
   };
 }
