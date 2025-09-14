@@ -78,8 +78,6 @@ in {
       # HACK
       systemd = {
         services."container@${cfg.containerName}" = {
-          after = ["data-qbittorrent.mount"];
-          bindsTo = ["data-qbittorrent.mount"];
           postStart = ''
             # Don't let tailscale hijack the traffic in and out of the monitoring veth
             ip route add throw ${cfg.monitoring.localAddress} table 52
