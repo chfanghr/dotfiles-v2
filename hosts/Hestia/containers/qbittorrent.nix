@@ -90,11 +90,9 @@ in {
       };
     }
     (mkIf cfg.enable {
-      # HACK
       systemd = {
         services."container@${cfg.containerName}" = {
-          after = ["data-qbittorrent.mount"];
-          bindsTo = ["data-qbittorrent.mount"];
+          # HACK
           postStart = ''
             # Don't let tailscale hijack the traffic in and out of the monitoring veth
             ip route add throw ${cfg.monitoring.localAddress} table 52
@@ -102,6 +100,7 @@ in {
           preStop = ''
             ip route delete throw ${cfg.monitoring.localAddress} table 52
           '';
+          unitConfig.RequiresMountsFor = cfg.dataDir;
         };
         network.networks."40-${cfg.monitoring.veth}" = {
           matchConfig.Name = cfg.monitoring.veth;
