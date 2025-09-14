@@ -100,7 +100,6 @@ in {
           preStop = ''
             ip route delete throw ${cfg.monitoring.localAddress} table 52
           '';
-          unitConfig.RequiresMountsFor = cfg.dataDir;
         };
         network.networks."40-${cfg.monitoring.veth}" = {
           matchConfig.Name = cfg.monitoring.veth;
