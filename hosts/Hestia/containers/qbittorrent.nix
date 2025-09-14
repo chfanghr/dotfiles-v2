@@ -178,19 +178,18 @@ in {
                 };
               };
             };
-          };
-
-          systemd.tmpfiles.settings."10-qbt-categories" = let
-            genCfg = cat:
-              nameValuePair (mkCatPathInDataDir cat) {
-                d = {
-                  user = cfg.user.name;
-                  group = cfg.group.name;
-                  mode = 0755;
+            tmpfiles.settings."10-qbt-categories" = let
+              genCfg = cat:
+                nameValuePair (mkCatPathInDataDir cat) {
+                  d = {
+                    user = cfg.user.name;
+                    group = cfg.group.name;
+                    mode = "0755";
+                  };
                 };
-              };
-          in
-            listToAttrs (map genCfg cfg.categories);
+            in
+              listToAttrs (map genCfg cfg.categories);
+          };
 
           services = {
             resolved.enable = true;
