@@ -19,6 +19,7 @@
           inputs'.deploy-rs.packages.default
           pkgs.nurl
           pkgs.nixos-facter
+          inputs'.qbittorrent-password.packages.default
         ];
     });
   };

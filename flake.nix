@@ -44,6 +44,7 @@
       url = "github:nix-community/lanzaboote/v0.4.2";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    qbittorrent-password.url = "git+https://codeberg.org/feathecutie/qbittorrent_password.git";
   };
 
   outputs = inputs @ {flake-parts, ...}:
