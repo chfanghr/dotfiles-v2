@@ -28,9 +28,10 @@
       qbittorrent ? null,
       safe ? null,
       slowStash ? null,
+      tm-hera ? null,
       ...
     }: {
-      inherit qbittorrent safe slowStash;
+      inherit qbittorrent safe slowStash tm-hera;
     })
     mountPoints;
 
@@ -74,9 +75,14 @@ in {
           };
         }
         // (listToAttrs [
-          (mkEncDataset "enc/qbittorrent" {atime = "off";} mountPointsFinal.qbittorrent)
+          (mkEncDataset "enc/qbittorrent" {
+              atime = "off";
+              compression = "zstd";
+            }
+            mountPointsFinal.qbittorrent)
           (mkEncDataset "enc/safe" {} mountPointsFinal.safe)
           (mkEncDataset "enc/slow_stash" {} mountPointsFinal.slowStash)
+          (mkEncDataset "enc/tm/hera" {compression = "zstd";} mountPointsFinal.tm-hera)
         ]);
     };
   };

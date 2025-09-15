@@ -49,6 +49,10 @@ in {
         type = types.str;
         default = mkDefaultPath "slow-stash";
       };
+      tm-hera = mkOption {
+        type = types.str;
+        default = mkDefaultPath "tm/hera";
+      };
     };
   };
 
@@ -83,6 +87,20 @@ in {
         "force create mode" = "0600";
         "force directory mode" = "0700";
         "force group" = "root";
+      };
+      mode = "0700";
+    })
+    (mkCfgFor {
+      name = "tm-hera";
+      mountPoint = enclosure.mountPoints.tm-hera;
+      user = config.dotfiles.nixos.props.users.superUser;
+      sambaCfg = {
+        "read only" = "no";
+        "valid users" = config.dotfiles.nixos.props.users.superUser;
+        "force user" = config.dotfiles.nixos.props.users.superUser;
+        "fruit:aapl" = "yes";
+        "fruit:time machine" = "yes";
+        "vfs objects" = "catia fruit streams_xattr";
       };
       mode = "0700";
     })
