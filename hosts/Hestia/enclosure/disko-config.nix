@@ -82,7 +82,11 @@ in {
             mountPointsFinal.qbittorrent)
           (mkEncDataset "enc/safe" {} mountPointsFinal.safe)
           (mkEncDataset "enc/slow_stash" {} mountPointsFinal.slowStash)
-          (mkEncDataset "enc/tm/hera" {compression = "zstd";} mountPointsFinal.tm-hera)
+          (mkEncDataset "enc/tm/hera" {
+              compression = "zstd";
+              quote = "5T";
+            }
+            mountPointsFinal.tm-hera)
         ]);
     };
   };
