@@ -3,10 +3,11 @@
 
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs-2411.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs-2505.url = "github:nixos/nixpkgs/nixos-25.05";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vscode-server = {
@@ -25,7 +26,10 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     cardano-nix.url = "github:mlabs-haskell/cardano.nix";
-    jovian.url = "github:Jovian-Experiments/Jovian-NixOS?rev=f31df4cb6b2eeef6cf0113edb687297be72a69df";
+    jovian = {
+      url = "github:Jovian-Experiments/Jovian-NixOS";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     disko.url = "github:nix-community/disko";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     agenix.url = "github:ryantm/agenix";
@@ -38,7 +42,10 @@
     ucodenix.url = "github:e-tho/ucodenix";
     nixos-anywhere.url = "github:nix-community/nixos-anywhere";
     impermanence.url = "github:nix-community/impermanence";
-    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.2";
