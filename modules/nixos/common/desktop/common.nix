@@ -54,7 +54,6 @@ in
           kdePackages.fcitx5-with-addons
           kdePackages.fcitx5-chinese-addons
         ];
-        plasma6Support = true;
         waylandFrontend = true;
       };
     };

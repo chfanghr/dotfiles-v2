@@ -6,7 +6,22 @@
 }:
 lib.mkMerge [
   {
-    programs.ssh.enable = true;
+    programs.ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+      matchBlocks."*" = {
+        forwardAgent = false;
+        addKeysToAgent = "no";
+        compression = false;
+        serverAliveInterval = 0;
+        serverAliveCountMax = 3;
+        hashKnownHosts = false;
+        userKnownHostsFile = "~/.ssh/known_hosts";
+        controlMaster = "no";
+        controlPath = "~/.ssh/master-%r@%n:%p";
+        controlPersist = "no";
+      };
+    };
   }
   (lib.mkIf config.dotfiles.shared.props.networking.home.proxy.useGateway {
     programs.ssh.matchBlocks = let
@@ -26,9 +41,6 @@ lib.mkMerge [
       "gist.github.com" = {
         hostname = "github.com";
         user = "git";
-        inherit proxyCommand;
-      };
-      "*.staging.mlabs.city" = {
         inherit proxyCommand;
       };
     };
