@@ -63,6 +63,8 @@ in {
     };
   };
 
+  programs.mosh.enable = true;
+
   nix.settings.download-buffer-size = 1048576000;
 
   hestia.mode = mkDefault "server";
