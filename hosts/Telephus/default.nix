@@ -24,10 +24,7 @@
 
   nix.settings.experimental-features = ["nix-command" "flakes"];
 
-  services = {
-    openssh.enable = true;
-    qemuGuest.enable = true;
-  };
+  services.openssh.enable = true;
 
   time.timeZone = "Asia/Singapore";
 
