@@ -8,9 +8,10 @@
   networking = {
     useNetworkd = true;
     hostName = "Telephus";
+    interfaces.enp0s1.useDHCP = true;
   };
 
-  networking.interfaces.enp0s1.useDHCP = true;
+  virtualisation.rosetta.enable = true;
 
   users.users.fanghr = {
     isNormalUser = true;
@@ -21,7 +22,12 @@
     hashedPassword = "$y$j9T$sUiL3HdtLj7MZAsxCkWYV1$4mGt.J0JppEhcRT5PqMeYhxnsFI1M2hpz0l95SluoND";
   };
 
-  services.openssh.enable = true;
+  nix.settings.experimental-features = ["nix-command" "flakes"];
+
+  services = {
+    openssh.enable = true;
+    qemuGuest.enable = true;
+  };
 
   time.timeZone = "Asia/Singapore";
 
