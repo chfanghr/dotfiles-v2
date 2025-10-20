@@ -50,6 +50,7 @@
     (mkNixosAndNode "Persephone" "persephone.snow-dace.ts.net")
     (mkNixosAndNode "Poseidon" "poseidon.snow-dace.ts.net")
     (mkNixosAndNode "Uranus" "uranus.snow-dace.ts.net")
+    (mkNixosAndNode "Telephus" "telephus.snow-dace.ts.net")
   ];
 
   nixosConfigurations = listToAttrs (
