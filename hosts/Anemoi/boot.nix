@@ -59,10 +59,13 @@
       };
     };
 
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
+
     loader = {
-      systemd-boot = {
-        enable = true;
-      };
+      systemd-boot.enable = false; # handled by lanzaboote
       efi.canTouchEfiVariables = true;
     };
 
