@@ -60,7 +60,6 @@ in {
             options = {
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
-              # keylocation = "file:///${zfsKeysMountpoint}/zp-striped-enc-key";
               keylocation = "prompt";
             };
           };

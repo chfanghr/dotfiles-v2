@@ -23,8 +23,7 @@
       ];
 
       network.enable = true;
-
-      luks.yubikeySupport = true;
+      systemd.enable = true;
     };
 
     loader = {
