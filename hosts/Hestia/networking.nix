@@ -47,8 +47,6 @@ in {
   imports = [
     {
       networking = {
-        enableIPv6 = true;
-
         firewall.enable = true;
         nftables.enable = true;
 

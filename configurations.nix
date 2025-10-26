@@ -40,6 +40,7 @@
   };
 
   hosts = [
+    (mkNixosAndNode "Anemoi" "anemoi.snow-dace.ts.net")
     (mkNixosAndNode "Apollo" "apollo.snow-dace.ts.net")
     (mkNixosAndNode "Artemis" "artemis.barbel-tritone.ts.net")
     (mkNixosAndNode "Athena" "athena.snow-dace.ts.net")

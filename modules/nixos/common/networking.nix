@@ -16,12 +16,10 @@ in {
         useNetworkd = mkDefault true;
         enableIPv6 = mkDefault true;
         firewall.enable = mkDefault true;
+        nftables.enable = mkDefault true;
         nameservers = mkDefault [
           "1.1.1.1"
           "8.8.8.8"
-          "9.9.9.9"
-          "223.5.5.5"
-          "114.114.114.114"
         ];
       };
     }
