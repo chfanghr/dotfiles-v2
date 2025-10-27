@@ -47,6 +47,7 @@ in {
     zpool = {
       zp-mirrored = {
         type = "zpool";
+        mode = "mirror";
         rootFsOptions = {
           mountpoint = "none";
           compression = "lz4";
