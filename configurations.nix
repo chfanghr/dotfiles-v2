@@ -40,6 +40,7 @@
   };
 
   hosts = [
+    (mkNixosAndNode "Anemoi" "anemoi.snow-dace.ts.net")
     (mkNixosAndNode "Apollo" "apollo.snow-dace.ts.net")
     (mkNixosAndNode "Artemis" "artemis.barbel-tritone.ts.net")
     (mkNixosAndNode "Athena" "athena.snow-dace.ts.net")
@@ -50,6 +51,7 @@
     (mkNixosAndNode "Persephone" "persephone.snow-dace.ts.net")
     (mkNixosAndNode "Poseidon" "poseidon.snow-dace.ts.net")
     (mkNixosAndNode "Uranus" "uranus.snow-dace.ts.net")
+    (mkNixosAndNode "Telephus" "telephus.snow-dace.ts.net")
   ];
 
   nixosConfigurations = listToAttrs (

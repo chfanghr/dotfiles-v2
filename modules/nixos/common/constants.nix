@@ -5,6 +5,7 @@ in {
     "Demeter-1:st+mG+g+DIrAmwIz0DpkPD4XfLtzrElbMiKDR9Jf+Nw="
     "Persephone-1:SlL2/HsC5uw1FvL+sdl4zm1cYpeFFyQLXNh9aKvKFQY="
     "Hestia-1:paJxDGrmii5SP4/9AhYVXP4nFBNB/bz0Qc1YODDEf94="
+    "Anemoi-1:bGv4AeeKuaVUjTWzPPzwXkOR4t8gG0qPdgwVbensIUs="
   ];
 
   users.users = {
