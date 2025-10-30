@@ -23,9 +23,14 @@
         emulation = true;
         vmHost = true;
       };
-      nix.roles.consumer = true;
+      nix.roles = {
+        consumer = true;
+        builder = true;
+      };
       ociHost = true;
     };
+
+    nix.builderPrivateKeyAgeSecret = ../../secrets/anemoi-nix-cache-key.age;
   };
 
   time.timeZone = "Asia/Singapore";
