@@ -175,7 +175,7 @@ in {
           age.secrets.ap-password.file = cfg.ap.encryptedPasswordFile;
 
           services.hostapd = {
-            enable = true;
+            enable = false;
 
             radios.${cfg.ap.device} = {
               band = "5g";
