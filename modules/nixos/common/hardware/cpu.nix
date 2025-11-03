@@ -30,7 +30,7 @@ in {
       amd = {
         noPstate = mkPropOption "don't use amd_spstate";
 
-        trustUCode = mkPropOption "trust amd microcode updates from ucode-nix";
+        trustUCode = mkPropOption "trust amd microcode updates from ucode-nix" // {default = true;};
       };
     };
   };
