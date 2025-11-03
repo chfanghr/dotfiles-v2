@@ -29,6 +29,8 @@ in {
     tweaks = {
       amd = {
         noPstate = mkPropOption "don't use amd_spstate";
+
+        trustUCode = mkPropOption "trust amd microcode updates from ucode-nix";
       };
     };
   };
@@ -53,6 +55,9 @@ in {
           }
           (mkIf (!cpuProps.tweaks.amd.noPstate) {
             boot.kernelParams = ["amd_pstate=active"];
+          })
+          (mkIf (cpuProps.tweaks.amd.trustUCode) {
+            boot.kernelParams = ["microcode.amd_sha_check=off"];
           })
         ])
       )
