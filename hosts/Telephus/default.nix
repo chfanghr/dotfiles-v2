@@ -3,8 +3,14 @@
     ./boot.nix
     ./disko-config.nix
     inputs.disko.nixosModules.default
+    ../../modules/nixos/common
   ];
 
+  dotfiles.nixos = {
+    props.hardware.cpu = {
+      aarch64 = true;
+    };
+  };
   networking = {
     useNetworkd = true;
     hostName = "Telephus";
@@ -27,8 +33,6 @@
   services.openssh.enable = true;
 
   time.timeZone = "Asia/Singapore";
-
-  system.stateVersion = "25.05";
 
   nixpkgs.hostPlatform = "aarch64-linux";
 }

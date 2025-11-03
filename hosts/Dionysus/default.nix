@@ -118,6 +118,4 @@
       dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce true;
     };
   };
-
-  nixpkgs.hostPlatform = "x86_64-linux";
 }
