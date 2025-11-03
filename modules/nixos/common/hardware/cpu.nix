@@ -24,6 +24,7 @@ in {
   options.dotfiles.nixos.props.hardware.cpu = {
     amd = mkPropOption "has a amd cpu";
     intel = mkPropOption "has a intel cpu";
+    aarch64 = mkPropOption "has a aarch64 cpu";
 
     tweaks = {
       amd = {
@@ -39,7 +40,7 @@ in {
       {
         assertions = [
           {
-            assertion = xor cpuProps.amd cpuProps.intel;
+            assertion = xor (xor cpuProps.amd cpuProps.intel) cpuProps.aarch64;
             message = "A machine can either have an amd or intel cpu, never both, never none";
           }
         ];
@@ -48,6 +49,7 @@ in {
         mkIf cpuProps.amd (mkMerge [
           {
             hardware.cpu.amd.updateMicrocode = true;
+            nixpkgs.hostPlatform = "x86_64-linux";
           }
           (mkIf (!cpuProps.tweaks.amd.noPstate) {
             boot.kernelParams = ["amd_pstate=active"];
@@ -57,6 +59,7 @@ in {
       (
         mkIf cpuProps.intel {
           hardware.cpu.intel.updateMicrocode = true;
+          nixpkgs.hostPlatform = "x86_64-linux";
         }
       )
       (
@@ -64,5 +67,6 @@ in {
           powerManagement.cpuFreqGovernor = "ondemand";
         }
       )
+      (mkIf cpuProps.aarch64 {nixpkgs.hostPlatform = "aarch64-linux";})
     ]);
 }
