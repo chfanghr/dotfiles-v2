@@ -73,6 +73,4 @@ in {
     mode = "server";
     enclosure.attached = true;
   };
-
-  nixpkgs.hostPlatform = "x86_64-linux";
 }

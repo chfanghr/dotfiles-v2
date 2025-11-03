@@ -46,6 +46,4 @@
   ];
 
   services.prometheus.enable = lib.mkForce false;
-
-  nixpkgs.hostPlatform = "x86_64-linux";
 }
