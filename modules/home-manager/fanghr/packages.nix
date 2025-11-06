@@ -34,6 +34,8 @@ lib.mkMerge [
       nil
       nix-output-monitor
       nix-prefetch-github
+
+      fastfetch
     ];
   }
   (
