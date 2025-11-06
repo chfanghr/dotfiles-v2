@@ -107,8 +107,7 @@ in {
           ];
         };
         useHostResolvConf = lib.mkForce false;
-        nameservers = [
-          "1.1.1.1"
+        nameservers = lib.mkForce [
           routerAddress
         ];
       };
