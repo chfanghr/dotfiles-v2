@@ -12,8 +12,8 @@
   qbtGid = 992;
 
   altUI = pkgs.fetchzip {
-    url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.18.0/vuetorrent.zip";
-    hash = "sha256-Z+N1RgcF67R6hWEfmfBls1+YLWkhEJQuOVqXXJCyptE=";
+    url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.30.2/vuetorrent.zip";
+    hash = "sha256-PFmqonv1Q71yc6cVVqXzw7Br4TVazB36qXtEY3SeBuQ=";
   };
 
   altUIPath = "${dataDir}/alt_ui";

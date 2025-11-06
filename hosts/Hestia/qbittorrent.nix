@@ -23,8 +23,8 @@ in {
     };
 
     altUI.package = pkgs.fetchzip {
-      url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.29.0/vuetorrent.zip";
-      hash = "sha256-L0C17iT5S5Kdk8RRdUeWVYQu0ucch6zAyfyzc9Esa/c=";
+      url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.30.2/vuetorrent.zip";
+      hash = "sha256-PFmqonv1Q71yc6cVVqXzw7Br4TVazB36qXtEY3SeBuQ=";
     };
 
     p2p = {
