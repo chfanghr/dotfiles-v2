@@ -6,6 +6,7 @@
     ./fonts.nix
     ./git.nix
     ./gpg.nix
+    ./jj.nix
     ./mangohud.nix
     ./hyprland.nix
     ./nvim.nix
