@@ -139,6 +139,7 @@
               "update.mode" = "manual";
               "workbench.colorTheme" = "Vim Dark Hard";
               "chat.disableAIFeatures" = true;
+              "nix.serverPath" = "nil";
             };
           };
         };
