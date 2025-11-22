@@ -23,7 +23,6 @@
               ms-vscode.cpptools
               llvm-vs-code-extensions.vscode-clangd
               ms-vscode.cmake-tools
-              streetsidesoftware.code-spell-checker
               vadimcn.vscode-lldb
               dhall.vscode-dhall-lsp-server
               mkhl.direnv
@@ -55,7 +54,6 @@
               redhat.vscode-yaml
               aaron-bond.better-comments
               dhall.dhall-lang
-              usernamehw.errorlens
               tailscale.vscode-tailscale
               rust-lang.rust-analyzer
             ];
@@ -140,6 +138,7 @@
               "editor.bracketPairColorization.independentColorPoolPerBracketType" = true;
               "update.mode" = "manual";
               "workbench.colorTheme" = "Vim Dark Hard";
+              "chat.disableAIFeatures" = true;
             };
           };
         };
