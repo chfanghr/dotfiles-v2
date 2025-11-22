@@ -49,7 +49,10 @@
       interface = "enp6s0f1np1";
       id = 42;
     };
-    interfaces."vlan-main".useDHCP = true;
+    interfaces = {
+      "vlan-main".useDHCP = true;
+      "enp6s0f1np1".useDHCP = false;
+    };
   };
 
   users.users.fanghr.hashedPassword = "$y$j9T$SxmPzl.7ervjxa6Mzvq7p1$KLXfgvnEzCboA8TPWqGrEV/rn49v6uXiFSoIf7j5YGD";
