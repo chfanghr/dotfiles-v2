@@ -105,6 +105,8 @@
 
   nix.settings.download-buffer-size = 524288000;
 
+  time.timeZone = "Asia/Singapore";
+
   specialisation = {
     debug.configuration = {
       dotfiles.shared.props.purposes.graphical = {
