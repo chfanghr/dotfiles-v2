@@ -17,12 +17,13 @@ in {
   boot = {
     kernelPackages = pkgsUnstable.linuxPackages_zen;
 
+    lanzaboote = {
+      enable = true;
+      pkiBundle = "/var/lib/sbctl";
+    };
+
     loader = {
-      systemd-boot = {
-        enable = true;
-        extraFiles."crypt-storage/default" =
-          pkgs.writeText "dionysus-yubikey-salt" "2ac3d3cbf23517076ac9720a30a83428\n1000000";
-      };
+      systemd-boot.enable = false; # Handled by lanzaboote
       efi.canTouchEfiVariables = true;
     };
 
@@ -54,25 +55,16 @@ in {
       ];
       network = {
         enable = true;
-        # ssh = {
-        #   enable = true;
-        # };
+        # TODO: enable ssh unlock
       };
-      luks = {
-        yubikeySupport = true;
-        devices = {
-          enc_root = {
-            allowDiscards = true;
-            # device = "/dev/nvme1n1p2"; # handled by disko
-            preLVM = false;
-            yubikey = {
-              slot = 2;
-              twoFactor = false;
-              storage.device = "/dev/disk/by-uuid/12CE-A600";
-            };
-          };
-        };
+      systemd = {
+        enable = true;
+        network.enable = true;
       };
     };
   };
+
+  environment.defaultPackages = [
+    pkgs.sbctl
+  ];
 }

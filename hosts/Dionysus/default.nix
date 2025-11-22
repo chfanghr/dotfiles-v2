@@ -8,6 +8,7 @@
     ./boot.nix
     ./disko.nix
     ../../modules/nixos/common
+    inputs.lanzaboote.nixosModules.lanzaboote
     inputs.agenix.nixosModules.default
     inputs.disko.nixosModules.default
   ];
@@ -22,10 +23,6 @@
           gaming = lib.mkDefault true;
           desktop = lib.mkDefault true;
         };
-      };
-      networking.home = {
-        onLanNetwork = true;
-        proxy.useGateway = false;
       };
     };
     nixos = {
@@ -44,8 +41,15 @@
         nix.roles.consumer = true;
         ociHost = true;
       };
-      networking.lanInterfaces = ["enp14s0"];
     };
+  };
+
+  networking = {
+    vlans."vlan-main" = {
+      interface = "enp6s0f1np1";
+      id = 42;
+    };
+    interfaces."vlan-main".useDHCP = true;
   };
 
   users.users.fanghr.hashedPassword = "$y$j9T$SxmPzl.7ervjxa6Mzvq7p1$KLXfgvnEzCboA8TPWqGrEV/rn49v6uXiFSoIf7j5YGD";
@@ -84,10 +88,9 @@
     };
 
     avahi = {
-      enable = true;
+      enable = lib.mkForce true;
       allowInterfaces = [
-        "enp6s0f1np1"
-        "enp6s0f1np0"
+        "vlan-main"
       ];
     };
   };
@@ -110,12 +113,8 @@
         loader.systemd-boot.memtest86.enable = true;
         plymouth.enable = false;
       };
-    };
-    amdvlk.configuration = {
-      dotfiles.nixos.props.hardware.gpu.amd.amdvlk.enable = true;
-    };
-    useProxy.configuration = {
-      dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce true;
+
+      networking.interfaces."enp6s0f0np0".useDHCP = true;
     };
   };
 }
