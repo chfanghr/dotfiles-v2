@@ -15,6 +15,7 @@
     ./pueue.nix
     ./ssh.nix
     ./tmate.nix
+    ./wezterm.nix
     ./vscode.nix
     ./zsh.nix
     ../../shared
