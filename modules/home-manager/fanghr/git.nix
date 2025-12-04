@@ -28,15 +28,16 @@
         hh = "rev-parse HEAD";
       };
 
-      extraConfig = {
-        core.autocrlf = "input";
-        core.editor = "nvim";
-        init.defaultBranch = "main";
-        "credential \"https://gitlab.com\"" = {
-          username = "connor81";
-          helper = "store";
-          useHttpPath = true;
-        };
+      core = {
+        autocrlf = "input";
+        editor = "nvim";
+      };
+      init.defaultBranch = "main";
+
+      "credential \"https://gitlab.com\"" = {
+        username = "connor81";
+        helper = "store";
+        useHttpPath = true;
       };
     };
 

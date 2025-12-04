@@ -45,12 +45,27 @@
   };
 
   networking = {
-    vlans."vlan-main" = {
-      interface = "enp6s0f1np1";
-      id = 42;
+    vlans = {
+      "vlan-main" = {
+        interface = "enp6s0f1np1";
+        id = 42;
+      };
+      "vlan-mgmt" = {
+        interface = "enp6s0f1np1";
+        id = 120;
+      };
     };
     interfaces = {
       "vlan-main".useDHCP = true;
+      "vlan-mgmt" = {
+        useDHCP = false;
+        ipv4.addresses = [
+          {
+            address = "10.5.0.10";
+            prefixLength = 16;
+          }
+        ];
+      };
       "enp6s0f1np1".useDHCP = false;
     };
   };
