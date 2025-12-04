@@ -3,10 +3,9 @@
 
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
-    nixpkgs-2411.url = "github:nixos/nixpkgs/nixos-24.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";
+      url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
     vscode-server = {
@@ -25,7 +24,7 @@
     };
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     cardano-nix.url = "github:mlabs-haskell/cardano.nix";
-    jovian.url = "github:Jovian-Experiments/Jovian-NixOS?rev=f31df4cb6b2eeef6cf0113edb687297be72a69df";
+    jovian.url = "github:Jovian-Experiments/Jovian-NixOS?";
     disko.url = "github:nix-community/disko";
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     agenix.url = "github:ryantm/agenix";
@@ -41,8 +40,7 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.2";
-      inputs.nixpkgs.follows = "nixpkgs";
+      url = "github:nix-community/lanzaboote/v0.4.3";
     };
   };
 

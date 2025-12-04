@@ -93,7 +93,7 @@ in {
     (
       mkIf sharedProps.purposes.work {
         nix = {
-          package = pkgs.nixVersions.nix_2_24;
+          package = pkgs.nixVersions.nix_2_31;
 
           settings = {
             substituters = [

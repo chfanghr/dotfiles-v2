@@ -20,7 +20,7 @@ lib.mkMerge [
       gnumake
       treefmt
       ripgrep
-      wakatime
+      wakatime-cli
       tmux
       multimarkdown
       distrobox
@@ -46,7 +46,6 @@ lib.mkMerge [
         signal-desktop
         telegram-desktop
         discord
-        whatsie
 
         vlc
 
