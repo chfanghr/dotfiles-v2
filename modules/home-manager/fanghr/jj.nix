@@ -4,8 +4,13 @@
     ediff = false;
 
     settings = {
-      name = "Hongrui Fang";
-      email = "chfanghr@gmail.com";
+      user = {
+        name = "Hongrui Fang";
+        email = "chfanghr@gmail.com";
+      };
+      ui = {
+        editor = "nvim";
+      };
     };
   };
 }
