@@ -61,4 +61,10 @@ in
     programs.xwayland.enable = true;
 
     programs.kdeconnect.enable = true;
+
+    programs.winbox = {
+      enable = true;
+      openFirewall = true;
+      package = pkgs.winbox4;
+    };
   }
