@@ -46,4 +46,6 @@
   ];
 
   services.prometheus.enable = lib.mkForce false;
+
+  services.tailscale.useRoutingFeatures = lib.mkForce "both";
 }
