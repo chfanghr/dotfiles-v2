@@ -1,4 +1,8 @@
 {
+  pkgs,
+  lib,
+  ...
+}: {
   networking = {
     useNetworkd = true;
 
@@ -20,4 +24,23 @@
       };
     };
   };
+
+  services = {
+    tailscale.useRoutingFeatures = lib.mkForce "both";
+
+    networkd-dispatcher = {
+      enable = true;
+      rules."50-tailscale-optimizations" = {
+        onState = ["routable"];
+        script = ''
+          ${lib.getExe' pkgs.ethtool "ethtool"} -K enp3s0 rx-udp-gro-forwarding on rx-gro-list off
+        '';
+      };
+    };
+  };
+
+  environment.defaultPackages = [
+    pkgs.sbctl
+    pkgs.ethtool
+  ];
 }
