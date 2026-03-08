@@ -74,6 +74,7 @@
 
   home-manager.users.fanghr.home.packages = [
     pkgs.handbrake
+    pkgs.yacreader
   ];
 
   systemd.tmpfiles.settings."10-game-backup"."/data/game-backup".d = {
