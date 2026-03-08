@@ -44,7 +44,7 @@ lib.mkMerge [
         spotify
 
         signal-desktop
-        telegram-desktop
+        # telegram-desktop
         discord
 
         vlc
