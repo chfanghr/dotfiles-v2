@@ -67,4 +67,9 @@ in
       openFirewall = true;
       package = pkgs.winbox4;
     };
+
+    hardware.logitech.wireless = {
+      enable = true;
+      enableGraphical = true;
+    };
   }
