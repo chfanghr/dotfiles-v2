@@ -34,5 +34,6 @@
 
   environment.defaultPackages = [
     pkgs.sbctl
+    pkgs.smartmontools
   ];
 }

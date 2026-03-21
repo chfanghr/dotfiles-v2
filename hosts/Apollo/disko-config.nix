@@ -147,9 +147,12 @@ in {
 
   networking.hostId = "2e30674c";
 
-  services.zfs = {
-    trim.enable = true;
-    autoScrub.enable = true;
+  services = {
+    zfs = {
+      trim.enable = true;
+      autoScrub.enable = true;
+    };
+    smartd.enable = true;
   };
 
   fileSystems."/persist".neededForBoot = true;
