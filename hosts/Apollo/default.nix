@@ -5,7 +5,7 @@
 }: {
   imports = [
     ./boot.nix
-    ./disko.nix
+    ./disko-config.nix
     ./impermanence.nix
     ./networking.nix
     ../../modules/nixos/common
