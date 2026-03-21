@@ -10,7 +10,6 @@
     ./networking.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
-    inputs.nixos-facter-modules.nixosModules.facter
     inputs.impermanence.nixosModules.default
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
@@ -19,7 +18,7 @@
 
   time.timeZone = "Asia/Singapore";
 
-  facter.reportPath = ./facter.json;
+  hardware.facter.reportPath = ./facter.json;
 
   dotfiles.nixos.props = {
     nix.roles.consumer = true;

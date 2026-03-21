@@ -17,12 +17,12 @@
     useLatestZfsCompatibleKernel = true;
 
     initrd = {
-      availableKernelModules = [
-        "i40e"
-        "igc"
-      ];
+      network = {
+        enable = true;
+      };
 
       systemd = {
+        network.enable = true;
         enable = true;
 
         emergencyAccess = "$y$j9T$2TSgVktAmtPlsD0fimxXw0$iqLvWrUDnzGIpnA6xDUaUi1Yd4i5PvCkcIPXHEFIwI3";
