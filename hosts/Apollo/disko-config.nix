@@ -153,4 +153,9 @@ in {
   };
 
   fileSystems."/persist".neededForBoot = true;
+
+  boot.zfs = {
+    extraPools = ["dpool"];
+    requestEncryptionCredentials = ["dpool/enc"];
+  };
 }
