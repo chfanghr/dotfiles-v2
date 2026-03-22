@@ -4,6 +4,7 @@
   ...
 }: let
   initrdHostKey = "/etc/secrets/initrd/ssh_host_ed25519_key";
+  bootTimeHostName = "${config.networking.hostName}-boot";
 in {
   boot = {
     kernelParams = ["i915.force_probe=4680"];
@@ -41,10 +42,14 @@ in {
       };
 
       systemd = {
-        network.enable = true;
         enable = true;
 
-        contents."/etc/hostname".text = "${config.networking.hostName}-boot";
+        network = {
+          enable = true;
+          networks."40-vlan-main".dhcpV4Config.Hostname = bootTimeHostName;
+        };
+
+        contents."/etc/hostname".text = bootTimeHostName;
 
         emergencyAccess = "$y$j9T$2TSgVktAmtPlsD0fimxXw0$iqLvWrUDnzGIpnA6xDUaUi1Yd4i5PvCkcIPXHEFIwI3";
 
