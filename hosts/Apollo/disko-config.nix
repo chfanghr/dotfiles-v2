@@ -84,6 +84,10 @@ in {
               keylocation = "prompt";
             };
           };
+          reserved = {
+            type = "zfs_volume";
+            size = "16G";
+          };
         };
       };
 

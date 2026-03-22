@@ -32,7 +32,6 @@
   users.users.fanghr.hashedPassword = "$y$j9T$9/lN9oIe6ucVOI45U4Nxk0$KTFiL2Rm5mtxj/O7Rsm951NT7ANeDmRAshr4yapZQM/";
 
   environment.defaultPackages = [
-    pkgs.sbctl
     pkgs.smartmontools
   ];
 }

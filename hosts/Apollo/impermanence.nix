@@ -22,6 +22,10 @@
         directory = "/var/lib/sbctl";
         mode = "u=rwx,g=,o=";
       }
+      {
+        directory = "/etc/secrets/initrd";
+        mode = "u=rwx,g=,o=";
+      }
     ];
 
     files = [
