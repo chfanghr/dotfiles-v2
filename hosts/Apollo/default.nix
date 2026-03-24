@@ -8,6 +8,7 @@
     ./disko-config.nix
     ./impermanence.nix
     ./networking.nix
+    ./reverse-proxy.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
     inputs.impermanence.nixosModules.default
