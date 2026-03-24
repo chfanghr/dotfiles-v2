@@ -6,6 +6,19 @@
   initrdHostKey = "/etc/secrets/initrd/ssh_host_ed25519_key";
   bootTimeHostName = "${config.networking.hostName}-boot";
 in {
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vpl-gpu-rt
+      intel-compute-runtime
+    ];
+  };
+
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+  };
+
   boot = {
     kernelParams = ["i915.force_probe=4680"];
 
