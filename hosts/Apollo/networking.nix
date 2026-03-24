@@ -8,7 +8,7 @@ let
   containerPhyIface = "enp13s0f1np1";
   containerBridgeIface = "br-container";
 
-  auxPhyIFaces = [
+  auxPhyIfaces = [
     "enp14s0"
     "enp15s0"
     "enp16s0"
@@ -107,7 +107,7 @@ in {
       };
       # Aux
       "40-aux" = {
-        matchConfig.Name = auxPhyIFaces;
+        matchConfig.Name = auxPhyIfaces;
         linkConfig.RequiredForOnline = "no";
         networkConfig = {
           DHCP = "ipv4";
