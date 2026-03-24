@@ -80,7 +80,10 @@ in {
     };
   };
 
-  powerManagement.cpuFreqGovernor = "performance";
+  powerManagement = {
+    cpuFreqGovernor = "performance";
+    powertop.enable = true;
+  };
 
   environment.defaultPackages = [pkgs.sbctl];
 }
