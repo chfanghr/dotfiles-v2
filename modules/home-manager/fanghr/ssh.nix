@@ -6,7 +6,10 @@
 }:
 lib.mkMerge [
   {
-    programs.ssh.enable = true;
+    programs.ssh = {
+      enable = true;
+      enableDefaultConfig = false;
+    };
   }
   (lib.mkIf config.dotfiles.shared.props.networking.home.proxy.useGateway {
     programs.ssh.matchBlocks = let
