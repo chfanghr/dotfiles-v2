@@ -72,6 +72,7 @@ in {
             wantedBy = ["initrd.target"];
             after = ["systemd-networkd.service"];
             serviceConfig.Type = "oneshot";
+            path = [config.boot.zfs.package];
             script = ''
               echo "systemctl default" >> /var/empty/.profile
             '';
