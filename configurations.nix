@@ -3,15 +3,28 @@
   lib,
   ...
 }: let
-  inherit (inputs) nixpkgs deploy-rs;
-  inherit (lib) nameValuePair warnIf map filter;
+  inherit (inputs) deploy-rs;
+  inherit
+    (lib)
+    nameValuePair
+    warnIf
+    map
+    filter
+    ;
   inherit (builtins) listToAttrs;
+
+  nixpkgsDef = inputs.nixpkgs;
 
   specialArgs = {inherit inputs;};
 
-  mkNixos = hostname: let
+  mkNixos = {
+    hostname,
+    nixpkgs ? nixpkgsDef,
+    extraModules ? [],
+    ...
+  }: let
     nixos = nixpkgs.lib.nixosSystem {
-      modules = [./hosts/${hostname}];
+      modules = extraModules ++ [./hosts/${hostname}];
       inherit specialArgs;
     };
   in
@@ -19,7 +32,11 @@
     "expected `networking.hostName` to be ${hostname}, but got ${nixos.config.networking.hostName}"
     nixos;
 
-  mkNode = nixos: fqdn: {
+  mkNode = {
+    nixos,
+    fqdn,
+    ...
+  }: {
     hostname = fqdn;
     profiles.system = {
       sshUser = "fanghr";
@@ -30,9 +47,9 @@
     };
   };
 
-  mkNixosAndNode = hostname: fqdn: let
-    nixos = mkNixos hostname;
-    node = mkNode nixos fqdn;
+  mkNixosAndNode = {hostname, ...} @ cfg: let
+    nixos = mkNixos cfg;
+    node = mkNode (cfg // {inherit nixos;});
   in {
     name = hostname;
     kind = "nixos";
@@ -40,25 +57,67 @@
   };
 
   hosts = [
-    (mkNixosAndNode "Anemoi" "anemoi.snow-dace.ts.net")
-    (mkNixosAndNode "Apollo" "apollo.snow-dace.ts.net")
-    (mkNixosAndNode "Artemis" "artemis.barbel-tritone.ts.net")
-    (mkNixosAndNode "Athena" "athena.snow-dace.ts.net")
-    (mkNixosAndNode "Demeter" "demeter.snow-dace.ts.net")
-    (mkNixosAndNode "Dionysus" "dionysus.snow-dace.ts.net")
-    (mkNixosAndNode "Hestia" "hestia.snow-dace.ts.net")
-    (mkNixosAndNode "Jupiter" "jupiter.snow-dace.ts.net")
-    (mkNixosAndNode "Persephone" "persephone.snow-dace.ts.net")
-    (mkNixosAndNode "Poseidon" "poseidon.snow-dace.ts.net")
-    (mkNixosAndNode "Uranus" "uranus.snow-dace.ts.net")
-    (mkNixosAndNode "Telephus" "telephus.snow-dace.ts.net")
+    (mkNixosAndNode {
+      hostname = "Anemoi";
+      fqdn = "anemoi.snow-dace.ts.net";
+    })
+    (mkNixosAndNode {
+      hostname = "Apollo";
+      fqdn = "apollo.snow-dace.ts.net";
+    })
+    (mkNixosAndNode {
+      hostname = "Artemis";
+      fqdn = "artemis.barbel-tritone.ts.net";
+    })
+    (mkNixosAndNode {
+      hostname = "Athena";
+      fqdn = "athena.snow-dace.ts.net";
+    })
+    (mkNixosAndNode {
+      hostname = "Demeter";
+      fqdn = "demeter.snow-dace.ts.net";
+    })
+    (mkNixosAndNode {
+      hostname = "Dionysus";
+      fqdn = "dionysus.snow-dace.ts.net";
+    })
+    (mkNixosAndNode {
+      hostname = "Hestia";
+      fqdn = "hestia.snow-dace.ts.net";
+    })
+    (mkNixosAndNode {
+      hostname = "Jupiter";
+      fqdn = "jupiter.snow-dace.ts.net";
+      inherit (inputs.jovian.inputs) nixpkgs;
+      extraModules = [{home-manager.users.fanghr.home.enableNixpkgsReleaseCheck = false;}];
+    })
+    (mkNixosAndNode {
+      hostname = "Persephone";
+      fqdn = "persephone.snow-dace.ts.net";
+    })
+    (mkNixosAndNode {
+      hostname = "Poseidon";
+      fqdn = "poseidon.snow-dace.ts.net";
+    })
+    (mkNixosAndNode {
+      hostname = "Uranus";
+      fqdn = "uranus.snow-dace.ts.net";
+      inherit (inputs.jovian.inputs) nixpkgs;
+      extraModules = [{home-manager.users.fanghr.home.enableNixpkgsReleaseCheck = false;}];
+    })
+    (mkNixosAndNode {
+      hostname = "Telephus";
+      fqdn = "telephus.snow-dace.ts.net";
+    })
   ];
 
   nixosConfigurations = listToAttrs (
     map (h: nameValuePair h.name h.nixos) (filter (h: h.kind == "nixos") hosts)
   );
 
-  deploy = {nodes = listToAttrs (map (h: nameValuePair h.name h.node) hosts);};
+  deploy = {
+    nodes = listToAttrs (map (h: nameValuePair h.name h.node) hosts);
+  };
 in {
   flake = {
     inherit nixosConfigurations deploy;
