@@ -42,6 +42,10 @@
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.3";
     };
+    nvf = {
+      url = "github:NotAShelf/nvf";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:

@@ -1,12 +1,12 @@
 {inputs, ...}: {
   imports = [
-    inputs.nixvim.homeModules.nixvim
+    inputs.nvf.homeManagerModules.default
   ];
 
-  programs.nixvim =
-    {
-      enable = true;
-      defaultEditor = true;
-    }
-    // inputs.my-nvim.nvimModules.default;
+  programs.nvf = {
+    enable = true;
+    enableManpages = true;
+    defaultEditor = true;
+    settings = import ./nvf.nix;
+  };
 }
