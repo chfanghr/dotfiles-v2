@@ -43,6 +43,8 @@
       "loongarch64-linux"
       "aarch64-linux"
     ];
+
+    kernelModules = ["msr"];
   };
 
   services.hardware.bolt.enable = true;
