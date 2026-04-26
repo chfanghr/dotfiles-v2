@@ -1,4 +1,10 @@
 {
+  pkgs,
+  inputs,
+  ...
+}: let
+  pkgsUnstable = import inputs.nixpkgs-unstable {inherit (pkgs.stdenv) system;};
+in {
   programs = {
     zsh = {
       enable = true;
@@ -49,6 +55,9 @@
       enableZshIntegration = true;
     };
 
-    zellij.enable = true;
+    zellij = {
+      package = pkgsUnstable.zellij;
+      enable = true;
+    };
   };
 }
