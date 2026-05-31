@@ -7,5 +7,6 @@
     ./qbittorrent.nix
     ./tailscale-traefik.nix
     ./tailscale.nix
+    ./yac-reader-library.nix
   ];
 }

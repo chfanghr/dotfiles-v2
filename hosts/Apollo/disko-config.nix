@@ -84,6 +84,11 @@ in {
               keylocation = "prompt";
             };
           };
+          "enc/comics" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = "/data/comics";
+          };
           reserved = {
             type = "zfs_volume";
             size = "16G";

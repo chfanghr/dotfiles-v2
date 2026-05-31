@@ -9,6 +9,7 @@
     ./impermanence.nix
     ./networking.nix
     ./reverse-proxy.nix
+    ./yac.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
     inputs.impermanence.nixosModules.default
