@@ -54,6 +54,10 @@ in {
     ifuse
   ];
 
+  home-manager.users.fanghr.home.packages = [
+    pkgs.opencode
+  ];
+
   services = {
     tailscale-traefik.enable = true;
 
