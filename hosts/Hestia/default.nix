@@ -12,6 +12,7 @@ in {
     ./backup.nix
     ./boot.nix
     ./disko-config.nix
+    ./homelab-maintainance.nix
     ./minecraft.nix
     ./mode.nix
     ./networking.nix
