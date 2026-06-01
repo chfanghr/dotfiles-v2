@@ -74,6 +74,7 @@ in {
             serviceConfig.Type = "oneshot";
             path = [config.boot.zfs.package];
             script = ''
+              echo "systemd-tty-ask-password-agent --watch" >> /var/empty/.profile
               echo "systemctl default" >> /var/empty/.profile
             '';
           };

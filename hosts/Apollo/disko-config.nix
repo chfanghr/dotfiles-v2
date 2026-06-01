@@ -168,6 +168,6 @@ in {
 
   boot.zfs = {
     extraPools = ["dpool"];
-    requestEncryptionCredentials = ["dpool/enc"];
+    requestEncryptionCredentials = ["rpool/enc" "dpool/enc"];
   };
 }
