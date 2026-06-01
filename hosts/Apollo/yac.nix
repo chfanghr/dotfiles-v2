@@ -7,7 +7,6 @@
     settings.libraryConfig = {
       UPDATE_LIBRARIES_AT_STARTUP = true;
     };
-    logLevel = "debug";
     openFirewall = true;
   };
 }
