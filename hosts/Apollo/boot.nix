@@ -1,10 +1,21 @@
 {
   config,
   pkgs,
+  lib,
   ...
 }: let
+  vars = import ./netvars.nix;
+
+  inherit
+    (vars)
+    phyNetKey
+    mainVlanNetKey
+    mgmtVlanNetKey
+    ;
+
   initrdHostKey = "/etc/secrets/initrd/ssh_host_ed25519_key";
   bootTimeHostName = "${config.networking.hostName}-boot";
+  inherit (lib) recursiveUpdate;
 in {
   hardware.graphics = {
     enable = true;
@@ -57,9 +68,24 @@ in {
       systemd = {
         enable = true;
 
-        network = {
+        network = let
+          stage2 = config.systemd.network;
+        in {
           enable = true;
-          networks."40-vlan-main".dhcpV4Config.Hostname = bootTimeHostName;
+
+          netdevs = {
+            "${mainVlanNetKey}" = stage2.netdevs.${mainVlanNetKey};
+            "${mgmtVlanNetKey}" = stage2.netdevs.${mgmtVlanNetKey};
+          };
+
+          networks =
+            recursiveUpdate {
+              "${phyNetKey}" = stage2.networks.${phyNetKey};
+              "${mainVlanNetKey}" = stage2.networks.${mainVlanNetKey};
+              "${mgmtVlanNetKey}" = stage2.networks.${mgmtVlanNetKey};
+            } {
+              "${mainVlanNetKey}".dhcpV4Config.Hostname = bootTimeHostName;
+            };
         };
 
         contents."/etc/hostname".text = bootTimeHostName;

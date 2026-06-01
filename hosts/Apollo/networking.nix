@@ -1,8 +1,14 @@
 let
-  phyIface = "enp13s0f0np0";
-  mainVlanIface = "vlan-main";
+  vars = import ./netvars.nix;
+
+  inherit
+    (vars)
+    phyIface
+    mainVlanIface
+    mgmtVlanIface
+    ;
+
   mainVlanId = 42;
-  mgmtVlanIface = "vlan-mgmt";
   mgmtVlanId = 120;
 
   containerPhyIface = "enp13s0f1np1";
