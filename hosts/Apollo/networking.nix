@@ -6,6 +6,9 @@ let
     phyIface
     mainVlanIface
     mgmtVlanIface
+    phyNetKey
+    mainVlanNetKey
+    mgmtVlanNetKey
     ;
 
   mainVlanId = 42;
@@ -33,7 +36,7 @@ in {
   systemd.network = {
     netdevs = {
       # Host Vlans
-      "40-${mainVlanIface}" = {
+      ${mainVlanNetKey} = {
         netdevConfig = {
           Kind = "vlan";
           Name = mainVlanIface;
@@ -42,7 +45,7 @@ in {
           Id = mainVlanId;
         };
       };
-      "40-${mgmtVlanIface}" = {
+      ${mgmtVlanNetKey} = {
         netdevConfig = {
           Kind = "vlan";
           Name = mgmtVlanIface;
@@ -66,7 +69,7 @@ in {
     };
     networks = {
       # Host Interfaces
-      "40-${phyIface}" = {
+      ${phyNetKey} = {
         matchConfig.Name = phyIface;
         networkConfig = {
           LLDP = true;
@@ -79,7 +82,7 @@ in {
           ];
         };
       };
-      "40-${mainVlanIface}" = {
+      ${mainVlanNetKey} = {
         matchConfig.Name = mainVlanIface;
         networkConfig = {
           DHCP = "ipv4";
@@ -87,7 +90,7 @@ in {
           IPv6PrivacyExtensions = "kernel";
         };
       };
-      "40-${mgmtVlanIface}" = {
+      ${mgmtVlanNetKey} = {
         matchConfig.Name = mgmtVlanIface;
         networkConfig = {
           LLDP = true;

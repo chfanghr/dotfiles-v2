@@ -50,6 +50,8 @@ in {
     useLatestZfsCompatibleKernel = true;
 
     initrd = {
+      kernelModules = ["8021q"]; # VLAN
+
       secrets = {
         ${initrdHostKey} = initrdHostKey;
       };
