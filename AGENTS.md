@@ -11,7 +11,7 @@
 - `nix develop` - enter the repo dev shell with deploy, disko, agenix, nixos-anywhere, and related tools.
 - `nix flake check` - run the flake checks.
 - `nixos-rebuild build .#<hostname>` - build a host configuration without switching it.
-- `deploy .#<host>` - deploy a host through deploy-rs.
+- `deploy .#<host>` - deploy a host through deploy-rs. Use `-s` to skip unnecessary evaluation.
 
 ## Formatting / Lint
 - `pre-commit run --all-files` - format and lint the repo with the configured hooks.
