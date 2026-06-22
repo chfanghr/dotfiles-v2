@@ -48,7 +48,7 @@ in {
           ];
           substituters = [
             "https://nix-community.cachix.org?priority=2"
-            "https://om.cachix.org?priority=3"
+            # "https://om.cachix.org?priority=3"
             "https://devenv.cachix.org?priority=4"
           ];
           trusted-public-keys = [

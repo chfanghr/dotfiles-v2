@@ -9,4 +9,6 @@
     };
     openFirewall = true;
   };
+
+  users.users.fanghr.extraGroups = [config.services.yac-reader-library.group];
 }

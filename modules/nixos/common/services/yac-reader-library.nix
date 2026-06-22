@@ -139,7 +139,7 @@ in {
     networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [cfg.port];
 
     systemd.tmpfiles.settings."10-yac-reader".${cfg.libraryRoot}.d = {
-      mode = "0755";
+      mode = "0775";
       user = cfg.user;
       group = cfg.group;
     };
