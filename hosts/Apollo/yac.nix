@@ -2,8 +2,12 @@
   services.yac-reader-library = {
     enable = true;
     port = 8080;
-    libraryName = "Comics";
-    libraryRoot = config.disko.devices.zpool.dpool.datasets."enc/comics".mountpoint;
+    libs = [
+      {
+        name = "Comics";
+        root = config.disko.devices.zpool.dpool.datasets."enc/comics".mountpoint;
+      }
+    ];
     settings.libraryConfig = {
       UPDATE_LIBRARIES_AT_STARTUP = true;
     };

@@ -29,6 +29,20 @@
   generatedSettings = generators.toINI {} cfg.settings;
   settingsFile = pkgs.writeText "YACReaderLibrary.ini" cfg.settingsFile;
 
+  libraryType = types.submodule {
+    options = {
+      name = mkOption {
+        type = types.str;
+        example = "Comics";
+      };
+
+      root = mkOption {
+        type = types.str;
+        example = "/srv/comics";
+      };
+    };
+  };
+
   startArgs = cli.toCommandLineShellGNU {} {
     loglevel = cfg.logLevel;
     port = cfg.port;
@@ -39,14 +53,21 @@ in {
 
     package = mkPackageOption pkgs "yacreader" {};
 
-    libraryRoot = mkOption {
-      type = types.str;
-      example = "/srv/comics";
-    };
-
-    libraryName = mkOption {
-      type = types.str;
-      default = "Library";
+    libs = mkOption {
+      type = types.listOf libraryType;
+      example = [
+        {
+          name = "Comics";
+          root = "/srv/comics";
+        }
+        {
+          name = "Manga";
+          root = "/srv/manga";
+        }
+      ];
+      description = ''
+        Library root directories to manage. Each entry becomes a separate YACReader library.
+      '';
     };
 
     port = mkOption {
@@ -114,8 +135,8 @@ in {
   config = mkIf cfg.enable {
     assertions = [
       {
-        assertion = hasPrefix "/" cfg.libraryRoot;
-        message = "services.yac-reader-library.libraryRoot must be an absolute path.";
+        assertion = cfg.libs != [] && lib.all (library: hasPrefix "/" library.root) cfg.libs;
+        message = "services.yac-reader-library.libs must contain at least one absolute path.";
       }
       {
         assertion = cfg.openFirewall -> cfg.port != null;
@@ -138,11 +159,15 @@ in {
 
     networking.firewall.allowedTCPPorts = mkIf cfg.openFirewall [cfg.port];
 
-    systemd.tmpfiles.settings."10-yac-reader".${cfg.libraryRoot}.d = {
-      mode = "0775";
-      user = cfg.user;
-      group = cfg.group;
-    };
+    systemd.tmpfiles.settings."10-yac-reader" = lib.listToAttrs (map (library:
+      lib.nameValuePair library.root {
+        d = {
+          mode = "0775";
+          user = cfg.user;
+          group = cfg.group;
+        };
+      })
+    cfg.libs);
 
     systemd.services.${serviceName} = {
       description = "YACReaderLibraryServer";
@@ -161,12 +186,15 @@ in {
       };
 
       preStart = ''
-        mkdir -p ${escapeShellArg cfg.libraryRoot} "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
-        install -Dm0644 ${settingsFile} "$XDG_DATA_HOME/YACReader/YACReaderLibrary/YACReaderLibrary.ini"
+                mkdir -p ${lib.concatStringsSep " " (map (library: escapeShellArg library.root) cfg.libs)} "$XDG_CONFIG_HOME" "$XDG_DATA_HOME"
+                install -Dm0644 ${settingsFile} "$XDG_DATA_HOME/YACReader/YACReaderLibrary/YACReaderLibrary.ini"
 
-        if ! YACReaderLibraryServer list-libraries | grep -Fqx ${escapeShellArg "${cfg.libraryName} : ${cfg.libraryRoot}"}; then
-          YACReaderLibraryServer create-library ${escapeShellArg cfg.libraryName} ${lib.escapeShellArg cfg.libraryRoot}
-        fi
+        ${lib.concatMapStringsSep "\n" (library: ''
+            if ! YACReaderLibraryServer list-libraries | grep -Fqx ${escapeShellArg "${library.name} : ${library.root}"}; then
+              YACReaderLibraryServer create-library ${escapeShellArg library.name} ${escapeShellArg library.root}
+            fi
+          '')
+          cfg.libs}
       '';
 
       script = ''
