@@ -1,11 +1,17 @@
-{config, ...}: {
+{config, ...}: let
+  mp = config.disko.devices.zpool.dpool.datasets."enc/comics".mountpoint;
+in {
   services.yac-reader-library = {
     enable = true;
     port = 8080;
     libs = [
       {
-        name = "Comics";
-        root = config.disko.devices.zpool.dpool.datasets."enc/comics".mountpoint;
+        name = "Comics - Manual";
+        root = mp;
+      }
+      {
+        name = "Comics - Weebcentral";
+        root = "${mp}/dl";
       }
     ];
     settings.libraryConfig = {
