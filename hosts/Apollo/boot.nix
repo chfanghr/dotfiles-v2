@@ -4,14 +4,7 @@
   lib,
   ...
 }: let
-  vars = import ./netvars.nix;
-
-  inherit
-    (vars)
-    phyNetKey
-    mainVlanNetKey
-    mgmtVlanNetKey
-    ;
+  cfg = config.apollo.networking.interfaces;
 
   initrdHostKey = "/etc/secrets/initrd/ssh_host_ed25519_key";
   bootTimeHostName = "${config.networking.hostName}-boot";
@@ -76,17 +69,17 @@ in {
           enable = true;
 
           netdevs = {
-            "${mainVlanNetKey}" = stage2.netdevs.${mainVlanNetKey};
-            "${mgmtVlanNetKey}" = stage2.netdevs.${mgmtVlanNetKey};
+            "${cfg.mainVlan.profile}" = stage2.netdevs.${cfg.mainVlan.profile};
+            "${cfg.mgmtVlan.profile}" = stage2.netdevs.${cfg.mgmtVlan.profile};
           };
 
           networks =
             recursiveUpdate {
-              "${phyNetKey}" = stage2.networks.${phyNetKey};
-              "${mainVlanNetKey}" = stage2.networks.${mainVlanNetKey};
-              "${mgmtVlanNetKey}" = stage2.networks.${mgmtVlanNetKey};
+              "${cfg.phy.profile}" = stage2.networks.${cfg.phy.profile};
+              "${cfg.mainVlan.profile}" = stage2.networks.${cfg.mainVlan.profile};
+              "${cfg.mgmtVlan.profile}" = stage2.networks.${cfg.mgmtVlan.profile};
             } {
-              "${mainVlanNetKey}".dhcpV4Config.Hostname = bootTimeHostName;
+              "${cfg.mainVlan.profile}".dhcpV4Config.Hostname = bootTimeHostName;
             };
         };
 
