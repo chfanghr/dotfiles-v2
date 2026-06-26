@@ -37,11 +37,15 @@ in {
         profile = mkProfile name;
       };
 
-      aux = [
-        "enp14s0"
-        "enp15s0"
-        "enp16s0"
-      ];
+      aux = rec {
+        name = "aux";
+        ifaces = [
+          "enp14s0"
+          "enp15s0"
+          "enp16s0"
+        ];
+        profile = mkProfile name;
+      };
     };
     readOnly = true;
   };
@@ -87,7 +91,7 @@ in {
           bridgeConfig = {
             DefaultPVID = cfg.mainVlan.vlanId;
             STP = true;
-            # VLANFiltering = true;
+            VLANFiltering = true;
           };
         };
       };
@@ -124,12 +128,13 @@ in {
           };
         };
         # Container network
-        "40-${cfg.containerPhy.iface}" = {
+        "${cfg.containerPhy.profile}" = {
           matchConfig.Name = cfg.containerPhy.iface;
           linkConfig.RequiredForOnline = "enslaved";
           networkConfig.Bridge = cfg.containerBridge.name;
+          bridgeVLANs = [{PVID = cfg.mainVlan.vlanId;}];
         };
-        "40-${cfg.containerBridge.name}" = {
+        "${cfg.containerBridge.profile}" = {
           matchConfig.Name = cfg.containerBridge.name;
           networkConfig = {
             IPv4Forwarding = true;
@@ -137,10 +142,16 @@ in {
             LinkLocalAddressing = false;
           };
           bridgeConfig.UseBPDU = true;
+          bridgeVLANs = [
+            {
+              PVID = cfg.mainVlan.vlanId;
+              VLAN = cfg.mainVlan.vlanId;
+            }
+          ];
         };
         # Aux
-        "40-aux" = {
-          matchConfig.Name = cfg.aux;
+        "${cfg.aux.profile}" = {
+          matchConfig.Name = cfg.aux.ifaces;
           linkConfig.RequiredForOnline = "no";
           networkConfig = {
             DHCP = "ipv4";
