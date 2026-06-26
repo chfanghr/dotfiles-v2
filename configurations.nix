@@ -64,6 +64,7 @@
     (mkNixosAndNode {
       hostname = "Apollo";
       fqdn = "apollo.snow-dace.ts.net";
+      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Artemis";
