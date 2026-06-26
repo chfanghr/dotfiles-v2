@@ -35,17 +35,6 @@ in {
                 mountOptions = ["umask=0077"];
               };
             };
-            zfs-keys = {
-              size = "128M";
-              content = {
-                type = "luks";
-                name = "zfs-keys";
-                content = {
-                  type = "filesystem";
-                  format = "ext4";
-                };
-              };
-            };
             swap = {
               size = "32G";
               content = {
@@ -81,7 +70,7 @@ in {
             options = {
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
-              keylocation = "prompt";
+              keylocation = "file:///etc/secrets/zfs-keys/dpool-enc";
             };
           };
           "enc/comics" = {
@@ -170,4 +159,6 @@ in {
     extraPools = ["dpool"];
     requestEncryptionCredentials = ["rpool/enc" "dpool/enc"];
   };
+
+  systemd.services.zfs-import-dpool.after = ["etc-secrets-zfs\\x2dkeys.mount"];
 }

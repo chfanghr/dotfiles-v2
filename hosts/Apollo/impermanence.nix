@@ -26,6 +26,10 @@
         directory = "/etc/secrets/initrd";
         mode = "u=rwx,g=,o=";
       }
+      {
+        directory = "/etc/secrets/zfs-keys";
+        mode = "u=rwx,g=,o=";
+      }
     ];
 
     files = [
