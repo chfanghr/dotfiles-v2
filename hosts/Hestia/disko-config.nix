@@ -1,5 +1,5 @@
 let
-  zfsKeysMountpoint = "/zfs-keys";
+  zfsKeysMountpoint = "/run/zfs-keys";
 in {
   disko.devices = {
     disk = {
@@ -17,17 +17,6 @@ in {
                 format = "vfat";
                 mountpoint = "/boot";
                 mountOptions = ["umask=0077"];
-              };
-            };
-            zfs-keys = {
-              size = "128M";
-              content = {
-                type = "luks";
-                name = "zfs-keys";
-                content = {
-                  type = "filesystem";
-                  format = "ext4";
-                };
               };
             };
             swap = {
@@ -103,8 +92,7 @@ in {
             options = {
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
-              keylocation = "file:///${zfsKeysMountpoint}/zp-striped-enc-key";
-              # keylocation = "prompt";
+              keylocation = "prompt";
             };
           };
           "enc/root" = {
@@ -137,6 +125,11 @@ in {
           "enc/zrepl/vault/safe" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
+          };
+          "enc/zfs-keys" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = zfsKeysMountpoint;
           };
 
           nix = {
@@ -174,7 +167,7 @@ in {
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
               compression = "lz4";
-              keylocation = "file:///${zfsKeysMountpoint}/zp-mirrored-enc-key";
+              keylocation = "file:///${zfsKeysMountpoint}/zp-mirrored-enc";
               # keylocation = "prompt";
             };
           };
@@ -203,34 +196,14 @@ in {
     };
   };
 
-  # TODO: This should be handled by disko
-  boot.initrd = {
-    supportedFilesystems.ext4 = true;
-    luks.devices.zfs-keys = {
-      yubikey = {
-        slot = 2;
-        twoFactor = false;
-        storage.device = "/dev/disk/by-partlabel/disk-ssd-1-esp";
-      };
-      postOpenCommands = ''
-        mkdir -p /zfs-keys
-        mount -t ext4 -o ro /dev/mapper/zfs-keys /zfs-keys || (dmesg && exit 1)
-        zpool import -f -a
-        zfs load-key -a
-        umount /zfs-keys
-        cryptsetup close zfs-keys
-      '';
-    };
-  };
-
-  fileSystems."/data/minecraft/smp".depends = [
-    "/data/minecraft"
-  ];
-
   services.zfs = {
     trim.enable = true;
     autoScrub.enable = true;
   };
 
+  boot.zfs.requestEncryptionCredentials = ["zp-striped/enc"];
+
   networking.hostId = "5dc9aa9c";
+
+  systemd.services.zfs-import-zp-mirrored.after = ["run-zfs\\x2dkeys.mount"];
 }

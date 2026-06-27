@@ -142,6 +142,7 @@ in {
             };
 
             fileSystems."${config.services.minecraft-servers.dataDir}/${cfg.smp.worldName}/world" = {
+              fsType = "none";
               device = "${cfg.worldsDir}/smp";
               options = ["bind"];
             };

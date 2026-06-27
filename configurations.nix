@@ -85,6 +85,7 @@
     (mkNixosAndNode {
       hostname = "Hestia";
       fqdn = "hestia.snow-dace.ts.net";
+      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Jupiter";

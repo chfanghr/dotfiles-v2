@@ -21,6 +21,7 @@ in {
     ./stash.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
+    inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
   dotfiles.nixos = {
@@ -74,8 +75,8 @@ in {
 
   specialisation.desktop.configuration.hestia.mode = "desktop";
 
-  specialisation.server-with-enclosure-attached.configuration.hestia = {
-    mode = "server";
-    enclosure.attached = true;
-  };
+  # specialisation.server-with-enclosure-attached.configuration.hestia = {
+  #   mode = "server";
+  #   enclosure.attached = true;
+  # };
 }
