@@ -40,7 +40,7 @@ in {
       btrfs = true;
     };
 
-    useLatestZfsCompatibleKernel = true;
+    kernelPackages = pkgs.linuxKernel.packages.linux_6_18;
 
     initrd = {
       kernelModules = ["8021q"]; # VLAN
