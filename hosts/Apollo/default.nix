@@ -36,4 +36,7 @@
   environment.defaultPackages = [
     pkgs.smartmontools
   ];
+
+  dotfiles.nixos.props.users.rootAccess = true;
+  users.users.root.hashedPassword = "$y$j9T$KyDUS1v19hdVfQWf68CPf0$zMGwak.72oGWX80IsM5JI8GN1ZxS712NercbXME0Xu9";
 }

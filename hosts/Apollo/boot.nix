@@ -32,7 +32,10 @@ in {
     };
 
     loader = {
-      systemd-boot.enable = false; # secure boot with lanzaboote
+      systemd-boot = {
+        enable = false; # secure boot with lanzaboote
+        memtest86.enable = true;
+      };
       efi.canTouchEfiVariables = true;
     };
 
