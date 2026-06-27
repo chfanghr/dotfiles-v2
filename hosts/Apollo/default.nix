@@ -23,6 +23,7 @@
   hardware.facter.reportPath = ./facter.json;
 
   dotfiles.nixos.props = {
+    users.rootAccess = true;
     nix.roles.consumer = true;
     hardware = {
       cpu.intel = true;
@@ -31,7 +32,10 @@
     };
   };
 
-  users.users.fanghr.hashedPassword = "$y$j9T$9/lN9oIe6ucVOI45U4Nxk0$KTFiL2Rm5mtxj/O7Rsm951NT7ANeDmRAshr4yapZQM/";
+  users.users = {
+    fanghr.hashedPassword = "$y$j9T$9/lN9oIe6ucVOI45U4Nxk0$KTFiL2Rm5mtxj/O7Rsm951NT7ANeDmRAshr4yapZQM/";
+    root.hashedPassword = "$y$j9T$KyDUS1v19hdVfQWf68CPf0$zMGwak.72oGWX80IsM5JI8GN1ZxS712NercbXME0Xu9";
+  };
 
   environment.defaultPackages = [
     pkgs.smartmontools
