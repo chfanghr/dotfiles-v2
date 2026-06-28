@@ -24,7 +24,7 @@ in {
   };
 
   boot = {
-    kernelParams = ["i915.force_probe=4680"];
+    kernelParams = ["i915.force_probe=4680" "acpi_mask_gpe=0x6F"];
 
     lanzaboote = {
       enable = true;
