@@ -1,7 +1,7 @@
 let
-  wholeDiskZPoolMember = device: pool: {
+  wholeDiskZPoolMember = id: pool: {
     type = "disk";
-    inherit device;
+    device = "/dev/disk/by-id/${id}";
     content = {
       type = "gpt";
       partitions.zfs = {
@@ -13,6 +13,12 @@ let
       };
     };
   };
+
+  zfsKeys = "/etc/secrets/zfs-keys/";
+
+  dpool = "dpool";
+  spool = "spool";
+  rpool = "rpool";
 in {
   disko.devices = {
     disk = {
@@ -53,13 +59,38 @@ in {
           };
         };
       };
-      hdd-1 = wholeDiskZPoolMember "/dev/disk/by-id/ata-TOSHIBA_HDWG51GUZSVA_1672A00UFWRH" "dpool";
-      hdd-2 = wholeDiskZPoolMember "/dev/disk/by-id/ata-TOSHIBA_HDWG51GUZSVA_1672A02KFWRH" "dpool";
-      hdd-3 = wholeDiskZPoolMember "/dev/disk/by-id/ata-TOSHIBA_HDWG51GUZSVA_1672A02FFWRH" "dpool";
+      hdd-1 = wholeDiskZPoolMember "ata-TOSHIBA_HDWG51GUZSVA_1672A00UFWRH" dpool;
+      hdd-2 = wholeDiskZPoolMember "ata-TOSHIBA_HDWG51GUZSVA_1672A02KFWRH" dpool;
+      hdd-3 = wholeDiskZPoolMember "ata-TOSHIBA_HDWG51GUZSVA_1672A02FFWRH" dpool;
+      hdd-4 = wholeDiskZPoolMember "ata-WDC_WUH721414ALE6L4_9MG6JYGA" spool;
+      hdd-5 = wholeDiskZPoolMember "ata-WDC_WUH721414ALE6L4_9MG6LJ9A" spool;
     };
 
     zpool = {
-      dpool = {
+      ${spool} = {
+        type = "zpool";
+
+        options.ashift = "12";
+        rootFsOptions.mountpoint = "none";
+
+        datasets = {
+          enc = {
+            type = "zfs_fs";
+            options = {
+              encryption = "aes-256-gcm";
+              keyformat = "passphrase";
+              keylocation = "file://${zfsKeys}/spool-enc";
+              compression = "lz4";
+            };
+          };
+          reserved = {
+            type = "zfs_volume";
+            size = "16G";
+          };
+        };
+      };
+
+      ${dpool} = {
         type = "zpool";
         options.ashift = "12";
         rootFsOptions.mountpoint = "none";
@@ -70,7 +101,7 @@ in {
             options = {
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
-              keylocation = "file:///etc/secrets/zfs-keys/dpool-enc";
+              keylocation = "file://${zfsKeys}/dpool-enc";
             };
           };
           "enc/comics" = {
@@ -85,7 +116,7 @@ in {
         };
       };
 
-      rpool = {
+      ${rpool} = {
         type = "zpool";
 
         options.ashift = "12";
@@ -156,8 +187,15 @@ in {
   fileSystems."/persist".neededForBoot = true;
 
   boot.zfs = {
-    extraPools = ["dpool"];
-    requestEncryptionCredentials = ["rpool/enc" "dpool/enc"];
+    extraPools = [
+      dpool
+      spool
+    ];
+    requestEncryptionCredentials = [
+      "${rpool}/enc"
+      "${dpool}/enc"
+      "${spool}/enc"
+    ];
   };
 
   systemd.services.zfs-import-dpool.after = ["etc-secrets-zfs\\x2dkeys.mount"];
