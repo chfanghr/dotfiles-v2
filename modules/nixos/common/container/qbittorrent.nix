@@ -14,7 +14,6 @@
     mkForce
     mkDefault
     optionalAttrs
-    recursiveUpdate
     ;
   inherit (builtins) toString;
 
@@ -37,50 +36,6 @@
   middlewareSetHeadersName = "${cfg.containerName}SetHeaders";
   middlewareRedirectName = "${cfg.containerName}Redirect";
   middlewareStripPrefixName = "${cfg.containerName}StripPrefix";
-
-  baseQbtConfig'' = {
-    LegalNotice.Accepted = true;
-    BitTorrent = {
-      MergeTrackersEnabled = mkDefault true;
-      Session = {
-        DefaultSavePath = cfg.defaultDownloadsDir;
-        GlobalDLSpeedLimit = mkDefault 0;
-        GlobalUPSpeedLimit = mkDefault 40960;
-        IgnoreLimitsOnLAN = true;
-        Interface = cfg.p2p.veth;
-        InterfaceName = cfg.p2p.veth;
-        Port = cfg.p2p.port;
-      };
-    };
-    Preferences = {
-      General.Locale = "en";
-      WebUI = {
-        AuthSubnetWhitelist = mkDefault "${cfg.monitoring.hostAddress}/32";
-        AuthSubnetWhitelistEnabled = mkDefault true;
-        UseUPnP = false;
-      };
-    };
-    RSS.Session = {
-      EnableProcessing = true;
-      RefreshInterval = 10;
-    };
-  };
-  baseQbtConfig' =
-    recursiveUpdate (optionalAttrs (cfg.altUIPackage != null) {
-      Preferences.WebUI = {
-        AlternativeUIEnabled = true;
-        RootFolder = "${cfg.altUIPackage}";
-      };
-    })
-    baseQbtConfig'';
-  baseQbtConfig =
-    recursiveUpdate (optionalAttrs (cfg.defaultIncompleteDownloadsDir != null) {
-      BitTorrent.Session = {
-        TempPathEnabled = true;
-        TempPath = cfg.defaultIncompleteDownloadsDir;
-      };
-    })
-    baseQbtConfig';
 in {
   options.dotfiles.nixos.containers.qbittorrent = {
     enable = mkEnableOption "qbittorrent container";
@@ -317,7 +272,50 @@ in {
 
     # MARK: Default Server Configs
     (mkIf cfg.enable {
-      dotfiles.nixos.containers.qbittorrent.qbtConfig = baseQbtConfig;
+      dotfiles.nixos.containers.qbittorrent.qbtConfig = {
+        LegalNotice.Accepted = true;
+        BitTorrent = {
+          MergeTrackersEnabled = mkDefault true;
+          Session = {
+            DefaultSavePath = cfg.defaultDownloadsDir;
+            GlobalDLSpeedLimit = mkDefault 0;
+            GlobalUPSpeedLimit = mkDefault 40960;
+            IgnoreLimitsOnLAN = true;
+            Interface = cfg.p2p.veth;
+            InterfaceName = cfg.p2p.veth;
+            Port = cfg.p2p.port;
+          };
+        };
+        Preferences = {
+          General.Locale = "en";
+          WebUI = {
+            AuthSubnetWhitelist = mkDefault "${cfg.monitoring.hostAddress}/32";
+            AuthSubnetWhitelistEnabled = mkDefault true;
+            UseUPnP = false;
+          };
+        };
+        RSS.Session = {
+          EnableProcessing = true;
+          RefreshInterval = 10;
+          AutoDownloader = {
+            DownloadRepacks = mkDefault true;
+            EnableProcessing = mkDefault true;
+            SmartEpisodeFilter = '''';
+          };
+        };
+      };
+    })
+    (mkIf (cfg.enable && cfg.altUIPackage != null) {
+      dotfiles.nixos.containers.qbittorrent.qbtConfig.Preferences.WebUI = {
+        AlternativeUIEnabled = true;
+        RootFolder = "${cfg.altUIPackage}";
+      };
+    })
+    (mkIf (cfg.enable && cfg.defaultIncompleteDownloadsDir != null) {
+      dotfiles.nixos.containers.qbittorrent.qbtConfig.BitTorrent.Session = {
+        TempPathEnabled = true;
+        TempPath = cfg.defaultIncompleteDownloadsDir;
+      };
     })
 
     # MARK: QBittorrent
