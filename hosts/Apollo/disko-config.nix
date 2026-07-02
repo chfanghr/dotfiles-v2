@@ -79,7 +79,7 @@ in {
             options = {
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
-              keylocation = "file://${zfsKeys}/spool-enc";
+              keylocation = "file://${zfsKeys}/${spool}-enc";
               compression = "lz4";
             };
           };
@@ -101,7 +101,7 @@ in {
             options = {
               encryption = "aes-256-gcm";
               keyformat = "passphrase";
-              keylocation = "file://${zfsKeys}/dpool-enc";
+              keylocation = "file://${zfsKeys}/${dpool}-enc";
             };
           };
           "enc/comics" = {
@@ -123,8 +123,8 @@ in {
         rootFsOptions.mountpoint = "none";
 
         postCreateHook = ''
-          zfs list -t snapshot -H -o name | grep -E '^rpool/enc/root@blank$' \
-            || zfs snapshot rpool/enc/root@blank
+          zfs list -t snapshot -H -o name | grep -E '^${rpool}/enc/root@blank$' \
+            || zfs snapshot ${rpool}/enc/root@blank
         '';
 
         datasets = {
