@@ -146,8 +146,8 @@ in {
     };
   };
 
-  config = mkMerge [
-    (mkIf cfg.enable {
+  config = mkIf cfg.enable (mkMerge [
+    {
       containers.${cfg.containerName} = {
         inherit (cfg) autoStart;
         ephemeral = true;
@@ -159,16 +159,16 @@ in {
           system.stateVersion = "24.11";
         };
       };
-    })
+    }
 
     # MARK: User and Group
-    (mkIf cfg.enable userAndGroupConfig) # On host
-    (mkIf cfg.enable {
+    userAndGroupConfig # On host
+    {
       containers.${cfg.containerName}.config = userAndGroupConfig;
-    })
+    }
 
     # MARK: Filesystem
-    (mkIf cfg.enable {
+    {
       systemd.tmpfiles.settings."10-qbittorrent-profile" =
         {
           ${cfg.profileDir}.d = {
@@ -195,10 +195,10 @@ in {
         mountPoint = cfg.profileDirContainer;
         isReadOnly = false;
       };
-    })
+    }
 
     # MARK: Networking
-    (mkIf cfg.enable {
+    {
       systemd = {
         services.${cfg.systemdServiceName} = {
           postStart = ''
@@ -268,10 +268,10 @@ in {
       };
 
       services.resolved.enable = true;
-    })
+    }
 
     # MARK: Default Server Configs
-    (mkIf cfg.enable {
+    {
       dotfiles.nixos.containers.qbittorrent.qbtConfig = {
         LegalNotice.Accepted = true;
         BitTorrent = {
@@ -304,14 +304,14 @@ in {
           };
         };
       };
-    })
-    (mkIf (cfg.enable && cfg.altUIPackage != null) {
+    }
+    (mkIf (cfg.altUIPackage != null) {
       dotfiles.nixos.containers.qbittorrent.qbtConfig.Preferences.WebUI = {
         AlternativeUIEnabled = true;
         RootFolder = "${cfg.altUIPackage}";
       };
     })
-    (mkIf (cfg.enable && cfg.defaultIncompleteDownloadsDir != null) {
+    (mkIf (cfg.defaultIncompleteDownloadsDir != null) {
       dotfiles.nixos.containers.qbittorrent.qbtConfig.BitTorrent.Session = {
         TempPathEnabled = true;
         TempPath = cfg.defaultIncompleteDownloadsDir;
@@ -319,7 +319,7 @@ in {
     })
 
     # MARK: QBittorrent
-    (mkIf cfg.enable {
+    {
       containers.${cfg.containerName}.config.services.qbittorrent = {
         enable = true;
         user = cfg.user.name;
@@ -329,9 +329,9 @@ in {
         torrentingPort = cfg.p2p.port;
         serverConfig = cfg.qbtConfig;
       };
-    })
+    }
 
-    (mkIf (cfg.enable && cfg.reverseProxy.enable) {
+    (mkIf cfg.reverseProxy.enable {
       services.traefik.dynamicConfigOptions = {
         http = {
           routers = {
@@ -371,7 +371,7 @@ in {
       };
     })
 
-    (mkIf cfg.enable {
+    {
       services.prometheus.scrapeConfigs = [
         {
           job_name = "${config.networking.hostName}-qbt-node";
@@ -387,6 +387,6 @@ in {
           ];
         }
       ];
-    })
-  ];
+    }
+  ]);
 }
