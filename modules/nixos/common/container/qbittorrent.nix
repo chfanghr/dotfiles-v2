@@ -284,6 +284,11 @@ in {
             Interface = cfg.p2p.veth;
             InterfaceName = cfg.p2p.veth;
             Port = cfg.p2p.port;
+            MaxActiveCheckingTorrents = 64;
+            MaxActiveDownloads = 64;
+            MaxActiveUploads = 64;
+            MaxActiveTorrents = 128;
+            QueueingSystemEnabled = true;
           };
         };
         Preferences = {
@@ -300,7 +305,7 @@ in {
           AutoDownloader = {
             DownloadRepacks = mkDefault true;
             EnableProcessing = mkDefault true;
-            SmartEpisodeFilter = '''';
+            SmartEpisodeFilter = "";
           };
         };
       };
