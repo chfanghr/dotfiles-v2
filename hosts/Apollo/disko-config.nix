@@ -83,6 +83,10 @@ in {
               compression = "lz4";
             };
           };
+          "enc/qbittorrent" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+          };
           reserved = {
             type = "zfs_volume";
             size = "16G";
