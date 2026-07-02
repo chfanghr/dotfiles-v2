@@ -1,5 +1,6 @@
 {inputs, ...}: {
   imports = [
+    ./container
     ./desktop
     ./hardware
     ./nix

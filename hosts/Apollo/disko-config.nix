@@ -1,4 +1,4 @@
-let
+{config, ...}: let
   wholeDiskZPoolMember = id: pool: {
     type = "disk";
     device = "/dev/disk/by-id/${id}";
@@ -86,6 +86,7 @@ in {
           "enc/qbittorrent" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
+            mountpoint = config.apollo.mountpoints.qbittorrent;
           };
           reserved = {
             type = "zfs_volume";
@@ -111,7 +112,7 @@ in {
           "enc/comics" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
-            mountpoint = "/data/comics";
+            mountpoint = config.apollo.mountpoints.yac;
           };
           reserved = {
             type = "zfs_volume";
@@ -157,7 +158,7 @@ in {
           "enc/persist" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";
-            mountpoint = "/persist";
+            mountpoint = config.apollo.mountpoints.persist;
           };
 
           nix = {
@@ -187,8 +188,6 @@ in {
     };
     smartd.enable = true;
   };
-
-  fileSystems."/persist".neededForBoot = true;
 
   boot.zfs = {
     extraPools = [

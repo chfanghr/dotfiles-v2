@@ -8,6 +8,7 @@
     ./disko-config.nix
     ./impermanence.nix
     ./networking.nix
+    ./qbittorrent.nix
     ./reverse-proxy.nix
     ./yac.nix
     ../../modules/nixos/common
