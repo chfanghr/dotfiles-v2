@@ -17,6 +17,7 @@
           inputs'.disko.packages.default
           inputs'.nixos-anywhere.packages.default
           inputs'.deploy-rs.packages.default
+          inputs'.qbittorrent-password.packages.default
           pkgs.nurl
           pkgs.nixos-facter
         ];

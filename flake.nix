@@ -47,6 +47,7 @@
       url = "github:NotAShelf/nvf";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    qbittorrent-password.url = "git+https://codeberg.org/fanghr/qbittorrent_password";
   };
 
   outputs = inputs @ {flake-parts, ...}:
