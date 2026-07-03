@@ -40,7 +40,7 @@
     deploy-rs.url = "github:serokell/deploy-rs";
     nixos-facter-modules.url = "github:numtide/nixos-facter-modules";
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/v0.4.3";
+      url = "github:nix-community/lanzaboote/v1.1.0";
     };
     nvf = {
       url = "github:NotAShelf/nvf";
