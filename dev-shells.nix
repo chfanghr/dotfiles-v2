@@ -20,6 +20,7 @@
           inputs'.qbittorrent-password.packages.default
           pkgs.nurl
           pkgs.nixos-facter
+          pkgs.openssl
         ];
     });
   };
