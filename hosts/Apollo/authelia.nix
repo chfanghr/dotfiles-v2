@@ -128,7 +128,7 @@ in {
               {
                 domain = fqdn;
                 authelia_url = "https://${fqdn}${prefix}";
-                default_redirection_url = "https://${fqdn}/${dashboardPrefix}";
+                default_redirection_url = "https://${fqdn}${dashboardPrefix}";
               }
             ];
           };
