@@ -60,37 +60,30 @@
     (mkNixosAndNode {
       hostname = "Anemoi";
       fqdn = "anemoi.snow-dace.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Apollo";
       fqdn = "apollo.snow-dace.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Artemis";
       fqdn = "artemis.barbel-tritone.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Athena";
       fqdn = "athena.snow-dace.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Demeter";
       fqdn = "demeter.snow-dace.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Dionysus";
       fqdn = "dionysus.snow-dace.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Hestia";
       fqdn = "hestia.snow-dace.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Jupiter";
@@ -101,12 +94,10 @@
     (mkNixosAndNode {
       hostname = "Persephone";
       fqdn = "persephone.snow-dace.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Poseidon";
       fqdn = "poseidon.snow-dace.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Uranus";
@@ -117,7 +108,6 @@
     (mkNixosAndNode {
       hostname = "Telephus";
       fqdn = "telephus.snow-dace.ts.net";
-      nixpkgs = inputs.nixpkgs2605;
     })
   ];
 
