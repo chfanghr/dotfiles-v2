@@ -289,6 +289,9 @@ in {
             MaxActiveUploads = 64;
             MaxActiveTorrents = 128;
             QueueingSystemEnabled = true;
+            AddExtensionToIncompleteFiles = true;
+            AddTorrentToTopOfQueue = true;
+            IgnoreSlowTorrentsForQueueing = true;
           };
         };
         Preferences = {
@@ -299,14 +302,12 @@ in {
             UseUPnP = false;
           };
         };
-        RSS.Session = {
-          EnableProcessing = true;
-          RefreshInterval = 10;
-          AutoDownloader = {
-            DownloadRepacks = mkDefault true;
+        RSS = {
+          Session = {
             EnableProcessing = mkDefault true;
-            SmartEpisodeFilter = "";
+            RefreshInterval = mkDefault 10;
           };
+          AutoDownloader.EnableProcessing = mkDefault true;
         };
       };
     }
