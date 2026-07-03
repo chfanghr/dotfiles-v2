@@ -1,5 +1,5 @@
 {
-  description = "System configuration for Demeter";
+  description = "Homelab Configurations";
 
   inputs = {
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
