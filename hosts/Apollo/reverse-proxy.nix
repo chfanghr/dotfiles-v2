@@ -20,7 +20,8 @@ in {
 
     traefik = {
       staticConfigOptions = {
-        log.level = "DEBUG";
+        # log.level = "DEBUG";
+        accesslog.bufferingSize = 256;
         api = {};
       };
       dynamicConfigOptions = {
