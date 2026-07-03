@@ -79,6 +79,7 @@
     (mkNixosAndNode {
       hostname = "Demeter";
       fqdn = "demeter.snow-dace.ts.net";
+      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Dionysus";

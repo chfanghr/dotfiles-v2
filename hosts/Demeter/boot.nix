@@ -34,13 +34,10 @@
         "igc"
         "i2c-dev"
         "i2c-piix4"
+        "bonding"
       ];
       network = {
         enable = true;
-        udhcpc = {
-          enable = true;
-          extraArgs = ["-t" "20"];
-        };
         ssh = {
           enable = true;
           authorizedKeys = config.users.users.fanghr.openssh.authorizedKeys.keys;
@@ -49,18 +46,12 @@
           ];
         };
       };
+      systemd.network.enable = true;
       luks = {
-        yubikeySupport = true;
         devices = {
           enc = {
             allowDiscards = true;
             device = "/dev/nvme0n1p2";
-            preLVM = false;
-            yubikey = {
-              slot = 2;
-              twoFactor = false;
-              storage.device = "/dev/nvme0n1p1";
-            };
           };
         };
       };
