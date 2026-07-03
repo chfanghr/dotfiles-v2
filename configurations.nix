@@ -60,6 +60,7 @@
     (mkNixosAndNode {
       hostname = "Anemoi";
       fqdn = "anemoi.snow-dace.ts.net";
+      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Apollo";
