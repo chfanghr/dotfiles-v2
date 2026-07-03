@@ -10,6 +10,8 @@
           root_url = "https://persephone.snow-dace.ts.net/grafana/";
           serve_from_sub_path = true;
         };
+        # FIXME: bad shit, replace this with a age encrypted file
+        security.secret_key = "SW2YcwTIb9zpOOhoPsMm";
       };
       provision.enable = true;
     };

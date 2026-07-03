@@ -21,6 +21,7 @@
     ${config.services.loki.dataDir} = {
       device = "/data/loki";
       options = ["bind"];
+      fsType = "none";
     };
   };
 

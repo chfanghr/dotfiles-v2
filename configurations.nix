@@ -99,6 +99,7 @@
     (mkNixosAndNode {
       hostname = "Persephone";
       fqdn = "persephone.snow-dace.ts.net";
+      nixpkgs = inputs.nixpkgs2605;
     })
     (mkNixosAndNode {
       hostname = "Poseidon";

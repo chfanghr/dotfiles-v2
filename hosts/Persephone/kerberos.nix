@@ -32,6 +32,7 @@ in {
     "/var/lib/krb5kdc" = {
       device = stateDir;
       options = ["bind"];
+      fsType = "none";
     };
   };
 

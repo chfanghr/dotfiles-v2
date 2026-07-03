@@ -21,6 +21,7 @@
     "/var/lib/prometheus2" = {
       device = "/data/prometheus";
       options = ["bind"];
+      fsType = "none";
     };
   };
 

@@ -18,10 +18,12 @@
     "/export/minecraft/main" = {
       device = "/data/minecraft/main";
       options = ["bind"];
+      fsType = "none";
     };
     "/export/nfs-test" = {
       device = "/data/nfs-test";
       options = ["bind"];
+      fsType = "none";
     };
   };
 
