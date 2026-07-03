@@ -9,6 +9,7 @@ in {
   options.apollo.mountpoints.qbittorrent = mkOption {
     type = types.path;
     default = "/data/qbittorrent";
+    readOnly = true;
   };
 
   config.dotfiles.nixos.containers.qbittorrent = {

@@ -10,6 +10,7 @@ in {
   options.apollo.mountpoints.yac = mkOption {
     type = types.path;
     default = "/data/comics";
+    readOnly = true;
   };
 
   config = {

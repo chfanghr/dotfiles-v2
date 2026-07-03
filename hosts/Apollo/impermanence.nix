@@ -10,6 +10,7 @@ in {
   options.apollo.mountpoints.persist = mkOption {
     type = types.path;
     default = "/persist";
+    readOnly = true;
   };
 
   config = {
@@ -38,10 +39,6 @@ in {
         }
         {
           directory = "/etc/secrets/initrd";
-          mode = "u=rwx,g=,o=";
-        }
-        {
-          directory = "/etc/secrets/zfs-keys";
           mode = "u=rwx,g=,o=";
         }
       ];
