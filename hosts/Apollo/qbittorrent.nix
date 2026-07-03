@@ -14,7 +14,7 @@ in {
 
   config.dotfiles.nixos.containers.qbittorrent = {
     enable = true;
-    autoStart = false;
+    # autoStart = false;
     altUIPackage = pkgs.fetchzip {
       url = "https://github.com/VueTorrent/VueTorrent/releases/download/v2.34.0/vuetorrent.zip";
       hash = "sha256-MtTN4O1sCF7JhSzz218qrF+zNZEII09AhLxG6fCPIOk=";
