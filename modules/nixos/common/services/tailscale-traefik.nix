@@ -16,14 +16,19 @@ in {
       type = lib.types.str;
       default = "snow-dace.ts.net";
     };
+
+    fqdn = lib.mkOption {
+      type = lib.types.str;
+      default = "${cfg.hostName}.${cfg.tsDomainName}";
+      readOnly = true;
+      description = "Computed fully-qualified domain name for the Traefik host.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     services.tailscale-traefik.hostName = lib.mkDefault (lib.toLower config.networking.hostName);
 
-    services.traefik = let
-      fullDomainName = "${cfg.hostName}.${cfg.tsDomainName}";
-    in {
+    services.traefik = {
       enable = true;
       staticConfigOptions = {
         global.sendAnonymousUsage = false;
@@ -40,7 +45,7 @@ in {
             address = ":443";
             http.tls = {
               certResolver = "tailnetResolver";
-              domains = [{main = fullDomainName;}];
+              domains = [{main = cfg.fqdn;}];
             };
           };
         };
