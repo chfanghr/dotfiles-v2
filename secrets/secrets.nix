@@ -8,6 +8,7 @@ let
   hestia = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJbRbsi/M17Abse+SY5LVXAH9hoL5Z7GClbxNv44No8q root@Hestia";
   artemis = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILa7DkensLy34eSaK3tBtaYNxxbkF6KBAnEEiwnEiBX4 root@Artemis";
   anemoi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTLvGjDG+74nqTRi78udzpQbQR2oLJ6NsFpmTxW8hPe root@Anemoi";
+  apollo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPLEXMVtFzBPmUAsKcWBTd9DCO83LTJlySsOrx9OsqI0 root@Apollo";
 in {
   "athena-sing-box-default-out.age".publicKeys = [master athena];
   "oizys-sing-box-default-out.age".publicKeys = [master eros artemis];
@@ -29,4 +30,7 @@ in {
   "vpn-gateway-experimental-proxy-out.age".publicKeys = [master artemis];
   "hestia-ap-password.age".publicKeys = [master hestia];
   "anemoi-nix-cache-key.age".publicKeys = [master anemoi];
+  "apollo-authelia-jwt-secret.age".publicKeys = [master apollo];
+  "apollo-authelia-session-secret.age".publicKeys = [master apollo];
+  "apollo-authelia-storage-encryption-key.age".publicKeys = [master apollo];
 }
