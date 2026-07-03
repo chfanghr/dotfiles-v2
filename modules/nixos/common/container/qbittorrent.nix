@@ -132,6 +132,11 @@ in {
         type = types.str;
         default = "/qbittorrent";
       };
+
+      authMiddleware = mkOption {
+        type = types.nullOr types.str;
+        default = null;
+      };
     };
 
     timeZone = mkOption {
@@ -344,11 +349,15 @@ in {
             qbittorrent = {
               service = cfg.containerName;
               rule = "PathPrefix(`${cfg.reverseProxy.prefix}`)";
-              middlewares = [
-                middlewareRedirectName
-                middlewareStripPrefixName
-                middlewareSetHeadersName
-              ];
+              middlewares =
+                [
+                  middlewareRedirectName
+                ]
+                ++ lib.optional (cfg.reverseProxy.authMiddleware != null) cfg.reverseProxy.authMiddleware
+                ++ [
+                  middlewareStripPrefixName
+                  middlewareSetHeadersName
+                ];
             };
           };
           middlewares = {
