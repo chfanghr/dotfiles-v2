@@ -4,6 +4,7 @@
   ...
 }: {
   imports = [
+    ./authelia.nix
     ./boot.nix
     ./disko-config.nix
     ./impermanence.nix

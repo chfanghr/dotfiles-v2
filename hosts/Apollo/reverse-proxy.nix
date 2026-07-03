@@ -1,10 +1,22 @@
 {
-  services = {
-    tailscale-traefik.enable = true;
+  lib,
+  config,
+  ...
+}: let
+  inherit (lib) types mkOption;
 
-    # authelia.instances.main = {
-    #   enable = true;
-    # };
+  inherit (config.apollo.services.traefik) dashboardPrefix;
+
+  authMiddleware = config.apollo.services.authelia.middleware;
+in {
+  options.apollo.services.traefik.dashboardPrefix = mkOption {
+    type = types.str;
+    default = "/dashboard";
+    readOnly = true;
+  };
+
+  config.services = {
+    tailscale-traefik.enable = true;
 
     traefik = {
       staticConfigOptions = {
@@ -15,7 +27,8 @@
         http = {
           routers = {
             dashboard = {
-              rule = "PathPrefix(`/api`) || PathPrefix(`/dashboard`)";
+              rule = "PathPrefix(`/api`) || PathPrefix(`${dashboardPrefix}`)";
+              middlewares = [authMiddleware];
               service = "api@internal";
             };
           };

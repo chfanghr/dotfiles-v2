@@ -22,7 +22,10 @@ in {
     profileDir = config.apollo.mountpoints.qbittorrent;
     user.id = 42420;
     group.id = 42420;
-    reverseProxy.enable = true;
+    reverseProxy = {
+      enable = true;
+      authMiddleware = config.apollo.services.authelia.middleware;
+    };
     p2p.hostBridge = config.apollo.networking.interfaces.containerBridge.name;
     monitoring = {
       hostAddress = "172.18.0.1";
