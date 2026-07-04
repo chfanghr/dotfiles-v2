@@ -117,7 +117,10 @@
   environment.systemPackages = [
     pkgs.vulkan-tools
     pkgs.nvtopPackages.amd
+    pkgs.boxflat
   ];
+
+  services.udev.packages = [pkgs.boxflat];
 
   nix.settings.download-buffer-size = 524288000;
 

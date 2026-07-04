@@ -1,12 +1,9 @@
 {
   pkgs,
   config,
-  inputs,
   lib,
   ...
-}: let
-  pkgsUnstable = import inputs.nixpkgs-unstable {inherit (pkgs.stdenv) system;};
-in {
+}: {
   # HACK: fix xhci_pci missing
   system.modulesTree = let
     inherit (config.boot.kernelPackages) kernel;
@@ -15,7 +12,7 @@ in {
   ];
 
   boot = {
-    kernelPackages = pkgsUnstable.linuxPackages_zen;
+    kernelPackages = pkgs.linuxPackages_zen;
 
     kernelParams = ["microcode.amd_sha_check=off"];
 
@@ -33,6 +30,7 @@ in {
 
     extraModulePackages = [
       config.boot.kernelPackages.zenergy
+      config.boot.kernelPackages.universal-pidff
     ];
 
     initrd = {
