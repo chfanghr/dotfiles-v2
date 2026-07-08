@@ -68,6 +68,7 @@
       };
       "enp6s0f1np1".useDHCP = false;
     };
+    firewall.trustedInterfaces = ["virbr0"];
   };
 
   users.users.fanghr.hashedPassword = "$y$j9T$SxmPzl.7ervjxa6Mzvq7p1$KLXfgvnEzCboA8TPWqGrEV/rn49v6uXiFSoIf7j5YGD";
@@ -125,6 +126,8 @@
   nix.settings.download-buffer-size = 524288000;
 
   time.timeZone = "Asia/Singapore";
+
+  virtualisation.libvirtd.qemu.vhostUserPackages = [pkgs.virtiofsd];
 
   specialisation = {
     debug.configuration = {
