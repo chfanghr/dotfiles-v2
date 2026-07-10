@@ -192,35 +192,32 @@ in {
                 dns = {
                   servers = [
                     {
+                      type = "udp";
                       tag = "dns-bootstrap";
-                      address = "223.5.5.5";
-                      detour = "direct-out";
+                      server = "223.5.5.5";
                     }
                     {
+                      type = "https";
                       tag = "dns-direct";
-                      address = "https://dns.alidns.com/dns-query";
-                      address_resolver = "dns-bootstrap";
-                      detour = "direct-out";
+                      server = "dns.alidns.com";
+                      domain_resolver = "dns-bootstrap";
                     }
                     {
+                      type = "https";
                       tag = "dns-proxy";
-                      address = "https://1.1.1.1/dns-query";
-                      address_resolver = "dns-direct";
+                      server = "1.1.1.1";
+                      domain_resolver = "dns-direct";
                       detour = "proxy-out";
-                      strategy = "ipv4_only";
                     }
                   ];
                   rules = [
-                    {
-                      outbound = "any";
-                      server = "dns-bootstrap";
-                    }
                     {
                       rule_set = "geosite-geolocation-cn";
                       server = "dns-direct";
                     }
                   ];
                   final = "dns-proxy";
+                  strategy = "ipv4_only";
                   independent_cache = true;
                 };
                 inbounds = [
@@ -229,8 +226,6 @@ in {
                     tag = "dns-in";
                     listen = "0.0.0.0";
                     listen_port = proxyCfg.dnsPort;
-                    sniff = true;
-                    sniff_override_destination = false;
                   }
                   {
                     type = "http";
@@ -238,8 +233,6 @@ in {
                     listen = "0.0.0.0";
                     listen_port = proxyCfg.httpPort;
                     users = [];
-                    sniff = true;
-                    sniff_override_destination = false;
                   }
                   {
                     type = "socks";
@@ -247,8 +240,6 @@ in {
                     listen = "0.0.0.0";
                     listen_port = proxyCfg.socksPort;
                     users = [];
-                    sniff = true;
-                    sniff_override_destination = false;
                   }
                 ];
                 outbounds = [
@@ -256,10 +247,6 @@ in {
                     # tag = "proxy-out";
                     _secret = vpnServerCfg.mountPoint;
                     quote = false;
-                  }
-                  {
-                    type = "dns";
-                    tag = "dns-out";
                   }
                   {
                     type = "direct";
@@ -277,7 +264,7 @@ in {
                     }
                     {
                       protocol = "dns";
-                      outbound = "dns-out";
+                      action = "hijack-dns";
                     }
                     {
                       protocol = "bittorrent";
@@ -326,6 +313,7 @@ in {
                   ];
                   final = "proxy-out";
                   default_interface = proxyCfg.lanInterface;
+                  default_domain_resolver = "dns-bootstrap";
                 };
               };
             };
@@ -412,35 +400,32 @@ in {
                 dns = {
                   servers = [
                     {
+                      type = "udp";
                       tag = "dns-bootstrap";
-                      address = "223.5.5.5";
-                      detour = "direct-out";
+                      server = "223.5.5.5";
                     }
                     {
+                      type = "https";
                       tag = "dns-direct";
-                      address = "https://dns.alidns.com/dns-query";
-                      address_resolver = "dns-bootstrap";
-                      detour = "direct-out";
+                      server = "dns.alidns.com";
+                      domain_resolver = "dns-bootstrap";
                     }
                     {
+                      type = "https";
                       tag = "dns-proxy";
-                      address = "https://1.1.1.1/dns-query";
-                      address_resolver = "dns-direct";
+                      server = "1.1.1.1";
+                      domain_resolver = "dns-direct";
                       detour = "proxy-out";
-                      strategy = "ipv4_only";
                     }
                   ];
                   rules = [
-                    {
-                      outbound = "any";
-                      server = "dns-bootstrap";
-                    }
                     {
                       rule_set = "geosite-geolocation-cn";
                       server = "dns-direct";
                     }
                   ];
                   final = "dns-proxy";
+                  strategy = "ipv4_only";
                   independent_cache = true;
                 };
                 inbounds = [
@@ -454,8 +439,6 @@ in {
                     auto_redirect = true;
                     strict_route = true;
                     stack = "system";
-                    sniff = true;
-                    sniff_override_destination = true;
                   }
                 ];
                 outbounds = [
@@ -463,10 +446,6 @@ in {
                     # tag = "proxy-out";
                     _secret = vpnServerCfg.mountPoint;
                     quote = false;
-                  }
-                  {
-                    type = "dns";
-                    tag = "dns-out";
                   }
                   {
                     type = "direct";
@@ -529,6 +508,7 @@ in {
                   ];
                   final = "proxy-out";
                   default_interface = gatewayCfg.lanInterface;
+                  default_domain_resolver = "dns-bootstrap";
                 };
               };
             };
