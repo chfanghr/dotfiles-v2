@@ -24,12 +24,12 @@ in {
         profile = mkVlanProfile name;
       };
       phy = rec {
-        iface = "enp13s0f0np0";
+        iface = "enp6s0f0np0";
         profile = mkProfile iface;
       };
 
       containerPhy = rec {
-        iface = "enp13s0f1np1";
+        iface = "enp6s0f1np1";
         profile = mkProfile iface;
       };
       containerBridge = rec {
