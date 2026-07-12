@@ -88,7 +88,7 @@ in {
 
         options = {
           ashift = "12";
-          autotrim = true;
+          autotrim = "on";
         };
         rootFsOptions.mountpoint = "none";
 
@@ -118,7 +118,7 @@ in {
         type = "zpool";
         options = {
           ashift = "12";
-          autotrim = true;
+          autotrim = "on";
         };
         rootFsOptions.mountpoint = "none";
         mode.topology = {
