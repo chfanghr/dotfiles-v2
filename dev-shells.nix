@@ -31,6 +31,14 @@
               pkgs.nurl
               pkgs.nixos-facter
               pkgs.openssl
+              (
+                pkgs.writeScriptBin "mk-oidc-client-id" ''
+                  ${lib.getExe pkgs.authelia} crypto rand --length 72 --charset rfc3986
+                ''
+              )
+              (pkgs.writeScriptBin "mk-oidc-client-secret" ''
+                ${lib.getExe pkgs.authelia} crypto hash generate pbkdf2 --variant sha512 --random --random.length 72 --random.charset rfc3986
+              '')
             ]
           );
       }
