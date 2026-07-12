@@ -74,6 +74,18 @@ in {
       ${spool} = {
         type = "zpool";
 
+        mode.topology = {
+          vdev = [
+            {
+              members = [
+                "hdd-4"
+                "hdd-5"
+              ];
+            }
+          ];
+          special = [{members = ["ssd-6"];}];
+        };
+
         options = {
           ashift = "12";
           autotrim = true;
@@ -104,7 +116,10 @@ in {
 
       ${dpool} = {
         type = "zpool";
-        options.ashift = "12";
+        options = {
+          ashift = "12";
+          autotrim = true;
+        };
         rootFsOptions.mountpoint = "none";
         mode.topology = {
           type = "topology";
