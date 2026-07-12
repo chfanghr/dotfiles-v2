@@ -75,6 +75,7 @@ in {
         type = "zpool";
 
         mode.topology = {
+          type = "topology";
           vdev = [
             {
               members = [
