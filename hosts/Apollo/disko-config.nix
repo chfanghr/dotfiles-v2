@@ -74,7 +74,10 @@ in {
       ${spool} = {
         type = "zpool";
 
-        options.ashift = "12";
+        options = {
+          ashift = "12";
+          autotrim = true;
+        };
         rootFsOptions.mountpoint = "none";
 
         datasets = {
