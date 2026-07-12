@@ -32,6 +32,7 @@
   jwtSecret = "authelia-jwt-secret";
   sessionSecret = "authelia-session-secret";
   storageEncryptionKey = "authelia-storage-encryption-key";
+  smtpPassword = "authelia-smtp-password";
 
   traefikService = "authelia-${instance}";
 in {
@@ -54,6 +55,7 @@ in {
       ${jwtSecret} = mkSecret ../../secrets/apollo-authelia-jwt-secret.age;
       ${sessionSecret} = mkSecret ../../secrets/apollo-authelia-session-secret.age;
       ${storageEncryptionKey} = mkSecret ../../secrets/apollo-authelia-storage-encryption-key.age;
+      ${smtpPassword} = mkSecret ../../secrets/apollo-authelia-smtp-password.age;
     };
 
     services = {
@@ -98,6 +100,10 @@ in {
           storageEncryptionKeyFile = config.age.secrets.${storageEncryptionKey}.path;
         };
 
+        environmentVariables = {
+          AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets.${smtpPassword}.path;
+        };
+
         settings = {
           default_2fa_method = "webauthn";
 
@@ -128,14 +134,22 @@ in {
               {
                 domain = fqdn;
                 authelia_url = "https://${fqdn}${prefix}";
-                default_redirection_url = "https://${fqdn}${dashboardPrefix}";
+                default_redirection_url = "https://${fqdn}${dashboardPrefix}/";
               }
             ];
           };
 
           storage.local.path = "${stateDir}/db.sqlite3";
 
-          notifier.filesystem.filename = "${stateDir}/notification";
+          notifier = {
+            # filesystem.filename = "${stateDir}/notification";
+            smtp = {
+              address = "submission://smtp.gmail.com:587";
+              username = "lancekulas7@gmail.com";
+              sender = "Authelia on Apollo <apollo_authelia+lancekulas7@gmail.com>";
+              identifier = "fqdn";
+            };
+          };
 
           webauthn = {
             enable_passkey_login = true;
