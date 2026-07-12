@@ -36,10 +36,17 @@
 
   traefikService = "authelia-${instance}";
 in {
-  options.apollo.services.authelia.middleware = mkOption {
-    type = types.str;
-    default = "authelia-${instance}";
-    readOnly = true;
+  options.apollo.services.authelia = {
+    middleware = mkOption {
+      type = types.str;
+      default = "authelia-${instance}";
+      readOnly = true;
+    };
+    singleton = mkOption {
+      type = types.str;
+      default = instance;
+      readOnly = true;
+    };
   };
 
   config = {
