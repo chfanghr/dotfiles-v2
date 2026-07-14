@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  secrets,
   ...
 }: let
   inherit (builtins) toString;
@@ -23,7 +24,7 @@
   stateDir = "/var/lib/authelia-${instance}/";
 
   mkSecret = file: {
-    inherit file;
+    file = "${secrets}/${file}";
     owner = user;
     group = group;
     mode = "0400";
@@ -33,6 +34,8 @@
   sessionSecret = "authelia-session-secret";
   storageEncryptionKey = "authelia-storage-encryption-key";
   smtpPassword = "authelia-smtp-password";
+  oidcHmacSecret = "authelia-oidc-hmac-secret";
+  oidcIssuerPrivateKey = "authelia-oidc-issuer-private-key";
 
   traefikService = "authelia-${instance}";
 in {
@@ -59,10 +62,12 @@ in {
     };
 
     age.secrets = {
-      ${jwtSecret} = mkSecret ../../secrets/apollo-authelia-jwt-secret.age;
-      ${sessionSecret} = mkSecret ../../secrets/apollo-authelia-session-secret.age;
-      ${storageEncryptionKey} = mkSecret ../../secrets/apollo-authelia-storage-encryption-key.age;
-      ${smtpPassword} = mkSecret ../../secrets/apollo-authelia-smtp-password.age;
+      ${jwtSecret} = mkSecret "apollo-authelia-jwt-secret.age";
+      ${sessionSecret} = mkSecret "apollo-authelia-session-secret.age";
+      ${storageEncryptionKey} = mkSecret "apollo-authelia-storage-encryption-key.age";
+      ${smtpPassword} = mkSecret "apollo-authelia-smtp-password.age";
+      ${oidcHmacSecret} = mkSecret "apollo-grafana-authelia-oidc-hmac-secret.age";
+      ${oidcIssuerPrivateKey} = mkSecret "apollo-authelia-oidc-issuer-private-key.age";
     };
 
     services = {
@@ -105,6 +110,8 @@ in {
           jwtSecretFile = config.age.secrets.${jwtSecret}.path;
           sessionSecretFile = config.age.secrets.${sessionSecret}.path;
           storageEncryptionKeyFile = config.age.secrets.${storageEncryptionKey}.path;
+          oidcHmacSecretFile = config.age.secrets.${oidcHmacSecret}.path;
+          oidcIssuerPrivateKeyFile = config.age.secrets.${oidcIssuerPrivateKey}.path;
         };
 
         environmentVariables = {

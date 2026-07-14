@@ -15,7 +15,11 @@
 
   nixpkgsDef = inputs.nixpkgs;
 
-  specialArgs = {inherit inputs;};
+  specialArgs = {
+    inherit inputs;
+    projectRoot = ./.;
+    secrets = ./secrets;
+  };
 
   mkNixos = {
     hostname,
