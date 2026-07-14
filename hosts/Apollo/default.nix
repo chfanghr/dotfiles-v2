@@ -7,6 +7,7 @@
     ./authelia.nix
     ./boot.nix
     ./disko-config.nix
+    ./grafana.nix
     ./impermanence.nix
     ./networking.nix
     ./qbittorrent.nix

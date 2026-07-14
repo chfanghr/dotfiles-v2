@@ -34,5 +34,8 @@ in {
   "apollo-authelia-session-secret.age".publicKeys = [master apollo];
   "apollo-authelia-storage-encryption-key.age".publicKeys = [master apollo];
   "apollo-authelia-smtp-password.age".publicKeys = [master apollo];
+  "apollo-grafana-secret-key.age".publicKeys = [master apollo];
+  "apollo-grafana-oidc-secret-key.age".publicKeys = [master apollo];
+  "apollo-grafana-authelia-oidc-hmac-secret.age".publicKeys = [master apollo];
   "apollo-authelia-oidc-issuer-private-key.age".publicKeys = [master apollo];
 }
