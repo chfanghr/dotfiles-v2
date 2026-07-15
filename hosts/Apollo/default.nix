@@ -9,6 +9,7 @@
     ./darwin-backups.nix
     ./disko-config.nix
     ./grafana.nix
+    ./influxdb.nix
     ./impermanence.nix
     ./networking.nix
     ./postfix.nix
