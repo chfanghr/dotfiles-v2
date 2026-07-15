@@ -297,6 +297,7 @@ in {
             AddExtensionToIncompleteFiles = true;
             AddTorrentToTopOfQueue = true;
             IgnoreSlowTorrentsForQueueing = true;
+            DisableAutoTMMByDefault = false;
           };
         };
         Preferences = {
