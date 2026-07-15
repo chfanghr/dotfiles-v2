@@ -12,6 +12,7 @@
     ./impermanence.nix
     ./networking.nix
     ./postfix.nix
+    ./prometheus.nix
     ./qbittorrent.nix
     ./reverse-proxy.nix
     ./samba.nix
