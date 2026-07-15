@@ -6,6 +6,7 @@
 - `configurations.nix` is the source of truth for `nixosConfigurations` and `deploy.nodes`.
 - Host configs live under `hosts/<Name>/default.nix`.
 - Disk layouts usually live beside the host as `disko.nix` or `disko-config.nix`.
+- AI Agents should commit their changes with their model name as the auther. The human involved should be the co-author, whose identity should be source with `git config --global --list`.  
 
 ## Common Commands
 - `nix develop` - enter the repo dev shell with deploy, disko, agenix, nixos-anywhere, and related tools.
