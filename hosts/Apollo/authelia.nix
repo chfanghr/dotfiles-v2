@@ -99,7 +99,6 @@ in {
             routers = {
               ${traefikService} = {
                 rule = "Host(`${fqdn}`) && PathPrefix(`${prefix}`)";
-                priority = 200;
                 service = traefikService;
               };
             };
