@@ -10,6 +10,7 @@
     ./grafana.nix
     ./impermanence.nix
     ./networking.nix
+    ./postfix.nix
     ./qbittorrent.nix
     ./reverse-proxy.nix
     ./samba.nix

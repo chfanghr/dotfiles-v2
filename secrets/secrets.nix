@@ -38,4 +38,6 @@ in {
   "apollo-grafana-oidc-secret-key.age".publicKeys = [master apollo];
   "apollo-grafana-authelia-oidc-hmac-secret.age".publicKeys = [master apollo];
   "apollo-authelia-oidc-issuer-private-key.age".publicKeys = [master apollo];
+  "apollo-postfix-sasl-passwd.age".publicKeys = [master apollo];
+  "apollo-postfix-smtp-generic-maps.age".publicKeys = [master apollo];
 }
