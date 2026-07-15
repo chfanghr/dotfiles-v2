@@ -33,7 +33,6 @@
   jwtSecret = "authelia-jwt-secret";
   sessionSecret = "authelia-session-secret";
   storageEncryptionKey = "authelia-storage-encryption-key";
-  smtpPassword = "authelia-smtp-password";
   oidcHmacSecret = "authelia-oidc-hmac-secret";
   oidcIssuerPrivateKey = "authelia-oidc-issuer-private-key";
 
@@ -71,7 +70,6 @@ in {
       ${jwtSecret} = mkSecret "apollo-authelia-jwt-secret.age";
       ${sessionSecret} = mkSecret "apollo-authelia-session-secret.age";
       ${storageEncryptionKey} = mkSecret "apollo-authelia-storage-encryption-key.age";
-      ${smtpPassword} = mkSecret "apollo-authelia-smtp-password.age";
       ${oidcHmacSecret} = mkSecret "apollo-grafana-authelia-oidc-hmac-secret.age";
       ${oidcIssuerPrivateKey} = mkSecret "apollo-authelia-oidc-issuer-private-key.age";
     };
@@ -120,10 +118,6 @@ in {
           oidcIssuerPrivateKeyFile = config.age.secrets.${oidcIssuerPrivateKey}.path;
         };
 
-        environmentVariables = {
-          AUTHELIA_NOTIFIER_SMTP_PASSWORD_FILE = config.age.secrets.${smtpPassword}.path;
-        };
-
         settings = {
           default_2fa_method = "webauthn";
 
@@ -164,10 +158,11 @@ in {
           notifier = {
             # filesystem.filename = "${stateDir}/notification";
             smtp = {
-              address = "submission://smtp.gmail.com:587";
-              username = "lancekulas7@gmail.com";
-              sender = "Authelia on Apollo <apollo_authelia+lancekulas7@gmail.com>";
+              address = "smtp://127.0.0.1:${toString config.apollo.services.postfix.port}";
+              sender = "Authelia on Apollo <authelia@Apollo>";
               identifier = "fqdn";
+              disable_starttls = true;
+              disable_require_tls = true;
             };
           };
 
