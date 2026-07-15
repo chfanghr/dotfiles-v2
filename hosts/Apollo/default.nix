@@ -12,6 +12,7 @@
     ./impermanence.nix
     ./networking.nix
     ./postfix.nix
+    ./prometheus.nix
     ./qbittorrent.nix
     ./reverse-proxy.nix
     ./samba.nix
@@ -36,7 +37,6 @@
         gpu.intel = true;
         vmHost = true;
       };
-      services.prometheus.pushToCollector = false;
     };
   };
 
