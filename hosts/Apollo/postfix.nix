@@ -44,9 +44,7 @@ in {
       enable = true;
 
       settings.${instance} = {
-        inet_interfaces = [
-          "127.0.0.1"
-        ];
+        inet_interfaces = "all";
 
         mynetworks = [
           "127.0.0.0/8"

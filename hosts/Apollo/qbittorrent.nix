@@ -47,9 +47,6 @@ in {
     networking.firewall.interfaces.${cfg.monitoring.veth}.allowedTCPPorts = [config.apollo.services.postfix.port];
 
     services.postfix.settings.main = {
-      inet_interfaces = [
-        cfg.monitoring.hostAddress
-      ];
       mynetworks = [
         "${cfg.monitoring.localAddress}/32"
       ];
