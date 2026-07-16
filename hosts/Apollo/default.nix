@@ -6,6 +6,7 @@
   imports = [
     ./authelia.nix
     ./boot.nix
+    ./darwin-backups.nix
     ./disko-config.nix
     ./grafana.nix
     ./impermanence.nix

@@ -159,6 +159,15 @@ in {
             options.mountpoint = "legacy";
             mountpoint = config.apollo.mountpoints.yac;
           };
+          "enc/darwin-backups" = {
+            type = "zfs_fs";
+            options.mountpoint = "none";
+          };
+          "enc/darwin-backups/dioscuri" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = config.apollo.mountpoints.darwin-backups.dioscuri;
+          };
           reserved = {
             type = "zfs_volume";
             size = "16G";
