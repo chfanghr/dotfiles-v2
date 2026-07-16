@@ -19,6 +19,8 @@
       mode = "0770";
     };
   };
+
+  dioscuri = "dioscuri";
 in {
   options.apollo.mountpoints.darwin-backups = {
     group = mkOption {
@@ -27,9 +29,9 @@ in {
       readOnly = true;
     };
 
-    dioscuri = mkOption {
+    ${dioscuri} = mkOption {
       type = types.path;
-      default = "${root}/dioscuri";
+      default = "${root}/${dioscuri}";
       readOnly = true;
     };
   };
@@ -42,6 +44,16 @@ in {
 
     systemd.tmpfiles.settings."40-darwin-backups" = {
       ${cfg.dioscuri} = mpDirRule;
+    };
+
+    services.samba.settings = {
+      "tm-${dioscuri}" = {
+        path = cfg.${dioscuri};
+        "writeable" = "yes";
+        "fruit:aapl" = "yes";
+        "fruit:time machine" = "yes";
+        "vfs objects" = "catia fruit streams_xattr";
+      };
     };
   };
 }
