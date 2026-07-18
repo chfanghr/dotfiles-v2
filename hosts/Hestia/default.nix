@@ -23,7 +23,6 @@ in {
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
     inputs.lanzaboote.nixosModules.lanzaboote
-    inputs.nix-index-database.nixosModules.default
   ];
 
   dotfiles.nixos = {

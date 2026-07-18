@@ -8,12 +8,13 @@
 in {
   config = mkMerge [
     {
+      programs.nix-index-database.comma.enable = true;
+
       environment.systemPackages = with pkgs; [
         curl
         coreutils
         file
         rsync
-        comma
       ];
 
       programs = {
