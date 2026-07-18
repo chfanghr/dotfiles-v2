@@ -131,6 +131,22 @@
         "type": "github"
       }
     },
+    "anthropic-skills": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784256457,
+        "narHash": "sha256-QZ+zJkyLd/42rxgtJEZSUOz9R75Tse6UXW7G0nOkFS8=",
+        "owner": "anthropics",
+        "repo": "skills",
+        "rev": "fa0fa64bdc967915dc8399e803be67759e1e62b8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "anthropics",
+        "repo": "skills",
+        "type": "github"
+      }
+    },
     "blockfrost": {
       "inputs": {
         "nixpkgs": [
@@ -3231,6 +3247,7 @@
       "inputs": {
         "agenix": "agenix",
         "agent-skills": "agent-skills",
+        "anthropic-skills": "anthropic-skills",
         "cardano-nix": "cardano-nix",
         "deploy-rs": "deploy-rs",
         "disko": "disko",

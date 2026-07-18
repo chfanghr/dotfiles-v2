@@ -47,6 +47,10 @@
     mcp-nixos.url = "github:utensils/mcp-nixos";
     agent-skills.url = "github:Kyure-A/agent-skills-nix";
     nix-skills.url = "github:nhooey/nix-skills";
+    anthropic-skills = {
+      url = "github:anthropics/skills";
+      flake = false;
+    };
   };
 
   outputs = inputs @ {flake-parts, ...}:
