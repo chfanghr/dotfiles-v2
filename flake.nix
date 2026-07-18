@@ -46,6 +46,7 @@
     qbittorrent-password.url = "git+https://codeberg.org/fanghr/qbittorrent_password";
     mcp-nixos.url = "github:utensils/mcp-nixos";
     agent-skills.url = "github:Kyure-A/agent-skills-nix";
+    nix-skills.url = "github:nhooey/nix-skills";
   };
 
   outputs = inputs @ {flake-parts, ...}:
