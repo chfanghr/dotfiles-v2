@@ -42,6 +42,7 @@
               (pkgs.writeScriptBin "mk-rsa-keypair" ''
                 ${lib.getExe pkgs.authelia} crypto pair rsa generate
               '')
+              pkgs.nix-tree
             ]
           );
       }
