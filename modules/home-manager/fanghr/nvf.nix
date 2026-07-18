@@ -1,4 +1,4 @@
-{
+{lib, ...}: {
   vim = {
     viAlias = false;
     vimAlias = true;
@@ -39,6 +39,20 @@
       nvim-docs-view.enable = true;
       lightbulb.enable = true;
       lspkind.enable = true;
+
+      servers.rust-analyzer = {
+        # Resolve rust-analyzer from PATH (e.g., a project's dev shell)
+        # instead of pinning the nixpkgs package.
+        cmd = lib.mkForce ["rust-analyzer"];
+        settings."rust-analyzer" = {
+          files.excludeDirs = [
+            ".cargo"
+            ".direnv"
+            ".git"
+            "target"
+          ];
+        };
+      };
     };
 
     languages = {
@@ -52,21 +66,6 @@
       rust = {
         enable = true;
         extensions.crates-nvim.enable = true;
-        lsp = {
-          package = ["rust-analyzer"];
-          opts = ''
-            ['rust-analyzer'] = {
-              files = {
-                excludeDirs = {
-                    ".cargo",
-                    ".direnv",
-                    ".git",
-                    "target",
-                },
-              },
-            },
-          '';
-        };
       };
       toml.enable = true;
       ocaml.enable = true;
