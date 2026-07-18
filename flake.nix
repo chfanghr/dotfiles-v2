@@ -47,6 +47,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     qbittorrent-password.url = "git+https://codeberg.org/fanghr/qbittorrent_password";
+    mcp-nixos.url = "github:utensils/mcp-nixos";
   };
 
   outputs = inputs @ {flake-parts, ...}:
