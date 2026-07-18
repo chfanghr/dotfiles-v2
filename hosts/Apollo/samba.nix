@@ -39,4 +39,8 @@
       qbittorrent.path = "${config.apollo.mountpoints.qbittorrent}/downloads";
     };
   };
+
+  environment.persistence.${config.apollo.mountpoints.persist}.directories = [
+    "/var/lib/samba"
+  ];
 }
