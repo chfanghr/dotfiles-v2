@@ -16,6 +16,7 @@ in {
     ./minecraft.nix
     ./mode.nix
     ./networking.nix
+    ./opencode.nix
     ./qbittorrent.nix
     ./samba.nix
     ./stash.nix
@@ -54,10 +55,6 @@ in {
     nvtopPackages.amd
     libimobiledevice
     ifuse
-  ];
-
-  home-manager.users.fanghr.home.packages = [
-    pkgs.opencode
   ];
 
   services = {
