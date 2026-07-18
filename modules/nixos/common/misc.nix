@@ -13,6 +13,7 @@ in {
         coreutils
         file
         rsync
+        comma
       ];
 
       programs = {
