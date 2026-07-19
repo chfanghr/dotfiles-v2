@@ -253,6 +253,7 @@ in {
       "${dpool}/enc"
       "${spool}/enc"
     ];
+    forceImportAll = true;
   };
 
   systemd.services.zfs-import-dpool.after = ["etc-secrets-zfs\\x2dkeys.mount"];
