@@ -18,6 +18,7 @@ in {
   services = {
     prometheus = {
       listenAddress = "127.0.0.1";
+      extraFlags = ["--web.enable-remote-write-receiver"];
       retentionTime = "1y";
 
       scrapeConfigs = [
@@ -35,6 +36,18 @@ in {
       ];
 
       exporters.zfs.enable = true;
+    };
+
+    traefik.dynamicConfigOptions.http = {
+      routers.prometheusWriteReceiver = {
+        service = "prometheusWriteReceiver";
+        rule = "Path(`/prometheus/write`)";
+        middlewares = ["setPrometheusWriteApiPath"];
+      };
+      middlewares.setPrometheusWriteApiPath.replacePath.path = "/api/v1/write";
+      services.prometheusWriteReceiver.loadBalancer.servers = [
+        {url = "http://127.0.0.1:${toString config.services.prometheus.port}/";}
+      ];
     };
 
     grafana.provision.datasources.settings.datasources = [

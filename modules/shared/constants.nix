@@ -34,7 +34,10 @@
           prefixLength = 16;
           router.address = "10.10.0.1";
         };
+        prometheus = "https://apollo.snow-dace.ts.net/prometheus/write";
       };
+
+      mars.prometheus = "https://apollo.snow-dace.ts.net/prometheus/write";
     };
   };
 }
