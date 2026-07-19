@@ -4,7 +4,8 @@
   config,
   ...
 }:
-lib.mkIf (config.dotfiles.shared.props.networking.home.onLanNetwork
+lib.mkIf (config.dotfiles.shared.props.location.networking.lan.ipv4.prefixLength
+  != null
   && config.dotfiles.nixos.networking.lanInterfaces != [])
 {
   services.avahi = {

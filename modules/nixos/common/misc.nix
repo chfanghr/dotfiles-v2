@@ -1,39 +1,34 @@
 {
   pkgs,
-  lib,
   config,
+  lib,
   ...
 }: let
-  inherit (lib) mkMerge mkIf;
+  inherit (lib) mkDefault;
 in {
-  config = mkMerge [
-    {
-      programs.nix-index-database.comma.enable = true;
+  programs.nix-index-database.comma.enable = true;
 
-      environment.systemPackages = with pkgs; [
-        curl
-        coreutils
-        file
-        rsync
-      ];
-
-      programs = {
-        zsh = {
-          enable = true;
-          enableBashCompletion = true;
-        };
-        git.enable = true;
-        neovim = {
-          viAlias = true;
-          vimAlias = true;
-          defaultEditor = true;
-        };
-      };
-
-      i18n.defaultLocale = "en_US.UTF-8";
-    }
-    (mkIf config.dotfiles.shared.props.networking.home.onLanNetwork {
-      time.timeZone = "Asia/Hong_Kong";
-    })
+  environment.systemPackages = with pkgs; [
+    curl
+    coreutils
+    file
+    rsync
   ];
+
+  programs = {
+    zsh = {
+      enable = true;
+      enableBashCompletion = true;
+    };
+    git.enable = true;
+    neovim = {
+      viAlias = true;
+      vimAlias = true;
+      defaultEditor = true;
+    };
+  };
+
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  time.timeZone = mkDefault config.dotfiles.shared.props.location.timeZone;
 }

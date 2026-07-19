@@ -3,49 +3,120 @@
   config,
   ...
 }: let
-  inherit (lib) mkOption types mdDoc;
-  mkPropOption = name:
-    mkOption {
-      type = types.bool;
-      default = false;
-      description = mdDoc "Shared property: this machine ${name}";
+  cfg = config.dotfiles.shared;
+in {
+  options.dotfiles.shared = let
+    inherit (lib) mkOption types mdDoc;
+
+    mkPropSwitch = name:
+      mkOption {
+        type = types.bool;
+        default = false;
+        description = mdDoc "Shared property: this machine ${name}";
+      };
+
+    proxyType = types.submodule {
+      options = {
+        address = mkOption {
+          type = types.str;
+        };
+        http.port = mkOption {
+          type = types.port;
+        };
+        socks5.port = mkOption {
+          type = types.port;
+        };
+      };
     };
 
-  inherit (config.dotfiles.shared) props;
-in {
-  options.dotfiles.shared = {
-    props.networking.home = {
-      proxy.useGateway = mkPropOption "needs to use the proxy server runs on the gateway";
-      onLanNetwork = mkPropOption "is on subnet 10.42.0.0/16";
-    };
-    networking.home.router = {
-      address = mkOption {
-        type = types.str;
-      };
-    };
-    networking.home.gateway = {
-      address = mkOption {
-        type = types.str;
-      };
-      proxyPorts = {
-        http = mkOption {
-          type = types.port;
+    locationType = types.submodule (
+      {name, ...}: {
+        options = {
+          name = mkOption {
+            type = types.str;
+            default = name;
+          };
+
+          timeZone = mkOption {
+            type = types.nullOr types.str;
+            default = null;
+          };
+
+          networking.lan.ipv4 = {
+            prefixLength = mkOption {
+              type = types.nullOr types.ints.u8;
+              default = null;
+            };
+
+            router.address = mkOption {
+              type = types.nullOr types.str;
+              default = null;
+            };
+
+            gfwBypass = {
+              gateway.address = mkOption {
+                type = types.nullOr types.str;
+                default = null;
+              };
+              proxy = mkOption {
+                type = types.nullOr proxyType;
+                default = null;
+              };
+            };
+          };
+
+          prometheus = mkOption {
+            type = types.nullOr types.str;
+            default = null;
+          };
         };
-        socks5 = mkOption {
-          type = types.port;
-        };
+      }
+    );
+  in {
+    locations = mkOption {
+      type = types.attrsOf locationType;
+    };
+
+    props = {
+      locationName = mkOption {
+        type = types.str;
+        default = "mars";
+      };
+
+      location = mkOption {
+        type = locationType;
+        default = cfg.locations.${cfg.props.locationName};
+        readOnly = true;
+      };
+
+      networking.lan.ipv4.gfwBypass = {
+        useProxy = mkPropSwitch "uses proxy";
+        useGateway = mkPropSwitch "uses gateway";
       };
     };
   };
 
-  config.assertions = [
-    {
-      assertion = props.purposes.vps -> !props.networking.home.onLanNetwork;
-      message = "VPS cannot be on home lan network";
-    }
-    {
-      assertion = props.networking.home.proxy.useGateway -> props.networking.home.onLanNetwork;
-      message = "To use the proxy service runs on the router, the machine should be on home lan";
-    }
-  ];
+  config = {
+    assertions = let
+      inherit (lib) hasAttrByPath;
+    in [
+      {
+        assertion = hasAttrByPath [cfg.props.locationName] (cfg.locations);
+        message = "location ${cfg.props.locationName} not defined";
+      }
+      {
+        assertion = let
+          l = cfg.props.location.networking.lan.ipv4.gfwBypass;
+
+          c = cfg.props.networking.lan.ipv4.gfwBypass;
+        in
+          (c.useProxy -> (l.proxy != null)) && (c.useGateway -> (l.gateway.address != null));
+        message = "GFW bypass not available at location ${cfg.props.locationName}";
+      }
+    ];
+
+    dotfiles.shared.locations = {
+      "mars" = {};
+    };
+  };
 }

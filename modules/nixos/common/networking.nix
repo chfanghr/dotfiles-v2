@@ -24,14 +24,14 @@ in {
       };
     }
     (
-      mkIf config.dotfiles.shared.props.networking.home.proxy.useGateway {
+      mkIf config.dotfiles.shared.props.networking.lan.ipv4.gfwBypass.useProxy {
         networking.proxy = let
-          inherit (config.dotfiles.shared.networking.home) gateway;
-          proxy = "http://${gateway.address}:${builtins.toString gateway.proxyPorts.http}";
+          inherit (config.dotfiles.shared.props.location.networking.lan.ipv4.gfwBypass) proxy;
+          proxy' = "http://${proxy.address}:${builtins.toString proxy.http.port}";
         in {
-          default = proxy;
-          httpProxy = proxy;
-          httpsProxy = proxy;
+          default = proxy';
+          httpProxy = proxy';
+          httpsProxy = proxy';
           noProxy = "127.0.0.1,localhost,*.local,*.snow-dace.ts.net";
         };
       }

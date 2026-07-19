@@ -11,10 +11,10 @@ lib.mkMerge [
       enableDefaultConfig = false;
     };
   }
-  (lib.mkIf config.dotfiles.shared.props.networking.home.proxy.useGateway {
+  (lib.mkIf config.dotfiles.shared.props.networking.lan.ipv4.gfwBypass.useProxy {
     programs.ssh.matchBlocks = let
-      inherit (config.dotfiles.shared.networking.home) gateway;
-      proxyCommand = "${lib.getExe' pkgs.netcat "nc"} -X 5 -x ${gateway.address}:${builtins.toString gateway.proxyPorts.socks5} %h %p";
+      inherit (config.dotfiles.shared.props.location.networking.lan.ipv4.gfwBypass) proxy;
+      proxyCommand = "${lib.getExe' pkgs.netcat "nc"} -X 5 -x ${proxy.address}:${builtins.toString proxy.socks5.port} %h %p";
     in {
       "gitlab.com" = {
         hostname = "gitlab.com";
