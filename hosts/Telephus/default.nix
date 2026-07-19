@@ -6,11 +6,14 @@
     ../../modules/nixos/common
   ];
 
-  dotfiles.nixos = {
-    props.hardware.cpu = {
-      aarch64 = true;
+  dotfiles = {
+    shared.props.locationName = "mars";
+    nixos.props = {
+      hardware.cpu.aarch64 = true;
+      services.prometheus.pushToCollector = false;
     };
   };
+
   networking = {
     useNetworkd = true;
     hostName = "Telephus";
@@ -28,11 +31,12 @@
     hashedPassword = "$y$j9T$sUiL3HdtLj7MZAsxCkWYV1$4mGt.J0JppEhcRT5PqMeYhxnsFI1M2hpz0l95SluoND";
   };
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   services.openssh.enable = true;
-
-  time.timeZone = "Asia/Singapore";
 
   nixpkgs.hostPlatform = "aarch64-linux";
 }

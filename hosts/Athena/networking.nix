@@ -60,7 +60,11 @@ in {
         netdevProfile = "10-bond0";
         networkProfile = "10-bond0";
         slave = {
-          interfaces = ["enp1s0" "enp2s0" "enp3s0"];
+          interfaces = [
+            "enp1s0"
+            "enp2s0"
+            "enp3s0"
+          ];
           networkProfile = "10-bond0-slaves";
         };
       };
@@ -93,7 +97,10 @@ in {
       nftables.enable = true;
       useDHCP = false;
       # WORKAROUND: use these two inside gfw
-      nameservers = mkForce ["223.5.5.5" "1.1.1.1"];
+      nameservers = mkForce [
+        "223.5.5.5"
+        "1.1.1.1"
+      ];
     };
 
     systemd = {
@@ -179,7 +186,10 @@ in {
 
         useRoutingFeatures = lib.mkForce "both";
 
-        extraSetFlags = ["--advertise-routes" "10.41.0.0/16"];
+        extraSetFlags = [
+          "--advertise-routes"
+          "10.41.0.0/16"
+        ]; # FIXME: use values defined under dotfiles.shared.props.location....
       };
 
       iperf3 = {

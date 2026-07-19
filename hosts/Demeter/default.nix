@@ -25,10 +25,7 @@
         work = true;
         graphical.desktop = lib.mkDefault true;
       };
-      networking.home = {
-        onLanNetwork = true;
-        proxy.useGateway = true;
-      };
+      locationName = "cn-1";
     };
     nixos = {
       props = {
@@ -154,13 +151,11 @@
 
   specialisation = {
     debug.configuration = {
-      dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce false;
       boot.plymouth.enable = false;
       dotfiles.shared.props.purposes.graphical.desktop = false;
       demeter.minecraft.enable = false;
     };
     noProxy.configuration = {
-      dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce false;
       networking.proxy = {
         default = lib.mkForce null;
         httpProxy = lib.mkForce null;
@@ -169,7 +164,6 @@
       };
     };
     staticIP.configuration = {
-      dotfiles.shared.props.networking.home.proxy.useGateway = lib.mkForce false;
       networking.proxy = {
         default = lib.mkForce null;
         httpProxy = lib.mkForce null;

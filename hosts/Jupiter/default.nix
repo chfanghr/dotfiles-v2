@@ -8,6 +8,7 @@
 
   dotfiles = {
     shared.props = {
+      locationName = "mars";
       purposes.graphical = {
         gaming = true;
         desktop = true;
@@ -18,6 +19,7 @@
       hardware.bluetooth.enable = true;
       nix.roles.consumer = true;
       users.rootAccess = true;
+      services.prometheus.pushToCollector = false;
     };
   };
 

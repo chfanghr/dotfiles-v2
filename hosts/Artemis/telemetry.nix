@@ -56,7 +56,12 @@ in {
       };
 
       config = {
-        imports = [../../modules/nixos/common/services/prometheus.nix];
+        imports = [
+          ../../modules/shared
+          ../../modules/nixos/common/services/prometheus.nix
+        ];
+
+        dotfiles.shared.props.locationName = "cn-2";
 
         networking = {
           enableIPv6 = true;

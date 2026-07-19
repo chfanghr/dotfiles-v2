@@ -13,27 +13,29 @@
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
-  dotfiles.nixos = {
-    props = {
-      hardware = {
-        audio = true;
-        bluetooth.enable = true;
-        cpu.amd = true;
-        gpu.amd.enable = true;
-        emulation = true;
-        vmHost = true;
+  dotfiles = {
+    shared.props.locationName = "sg";
+    nixos = {
+      props = {
+        services.prometheus.pushToCollector = false;
+        hardware = {
+          audio = true;
+          bluetooth.enable = true;
+          cpu.amd = true;
+          gpu.amd.enable = true;
+          emulation = true;
+          vmHost = true;
+        };
+        nix.roles = {
+          consumer = true;
+          builder = true;
+        };
+        ociHost = true;
       };
-      nix.roles = {
-        consumer = true;
-        builder = true;
-      };
-      ociHost = true;
+
+      nix.builderPrivateKeyAgeSecret = ../../secrets/anemoi-nix-cache-key.age;
     };
-
-    nix.builderPrivateKeyAgeSecret = ../../secrets/anemoi-nix-cache-key.age;
   };
-
-  time.timeZone = "Asia/Singapore";
 
   networking.hostName = "Anemoi";
 

@@ -28,7 +28,7 @@
 
   containerName = "qbt";
 
-  routerAddress = config.dotfiles.shared.networking.home.router.address;
+  routerAddress = config.dotfiles.shared.props.location.networking.lan.ipv4.router.address;
 
   qbittorrentPrefix = "/qbittorrent";
 in {

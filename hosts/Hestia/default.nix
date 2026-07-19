@@ -25,23 +25,27 @@ in {
     inputs.lanzaboote.nixosModules.lanzaboote
   ];
 
-  dotfiles.nixos = {
-    props = {
-      hardware = {
-        audio = true;
-        bluetooth.enable = true;
-        cpu.amd = true;
-        gpu.amd.enable = true;
-        emulation = true;
-        vmHost = true;
+  dotfiles = {
+    shared.props.locationName = "sg";
+    nixos = {
+      props = {
+        hardware = {
+          audio = true;
+          bluetooth.enable = true;
+          cpu.amd = true;
+          gpu.amd.enable = true;
+          emulation = true;
+          vmHost = true;
+        };
+        nix.roles = {
+          builder = true;
+          consumer = true;
+        };
+        ociHost = true;
+        services.prometheus.pushToCollector = false;
       };
-      nix.roles = {
-        builder = true;
-        consumer = true;
-      };
-      ociHost = true;
+      nix.builderPrivateKeyAgeSecret = ../../secrets/hestia-nix-cache-key.age;
     };
-    nix.builderPrivateKeyAgeSecret = ../../secrets/hestia-nix-cache-key.age;
   };
 
   time.timeZone = "Asia/Hong_Kong";

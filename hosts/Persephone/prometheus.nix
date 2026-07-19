@@ -25,39 +25,18 @@
     };
   };
 
-  dotfiles.nixos.props.services.prometheus.pushToCollector = false;
+  dotfiles.nixos.props.services.prometheus = {
+    pushToCollector = false;
+    enableDefault = true;
+  };
 
   services = {
     prometheus = {
-      enable = true;
-      enableReload = true;
       listenAddress = "127.0.0.1";
       extraFlags = ["--web.enable-remote-write-receiver"];
       retentionTime = "1y";
 
       scrapeConfigs = [
-        {
-          job_name = "${config.networking.hostName}-node";
-          static_configs = [
-            {
-              targets = [
-                "127.0.0.1:${toString config.services.prometheus.exporters.node.port}"
-              ];
-              labels.instance = config.networking.hostName;
-            }
-          ];
-        }
-        {
-          job_name = "${config.networking.hostName}-systemd";
-          static_configs = [
-            {
-              targets = [
-                "127.0.0.1:${toString config.services.prometheus.exporters.systemd.port}"
-              ];
-              labels.instance = config.networking.hostName;
-            }
-          ];
-        }
         {
           job_name = "${config.networking.hostName}-zfs";
           static_configs = [
@@ -69,25 +48,9 @@
             }
           ];
         }
-        {
-          job_name = "${config.networking.hostName}-smartctl";
-          static_configs = [
-            {
-              targets = [
-                "127.0.0.1:${toString config.services.prometheus.exporters.smartctl.port}"
-              ];
-              labels.instance = config.networking.hostName;
-            }
-          ];
-        }
       ];
 
-      exporters = {
-        node.enable = true;
-        zfs.enable = true;
-        smartctl.enable = true;
-        systemd.enable = true;
-      };
+      exporters.zfs.enable = true;
     };
 
     traefik.dynamicConfigOptions.http = {

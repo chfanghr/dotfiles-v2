@@ -17,6 +17,7 @@
 
   dotfiles = {
     shared.props = {
+      locationName = "sg";
       purposes = {
         work = true;
         graphical = {
@@ -25,22 +26,21 @@
         };
       };
     };
-    nixos = {
-      props = {
-        hardware = {
-          audio = true;
-          bluetooth = {
-            enable = true;
-            blueman = true;
-          };
-          cpu.amd = true;
-          gpu.amd.enable = true;
-          emulation = true;
-          vmHost = true;
+    nixos.props = {
+      hardware = {
+        audio = true;
+        bluetooth = {
+          enable = true;
+          blueman = true;
         };
-        nix.roles.consumer = true;
-        ociHost = true;
+        cpu.amd = true;
+        gpu.amd.enable = true;
+        emulation = true;
+        vmHost = true;
       };
+      nix.roles.consumer = true;
+      ociHost = true;
+      services.prometheus.pushToCollector = false;
     };
   };
 
@@ -124,8 +124,6 @@
   services.udev.packages = [pkgs.boxflat];
 
   nix.settings.download-buffer-size = 524288000;
-
-  time.timeZone = "Asia/Singapore";
 
   virtualisation.libvirtd.qemu.vhostUserPackages = [pkgs.virtiofsd];
 

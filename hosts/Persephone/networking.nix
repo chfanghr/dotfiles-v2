@@ -102,7 +102,7 @@
           ];
         };
         defaultGateway = {
-          address = config.dotfiles.shared.networking.home.router.address;
+          address = config.dotfiles.shared.props.location.networking.lan.ipv4.router.address;
           interface = "bond0";
         };
       };

@@ -14,24 +14,27 @@
     nftables.enable = true;
   };
 
-  dotfiles.nixos = {
-    props = {
-      hardware = {
-        audio = true;
-        bluetooth = {
-          enable = true;
-          blueman = true;
+  dotfiles = {
+    nixos = {
+      props = {
+        hardware = {
+          audio = true;
+          bluetooth = {
+            enable = true;
+            blueman = true;
+          };
+          cpu.intel = true;
+          emulation = true;
+          rgb = true;
+          vmHost = true;
         };
-        cpu.intel = true;
-        emulation = true;
-        rgb = true;
-        vmHost = true;
+        nix.roles.consumer = true;
+        users.guests.robertchen = true;
+        ociHost = true;
       };
-      nix.roles.consumer = true;
-      users.guests.robertchen = true;
-      ociHost = true;
+      networking.lanInterfaces = ["enp5s0"];
     };
-    networking.lanInterfaces = ["enp5s0"];
+    shared.props.locationName = "cn-2";
   };
 
   boot = {
@@ -89,8 +92,6 @@
 
   users.users.fanghr.hashedPassword = "$y$j9T$ESoL30N/VpkRWrQjHtuJy0$xyvywylDt4YaLWg5KdqsZ5x2bSaRbGIRld811A4dBjA";
 
-  time.timeZone = "Asia/Hong_Kong";
-
   dotfiles.shared.props.purposes.graphical = {
     gaming = lib.mkDefault true;
     desktop = lib.mkDefault true;
@@ -127,7 +128,7 @@
         ];
         defaultGateway = {
           interface = "enp7s0";
-          address = config.dotfiles.shared.networking.home.gateway.address;
+          address = config.dotfiles.shared.props.location.networking.lan.ipv4.router.address;
         };
       };
     };

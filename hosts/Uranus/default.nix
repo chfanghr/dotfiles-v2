@@ -9,6 +9,7 @@
 
   dotfiles = {
     shared.props = {
+      locationName = "mars";
       purposes.graphical = {
         gaming = true;
         desktop = true;
@@ -19,10 +20,9 @@
       hardware.bluetooth.enable = true;
       nix.roles.consumer = true;
       users.rootAccess = true;
+      services.prometheus.pushToCollector = false;
     };
   };
-
-  time.timeZone = "Asia/Hong_Kong";
 
   users.users = {
     fanghr.hashedPassword = "$y$j9T$tn5fAVwNCepbQ4xrimozH0$FhC1TMwwwcKFfDFtX4qx23AUhHRee9o2GviL5dM35b.";

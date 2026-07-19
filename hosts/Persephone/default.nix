@@ -27,11 +27,7 @@
   ];
 
   dotfiles = {
-    shared.props = {
-      networking.home = {
-        onLanNetwork = true;
-      };
-    };
+    shared.props.locationName = "cn-1";
     nixos = {
       props = {
         hardware = {

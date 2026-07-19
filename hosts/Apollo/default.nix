@@ -24,17 +24,19 @@
 
   networking.hostName = "Apollo";
 
-  time.timeZone = "Asia/Singapore";
-
   hardware.facter.reportPath = ./facter.json;
 
-  dotfiles.nixos.props = {
-    users.rootAccess = true;
-    nix.roles.consumer = true;
-    hardware = {
-      cpu.intel = true;
-      gpu.intel = true;
-      vmHost = true;
+  dotfiles = {
+    shared.props.locationName = "sg";
+    nixos.props = {
+      users.rootAccess = true;
+      nix.roles.consumer = true;
+      hardware = {
+        cpu.intel = true;
+        gpu.intel = true;
+        vmHost = true;
+      };
+      services.prometheus.pushToCollector = false;
     };
   };
 

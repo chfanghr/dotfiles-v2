@@ -15,17 +15,19 @@
     inputs.disko.nixosModules.default
   ];
 
-  dotfiles.nixos.props = {
-    nix.roles.consumer = true;
-    users.guests.fry = true;
-    hardware = {
-      cpu.intel = true;
-      vmHost = true;
+  dotfiles = {
+    shared.props.locationName = "cn-2";
+    nixos.props = {
+      nix.roles.consumer = true;
+      users.guests.fry = true;
+      hardware = {
+        cpu.intel = true;
+        vmHost = true;
+      };
+      ociHost = true;
+      services.prometheus.pushToCollector = false;
     };
-    ociHost = true;
   };
-
-  time.timeZone = "Asia/Hong_Kong";
 
   users.users.fanghr.hashedPassword = "$y$j9T$tn5fAVwNCepbQ4xrimozH0$FhC1TMwwwcKFfDFtX4qx23AUhHRee9o2GviL5dM35b.";
 
