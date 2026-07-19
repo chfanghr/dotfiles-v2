@@ -163,6 +163,11 @@ in {
             type = "zfs_fs";
             options.mountpoint = "none";
           };
+          "enc/darwin-backups/hera" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = config.apollo.mountpoints.darwin-backups.hera;
+          };
           "enc/darwin-backups/dioscuri" = {
             type = "zfs_fs";
             options.mountpoint = "legacy";

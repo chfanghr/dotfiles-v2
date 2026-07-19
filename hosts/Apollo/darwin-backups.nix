@@ -20,7 +20,18 @@
     };
   };
 
+  mkSmbShare = name: {
+    "tm-${name}" = {
+      path = cfg.${name};
+      "writeable" = "yes";
+      "fruit:aapl" = "yes";
+      "fruit:time machine" = "yes";
+      "vfs objects" = "catia fruit streams_xattr";
+    };
+  };
+
   dioscuri = "dioscuri";
+  hera = "hera";
 in {
   options.apollo.mountpoints.darwin-backups = {
     group = mkOption {
@@ -34,6 +45,12 @@ in {
       default = "${root}/${dioscuri}";
       readOnly = true;
     };
+
+    ${hera} = mkOption {
+      type = types.path;
+      default = "${root}/${hera}";
+      readOnly = true;
+    };
   };
 
   config = {
@@ -44,16 +61,9 @@ in {
 
     systemd.tmpfiles.settings."40-darwin-backups" = {
       ${cfg.dioscuri} = mpDirRule;
+      ${cfg.hera} = mpDirRule;
     };
 
-    services.samba.settings = {
-      "tm-${dioscuri}" = {
-        path = cfg.${dioscuri};
-        "writeable" = "yes";
-        "fruit:aapl" = "yes";
-        "fruit:time machine" = "yes";
-        "vfs objects" = "catia fruit streams_xattr";
-      };
-    };
+    services.samba.settings = (mkSmbShare dioscuri) // (mkSmbShare hera);
   };
 }
