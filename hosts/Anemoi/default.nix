@@ -17,7 +17,6 @@
     shared.props.locationName = "sg";
     nixos = {
       props = {
-        services.prometheus.pushToCollector = false;
         hardware = {
           audio = true;
           bluetooth.enable = true;

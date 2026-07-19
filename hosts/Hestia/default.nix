@@ -42,7 +42,6 @@ in {
           consumer = true;
         };
         ociHost = true;
-        services.prometheus.pushToCollector = false;
       };
       nix.builderPrivateKeyAgeSecret = ../../secrets/hestia-nix-cache-key.age;
     };

@@ -10,7 +10,6 @@
     shared.props.locationName = "mars";
     nixos.props = {
       hardware.cpu.aarch64 = true;
-      services.prometheus.pushToCollector = false;
     };
   };
 

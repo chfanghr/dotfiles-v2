@@ -40,7 +40,6 @@
       };
       nix.roles.consumer = true;
       ociHost = true;
-      services.prometheus.pushToCollector = false;
     };
   };
 
