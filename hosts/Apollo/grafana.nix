@@ -31,6 +31,15 @@ in {
     ${oidcClientSecret} = mkSecret "apollo-grafana-oidc-secret-key.age";
   };
 
+  environment.persistence.${config.apollo.mountpoints.persist}.directories = [
+    {
+      directory = config.services.grafana.dataDir;
+      user = "grafana";
+      group = "grafana";
+      mode = "0700";
+    }
+  ];
+
   services = {
     grafana = {
       enable = true;
