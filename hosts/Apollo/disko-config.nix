@@ -65,7 +65,7 @@ in {
       hdd-4 = wholeDiskZPoolMember "ata-WDC_WUH721414ALE6L4_9MG6JYGA" spool;
       hdd-5 = wholeDiskZPoolMember "ata-WDC_WUH721414ALE6L4_9MG6LJ9A" spool;
       ssd-6 = wholeDiskZPoolMember "ata-ORICO_260203GH25602665" spool;
-      ssd-7 = wholeDiskZPoolMember "ata-ORICO_MQ23A96508021" dpool;
+      # ssd-7 = wholeDiskZPoolMember "ata-ORICO_MQ23A96508021" dpool;
       ssd-8 = wholeDiskZPoolMember "ata-ORICO_MQ42W26901557" dpool;
       ssd-9 = wholeDiskZPoolMember "ata-ORICO_MQ42W26910168" dpool;
     };
@@ -138,7 +138,7 @@ in {
             {
               mode = "raidz1";
               members = [
-                "ssd-7"
+                # "ssd-7"
                 "ssd-8"
                 "ssd-9"
               ];
