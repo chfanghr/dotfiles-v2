@@ -1,7 +1,6 @@
 {
   inputs,
   pkgs,
-  lib,
   ...
 }: {
   imports = [
@@ -45,6 +44,4 @@
   environment.defaultPackages = [
     pkgs.sbctl
   ];
-
-  services.prometheus.enable = lib.mkForce false;
 }
