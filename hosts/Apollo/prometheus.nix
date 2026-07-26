@@ -33,6 +33,17 @@ in {
             }
           ];
         }
+        {
+          job_name = "Dioscuri-node";
+          static_configs = [
+            {
+              targets = [
+                "dioscuri.snow-dace.ts.net:9100"
+              ];
+              labels.instance = "Dioscuri";
+            }
+          ];
+        }
       ];
 
       exporters.zfs.enable = true;
