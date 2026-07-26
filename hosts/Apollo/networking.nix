@@ -40,9 +40,8 @@ in {
       aux = rec {
         name = "aux";
         ifaces = [
+          "enp13s0"
           "enp14s0"
-          "enp15s0"
-          "enp16s0"
         ];
         profile = mkProfile name;
       };
