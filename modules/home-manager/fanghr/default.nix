@@ -8,7 +8,6 @@
     ./gpg.nix
     ./jj.nix
     ./mangohud.nix
-    ./hyprland.nix
     ./nvim.nix
     ./obs.nix
     ./packages.nix

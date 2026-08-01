@@ -99,10 +99,6 @@
 
   dotfiles.nixos.props.hardware.gpu.amd.enable = lib.mkDefault true;
 
-  home-manager.users.fanghr.dotfiles.hm.graphical.desktop.hyprland.extraConfig = ''
-    monitor=HDMI-A-1,3840x2160@120,0x0,2
-  '';
-
   specialisation = {
     debug.configuration = {
       boot = {

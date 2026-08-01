@@ -63,9 +63,6 @@
   };
 
   home-manager.users.fanghr = {
-    dotfiles.hm.graphical.desktop.hyprland.extraConfig = ''
-      monitor=DP-1,3840x2160@120,0x0,2
-    '';
     programs.git.signing = {
       key = "0x06DA3273BC714AE7";
       signByDefault = true;

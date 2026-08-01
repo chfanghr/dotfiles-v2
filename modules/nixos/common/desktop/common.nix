@@ -13,9 +13,9 @@ in
     # xdg.portal.extraPortals = [pkgs.xdg-desktop-portal-wlr];
     # xdg.portal.configPackages = [pkgs.xdg-desktop-portal-wlr];
 
-    programs.hyprland = {
-      enable = true;
-    };
+    # programs.hyprland = {
+    #   enable = true;
+    # };
 
     fonts.packages = [pkgs.noto-fonts pkgs.hack-font];
     fonts.fontconfig.defaultFonts = {
