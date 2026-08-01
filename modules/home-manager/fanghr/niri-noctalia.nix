@@ -70,6 +70,7 @@ in
         _children = [
           {
             window-rule = {
+              exclude._props.app-id = ''^(gamescope|steam_app_\\d+)$'';
               geometry-corner-radius = 20;
               clip-to-geometry = true;
             };
