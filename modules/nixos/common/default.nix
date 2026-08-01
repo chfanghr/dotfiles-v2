@@ -17,6 +17,7 @@
     ../../shared
     inputs.home-manager.nixosModules.home-manager
     inputs.nix-index-database.nixosModules.default
+    inputs.noctalia.nixosModules.default
   ];
 
   home-manager.extraSpecialArgs = {inherit inputs;};

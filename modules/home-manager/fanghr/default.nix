@@ -1,4 +1,4 @@
-{
+{inputs, ...}: {
   imports = [
     ./alacritty.nix
     ./direnv.nix
@@ -19,6 +19,7 @@
     ./vscode.nix
     ./zsh.nix
     ../../shared
+    inputs.noctalia.homeModules.default
   ];
 
   programs.home-manager.enable = true;
