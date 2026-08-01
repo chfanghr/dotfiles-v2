@@ -1,6 +1,7 @@
 {
   lib,
   config,
+  pkgs,
   ...
 }: let
   inherit (lib) mkIf;
@@ -13,9 +14,10 @@ in
 
       settings = {
         theme = {
-          mode = "dark";
+          mode = "auto";
           source = "builtin";
-          builtin = "Catppuccin";
+          builtin = "Noctalia";
+          templates.builtin_ids = ["wezterm" "gtk3" "gtk4" "kcolorscheme" "niri" "qt"];
         };
 
         wallpaper = {
@@ -24,19 +26,33 @@ in
         };
 
         shell = {
+          shell.font_family = "3270 Nerd Font Mono";
           launch_apps_as_systemd_services = true;
           niri_overview_type_to_launch_enabled = true;
         };
 
         backdrop.enabled = true;
+
+        idle = {
+          behavior_order = ["lock"];
+          behavior.lock = {
+            action = "lock";
+            enabled = true;
+            timeout = 600.0;
+          };
+        };
       };
     };
+
+    home.packages = [pkgs.qt6Packages.qt6ct];
 
     wayland.windowManager.niri = {
       enable = true;
 
       settings = {
         spawn-at-startup = "noctalia";
+
+        environment.QT_QPA_PLATFORMTHEME = "qt6ct";
 
         debug.honor-xdg-activation-with-invalid-serial = {};
 
@@ -45,6 +61,7 @@ in
           "Mod+S".spawn-sh = "noctalia msg panel-toggle control-center";
           "Mod+Comma".spawn-sh = "noctalia msg settings-toggle";
           "Alt+Tab".spawn-sh = "noctalia msg window-switcher";
+          "Super+Control+Q".spawn-sh = "noctalia msg session lock";
 
           "XF86AudioRaiseVolume".spawn-sh = "noctalia msg volume-up";
           "XF86AudioLowerVolume".spawn-sh = "noctalia msg volume-down";
