@@ -74,6 +74,8 @@ in
         openFirewall = true;
         package = pkgs.winbox4;
       };
+
+      niri.enable = true;
     };
 
     hardware.logitech.wireless = {

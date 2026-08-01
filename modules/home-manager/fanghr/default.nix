@@ -9,6 +9,7 @@
     ./jj.nix
     ./mangohud.nix
     ./niri.nix
+    ./niri-noctalia.nix
     ./nvim.nix
     ./obs.nix
     ./packages.nix
