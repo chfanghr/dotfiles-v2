@@ -1,7 +1,8 @@
 {config, ...}: let
+  mkDiskPathById = id: "/dev/disk/by-id/${id}";
   wholeDiskZPoolMember = id: pool: {
     type = "disk";
-    device = "/dev/disk/by-id/${id}";
+    device = mkDiskPathById id;
     content = {
       type = "gpt";
       partitions.zfs = {
@@ -22,52 +23,54 @@
 in {
   disko.devices = {
     disk = {
-      main = {
-        type = "disk";
-        device = "/dev/disk/by-id/nvme-CT1000P310SSD8_25124F63CB07";
-        content = {
-          type = "gpt";
-          partitions = {
-            ESP = {
-              priority = 1;
-              name = "ESP";
-              start = "1M";
-              end = "4G";
-              type = "EF00";
-              content = {
-                type = "filesystem";
-                format = "vfat";
-                mountpoint = "/boot";
-                mountOptions = ["umask=0077"];
-              };
-            };
-            swap = {
-              size = "32G";
-              content = {
-                type = "swap";
-                randomEncryption = true;
-                discardPolicy = "both";
-              };
-            };
-            root = {
-              size = "100%";
-              content = {
-                type = "zfs";
-                pool = "rpool";
-              };
-            };
-          };
-        };
-      };
       hdd-1 = wholeDiskZPoolMember "ata-TOSHIBA_HDWG51GUZSVA_1672A00UFWRH" dpool;
       hdd-2 = wholeDiskZPoolMember "ata-TOSHIBA_HDWG51GUZSVA_1672A02KFWRH" dpool;
       hdd-3 = wholeDiskZPoolMember "ata-TOSHIBA_HDWG51GUZSVA_1672A02FFWRH" dpool;
       hdd-4 = wholeDiskZPoolMember "ata-WDC_WUH721414ALE6L4_9MG6JYGA" spool;
       hdd-5 = wholeDiskZPoolMember "ata-WDC_WUH721414ALE6L4_9MG6LJ9A" spool;
       ssd-6 = wholeDiskZPoolMember "ata-ORICO_260203GH25602665" spool;
-      # ssd-7 = wholeDiskZPoolMember "ata-ORICO_MQ23A96508021" dpool;
+      ssd-7 = wholeDiskZPoolMember "ata-ORICO_260129FS25600312" dpool;
       ssd-8 = wholeDiskZPoolMember "ata-ORICO_MQ42W26901557" dpool;
       ssd-9 = wholeDiskZPoolMember "ata-ORICO_MQ42W26910168" dpool;
+      ssd-10 = wholeDiskZPoolMember "nvme-CT1000P310SSD8_254253C06CCD" rpool;
+      ssd-11 = wholeDiskZPoolMember "nvme-CT1000P310SSD8_25124F63CB07" rpool;
+      ssd-12 = {
+        type = "disk";
+        device = mkDiskPathById "nvme-BC711_NVMe_SK_hynix_128GB____CYA3N039910303D3V";
+        content = {
+          type = "gpt";
+          partitions.ESP = {
+            priority = 1;
+            name = "ESP";
+            start = "1M";
+            size = "100%";
+            type = "EF00";
+            content = {
+              type = "filesystem";
+              format = "vfat";
+              mountpoint = "/boot";
+              mountOptions = ["umask=0077"];
+            };
+          };
+        };
+      };
+      ssd-13 = {
+        type = "disk";
+        device = mkDiskPathById "nvme-CT1000P3PSSD8_25144F6CADD9";
+        content = {
+          type = "gpt";
+          partitions = {
+            swap = {
+              size = "128G";
+              content = {
+                type = "swap";
+                randomEncryption = true;
+                discardPolicy = "both";
+              };
+            };
+          };
+        };
+      };
     };
 
     zpool = {
@@ -138,7 +141,7 @@ in {
             {
               mode = "raidz1";
               members = [
-                # "ssd-7"
+                "ssd-7"
                 "ssd-8"
                 "ssd-9"
               ];
@@ -182,6 +185,19 @@ in {
 
       ${rpool} = {
         type = "zpool";
+
+        mode.topology = {
+          type = "topology";
+          vdev = [
+            {
+              mode = "mirror";
+              members = [
+                "ssd-10"
+                "ssd-11"
+              ];
+            }
+          ];
+        };
 
         options.ashift = "12";
         rootFsOptions.mountpoint = "none";

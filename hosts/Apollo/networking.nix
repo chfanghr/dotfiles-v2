@@ -24,12 +24,12 @@ in {
         profile = mkVlanProfile name;
       };
       phy = rec {
-        iface = "enp17s0f0np0";
+        iface = "enp19s0f0np0";
         profile = mkProfile iface;
       };
 
       containerPhy = rec {
-        iface = "enp17s0f1np1";
+        iface = "enp19s0f1np1";
         profile = mkProfile iface;
       };
       containerBridge = rec {
@@ -40,8 +40,8 @@ in {
       aux = rec {
         name = "aux";
         ifaces = [
-          "enp13s0"
           "enp14s0"
+          "enp15s0"
         ];
         profile = mkProfile name;
       };
