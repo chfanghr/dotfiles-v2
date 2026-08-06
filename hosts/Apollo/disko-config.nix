@@ -20,6 +20,7 @@
   dpool = "dpool";
   spool = "spool";
   rpool = "rpool";
+  fpool = "fpool";
 in {
   disko.devices = {
     disk = {
@@ -66,6 +67,13 @@ in {
                 type = "swap";
                 randomEncryption = true;
                 discardPolicy = "both";
+              };
+            };
+            zfs = {
+              size = "100%";
+              content = {
+                type = "zfs";
+                pool = fpool;
               };
             };
           };
@@ -253,6 +261,33 @@ in {
           reserved = {
             type = "zfs_volume";
             size = "16G";
+          };
+        };
+      };
+
+      ${fpool} = {
+        type = "zpool";
+
+        options.ashift = "12";
+        rootFsOptions.mountpoint = "none";
+
+        datasets = {
+          enc = {
+            type = "zfs_fs";
+            options = {
+              encryption = "aes-256-gcm";
+              keyformat = "passphrase";
+              keylocation = "file://${zfsKeys}/${fpool}-enc";
+              compression = "lz4";
+            };
+          };
+
+          "enc/github-runner" = {
+            type = "zfs_fs";
+            options = {
+              mountpoint = "legacy";
+              atime = "off";
+            };
           };
         };
       };
