@@ -43,6 +43,7 @@
                 ${lib.getExe pkgs.authelia} crypto pair rsa generate
               '')
               pkgs.nix-tree
+              pkgs.omnix
             ]
           );
       }
