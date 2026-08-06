@@ -176,6 +176,11 @@ in {
             options.mountpoint = "legacy";
             mountpoint = config.apollo.mountpoints.darwin-backups.dioscuri;
           };
+          "enc/slow-stash" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = config.apollo.mountpoints.slow-stash;
+          };
           reserved = {
             type = "zfs_volume";
             size = "16G";
