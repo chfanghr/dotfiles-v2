@@ -316,7 +316,11 @@ in {
     forceImportAll = true;
   };
 
-  systemd.services.zfs-import-dpool.after = ["etc-secrets-zfs\\x2dkeys.mount"];
+  systemd.services = {
+    "zfs-import-${dpool}".after = ["etc-secrets-zfs\\x2dkeys.mount"];
+    "zfs-import-${spool}".after = ["etc-secrets-zfs\\x2dkeys.mount"];
+    "zfs-import-${fpool}".after = ["etc-secrets-zfs\\x2dkeys.mount"];
+  };
 
   environment.persistence.${config.apollo.mountpoints.persist}.directories = [
     {
