@@ -8,6 +8,7 @@
     ./boot.nix
     ./darwin-backups.nix
     ./disko-config.nix
+    ./github-runner.nix
     ./grafana.nix
     ./influxdb.nix
     ./impermanence.nix

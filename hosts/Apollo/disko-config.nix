@@ -288,6 +288,7 @@ in {
               mountpoint = "legacy";
               atime = "off";
             };
+            mountpoint = config.apollo.mountpoints.github-runner;
           };
         };
       };
