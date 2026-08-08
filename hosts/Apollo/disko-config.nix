@@ -249,6 +249,16 @@ in {
             mountpoint = config.apollo.mountpoints.persist;
           };
 
+          "enc/minecraft" = {
+            type = "zfs_fs";
+            options.mountpoint = "none";
+          };
+          "enc/minecraft/main-smp" = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = config.apollo.mountpoints.minecraft.main-smp;
+          };
+
           nix = {
             type = "zfs_fs";
             options = {
