@@ -23,7 +23,13 @@
     inputs.disko.nixosModules.default
     inputs.impermanence.nixosModules.default
     inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.nix-minecraft.nixosModules.minecraft-servers
   ];
+
+  nixpkgs = {
+    overlays = [inputs.nix-minecraft.overlay];
+    config.allowUnfree = true;
+  };
 
   networking.hostName = "Apollo";
 
