@@ -44,6 +44,7 @@
               '')
               pkgs.nix-tree
               pkgs.omnix
+              inputs'.nix-minecraft.packages.nix-modrinth-prefetch
             ]
           );
       }
