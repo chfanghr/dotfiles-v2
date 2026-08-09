@@ -4,11 +4,23 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkOption types attrValues;
+  inherit
+    (lib)
+    mkOption
+    types
+    attrValues
+    toString
+    ;
   inherit (pkgs) fetchurl;
+  inherit (config.networking) hostName;
 
   user = "minecraft";
   group = "minecraft";
+
+  mainSMPExporterPort = 25585;
+  mainSMPServerPort = 25565;
+  mainSMPVoiceChatPort = 24454;
+  mainSMPRCONPort = 25575;
 
   mods = {
     fabric-api = fetchurl {
@@ -47,15 +59,23 @@
       url = "https://cdn.modrinth.com/data/ZHKrK8Rp/versions/EVNH1CA6/fastback-fabric-0.34.0%2B26.2.0.jar";
       sha512 = "70f5ad680e16e24b4c0130200a71a1301a288ae79672a9243388c1a843ad1215b0701a4fc5038aebb6c8cf744b4f6f61246f969b5f1ecd3cdb7a98bd0ab12b25";
     };
+    spark = fetchurl {
+      url = "https://cdn.modrinth.com/data/l6YH9Als/versions/iYFOl6lQ/spark-1.10.173-fabric.jar";
+      sha512 = "1dcbf2b76ceacf07523afaeaf63d3625b0318077cc6ce588bb701aea4a494bc2a5179fd2ca5aeda9513c6a2248c2ec590387e8aec6ac9fd8e3d01760bbc3dbfb";
+    };
+    fabric-exporter = fetchurl {
+      url = "https://cdn.modrinth.com/data/dbVXHSlv/versions/tuPsGk8g/fabricexporter-26.2-1.0.22.jar";
+      sha512 = "80475cc389900c1d2e777ff1d0dd19776ba474eb2f96b73f1c1dbe8f349606a888ea35c7845cb517beef2ea3eaee0b5ce5ac39bea24a85f1165881b852760870";
+    };
   };
 
   dataDir = "/data/minecraft";
 
-  main-smp = "main-smp";
+  mainSMP = "main-smp";
 in {
-  options.apollo.mountpoints.minecraft.${main-smp} = mkOption {
+  options.apollo.mountpoints.minecraft.${mainSMP} = mkOption {
     type = types.str;
-    default = "${dataDir}/${main-smp}";
+    default = "${dataDir}/${mainSMP}";
     readOnly = true;
   };
 
@@ -75,7 +95,7 @@ in {
         mode = "0770";
       };
 
-      ${config.apollo.mountpoints.minecraft.${main-smp}}.d = {
+      ${config.apollo.mountpoints.minecraft.${mainSMP}}.d = {
         inherit user group;
         mode = "0770";
       };
@@ -89,17 +109,17 @@ in {
 
       inherit user group;
 
-      servers.${main-smp} = {
+      servers.${mainSMP} = {
         enable = true;
         package = pkgs.fabricServers.fabric-26_2.override {
           loaderVersion = "0.19.3";
           jre_headless = pkgs.jdk25;
         };
         serverProperties = {
-          server-port = 25565;
+          server-port = mainSMPServerPort;
           gamemode = "survival";
           enable-rcon = true;
-          "rcon.port" = 25575;
+          "rcon.port" = mainSMPRCONPort;
           "rcon.password" = 8964;
           level-seed = 8964;
           difficulty = "hard";
@@ -128,15 +148,45 @@ in {
             defaultLoggers mobcaps,tps
             accurateBlockPlacement true
           ''}";
+          "config/exporter.properties" = "${pkgs.writeText "exporter.properties" ''
+            server-port=${toString mainSMPExporterPort}
+            update-interval=1000
+            use-spark=true
+            export-default-jvm-metrics=true
+            strip-identifier-namespaces=true
+            enable-loaded-chunks=true
+            enable-mspt=true
+            enable-tps=true
+            enable-players-online=true
+            enable-entities=true
+            enable-handshakes=true
+          ''}";
         };
         jvmOpts = "-Xmx8192M";
-        path = [pkgs.git pkgs.git-lfs];
+        path = [
+          pkgs.git
+          pkgs.git-lfs
+        ];
       };
     };
 
     networking.firewall.interfaces.tailscale0 = {
-      allowedTCPPorts = [25565];
-      allowedUDPPorts = [24454];
+      allowedTCPPorts = [mainSMPServerPort];
+      allowedUDPPorts = [mainSMPVoiceChatPort];
     };
+
+    services.prometheus.scrapeConfigs = [
+      {
+        job_name = "${hostName}-minecraft-${mainSMP}";
+        static_configs = [
+          {
+            targets = [
+              "127.0.0.1:${toString mainSMPExporterPort}"
+            ];
+            labels.instance = hostName;
+          }
+        ];
+      }
+    ];
   };
 }
