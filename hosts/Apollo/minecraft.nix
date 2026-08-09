@@ -13,6 +13,7 @@
     ;
   inherit (pkgs) fetchurl;
   inherit (config.networking) hostName;
+  inherit (config.services.tailscale-traefik) fqdn;
 
   user = "minecraft";
   group = "minecraft";
@@ -21,6 +22,10 @@
   mainSMPServerPort = 25565;
   mainSMPVoiceChatPort = 24454;
   mainSMPRCONPort = 25575;
+  mainSMPBluemapPort = 1800;
+  mainSMPBluemapTraefikService = "${mainSMP}-bluemap";
+  mainSMPBluemapPrefix = "/minecraft/main-smp";
+  mainSMPBluemapStripPrefix = "mainSMPBluemapTraefikService-stripPrefix";
 
   mods = {
     fabric-api = fetchurl {
@@ -143,6 +148,16 @@ in {
               append: false
             }
           ''}";
+          "config/bluemap/webserver.conf" = "${pkgs.writeText "bluemap-core.conf" ''
+            enabled: true
+            webroot: "bluemap/web"
+            port: ${toString mainSMPBluemapPort}
+            log: {
+              file: "bluemap/logs/webserver.log"
+              append: false
+              format: "%1$s \"%3$s %4$s %5$s\" %6$s %7$s"
+            }
+          ''}";
           "world/carpet.conf" = "${pkgs.writeText "carpet.conf" ''
             commandPlayer true
             defaultLoggers mobcaps,tps
@@ -188,5 +203,27 @@ in {
         ];
       }
     ];
+
+    services.traefik = {
+      dynamicConfigOptions.http = {
+        services.${mainSMPBluemapTraefikService}.loadBalancer.servers = [
+          {
+            url = "http://127.0.0.1:${toString mainSMPBluemapPort}/";
+          }
+        ];
+
+        middlewares.${mainSMPBluemapStripPrefix}.stripPrefix.prefixes = [mainSMPBluemapPrefix];
+
+        routers = {
+          ${mainSMPBluemapTraefikService} = {
+            rule = "Host(`${fqdn}`) && PathPrefix(`${mainSMPBluemapPrefix}`)";
+            service = mainSMPBluemapTraefikService;
+            middlewares = [
+              mainSMPBluemapStripPrefix
+            ];
+          };
+        };
+      };
+    };
   };
 }
