@@ -1,6 +1,7 @@
 {
   imports = [
     ./avahi.nix
+    ./minecraft-prometheus-exporter.nix
     ./mktxp.nix
     ./openssh.nix
     ./prometheus.nix

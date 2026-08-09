@@ -126,8 +126,12 @@
   deploy = {
     nodes = listToAttrs (map (h: nameValuePair h.name h.node) hosts);
   };
+
+  nixosModules = {
+    minecraft-prometheus-exporter = ./modules/nixos/common/services/minecraft-prometheus-exporter.nix;
+  };
 in {
   flake = {
-    inherit nixosConfigurations deploy;
+    inherit nixosConfigurations deploy nixosModules;
   };
 }
