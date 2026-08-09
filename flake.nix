@@ -79,6 +79,7 @@
         ./configurations.nix
         ./dev-shells.nix
         ./hercules-ci.nix
+        ./pkgs
         ./pre-commit.nix
       ];
     };
