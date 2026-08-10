@@ -225,5 +225,7 @@ in {
         };
       };
     };
+
+    users.users.fanghr.extraGroups = [group];
   };
 }
