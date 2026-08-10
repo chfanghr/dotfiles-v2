@@ -126,7 +126,7 @@ in {
           enable-rcon = true;
           "rcon.port" = mainSMPRCONPort;
           "rcon.password" = 8964;
-          level-seed = 8964;
+          level-seed = 826365176;
           difficulty = "hard";
           force-gamemode = true;
           view-distance = 16;
