@@ -77,6 +77,19 @@
     pkgs.yacreader
   ];
 
+  home-manager.users.fanghr.wayland.windowManager.niri.settings._children =
+    map (name: {
+      output = {
+        _args = [name];
+        variable-refresh-rate = {};
+      };
+    }) [
+      "DP-1"
+      "DP-2"
+      "DP-3"
+      "HDMI-A-1"
+    ];
+
   systemd.tmpfiles.settings."10-game-backup"."/data/game-backup".d = {
     user = "fanghr";
     mode = "0700";

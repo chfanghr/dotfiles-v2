@@ -185,7 +185,13 @@ in {
           enableIPv6 = true;
         };
 
-        services.resolved.enable = true;
+        services = {
+          resolved.enable = true;
+          iperf3 = {
+            enable = true;
+            openFirewall = true;
+          };
+        };
 
         systemd.network = {
           wait-online.enable = false;
