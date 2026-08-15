@@ -77,18 +77,42 @@
     pkgs.yacreader
   ];
 
-  home-manager.users.fanghr.wayland.windowManager.niri.settings._children =
-    map (name: {
-      output = {
-        _args = [name];
-        variable-refresh-rate = {};
+  home-manager.users.fanghr.wayland.windowManager.niri.settings = {
+    binds = {
+      "Mod+F".fullscreen-window = {};
+      "Mod+WheelScrollDown".focus-workspace-down = {};
+      "Mod+WheelScrollUp".focus-workspace-up = {};
+      "Mod+WheelScrollLeft" = {
+        _props.cooldown-ms = 256;
+        focus-column-left = {};
       };
-    }) [
-      "DP-1"
-      "DP-2"
-      "DP-3"
-      "HDMI-A-1"
-    ];
+      "Mod+WheelScrollRight" = {
+        _props.cooldown-ms = 256;
+        focus-column-right = {};
+      };
+    };
+
+    _children =
+      [
+        {
+          output = {
+            _args = ["DP-1"];
+            mode = "3840x2160@240.016";
+            variable-refresh-rate = {};
+          };
+        }
+      ]
+      ++ map (name: {
+        output = {
+          _args = [name];
+          variable-refresh-rate = {};
+        };
+      }) [
+        "DP-2"
+        "DP-3"
+        "HDMI-A-1"
+      ];
+  };
 
   systemd.tmpfiles.settings."10-game-backup"."/data/game-backup".d = {
     user = "fanghr";
