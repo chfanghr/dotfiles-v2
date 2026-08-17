@@ -317,11 +317,13 @@ in {
     extraPools = [
       dpool
       spool
+      fpool
     ];
     requestEncryptionCredentials = [
       "${rpool}/enc"
       "${dpool}/enc"
       "${spool}/enc"
+      "${fpool}/enc"
     ];
     forceImportAll = true;
   };
