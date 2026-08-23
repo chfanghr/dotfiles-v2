@@ -163,6 +163,8 @@
 
   virtualisation.libvirtd.qemu.vhostUserPackages = [pkgs.virtiofsd];
 
+  services.desktopManager.gnome.enable = true;
+
   specialisation = {
     debug.configuration = {
       dotfiles.shared.props.purposes.graphical = {
