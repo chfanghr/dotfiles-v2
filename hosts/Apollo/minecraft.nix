@@ -29,8 +29,8 @@
 
   mods = {
     fabric-api = fetchurl {
-      url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/3gT0I5vt/fabric-api-0.156.0%2B26.2.jar";
-      sha512 = "5bbc436d07f836cd90b88287e2ef27f1cd67e26185b2cd4a62cb2ae850eb74e5edbbc7ba7772e92ea91ebf35b263f8815421e3d5e7d2836cb28993ba1d534816";
+      url = "https://cdn.modrinth.com/data/P7dR8mSH/versions/NqwNSxwA/fabric-api-0.158.0%2B26.2.jar";
+      sha512 = "4c2c1ebe74ffd54875a01ff371b53ba3d8674ac98d561f7dae02a96d3d37fbdbc5f5abc6e820f73b6154d6f873ddd05a442b0998ed2d456863dc0ad972e040a6";
     };
     carpet = fetchurl {
       url = "https://cdn.modrinth.com/data/TQTTVgYE/versions/bGrLxJ8v/fabric-carpet-26.2%2Bv260616.jar";
@@ -41,8 +41,8 @@
       sha512 = "39bcfd81340cee04c2e9b9e61d628c297a13af2f96464d0081040ffa9e6336a64d36d95b76371aa00f343cef334bff3d0c6773cfb96994a9441e62ff7632da8d";
     };
     servux = fetchurl {
-      url = "https://cdn.modrinth.com/data/zQhsx8KF/versions/qMld6z1t/servux-fabric-26.2-0.11.2.jar";
-      sha512 = "28690e1fb4b6b7acba032297b0165df9d46cb43c56144e9afb94d5de37bcb0a302316cbb25979d0d1983008f4d1137ce6be859c35dbd5eee25dd018a8e8e17bb";
+      url = "https://cdn.modrinth.com/data/zQhsx8KF/versions/Er2wlain/servux-fabric-26.2-0.11.3.jar";
+      sha512 = "42ec8769ba50ecf1ac6b3da4caa554d5dad6e8226ebb4faf0918a483c0a7823e3a1a69ae39c1157029209b4272df6a6fb025c5b797fd0d4402ab9ddcc800ae67";
     };
     bluemap = fetchurl {
       url = "https://cdn.modrinth.com/data/swbUV1cr/versions/VTvifNPN/bluemap-5.22-fabric.jar";
@@ -71,6 +71,10 @@
     fabric-exporter = fetchurl {
       url = "https://cdn.modrinth.com/data/dbVXHSlv/versions/tuPsGk8g/fabricexporter-26.2-1.0.22.jar";
       sha512 = "80475cc389900c1d2e777ff1d0dd19776ba474eb2f96b73f1c1dbe8f349606a888ea35c7845cb517beef2ea3eaee0b5ce5ac39bea24a85f1165881b852760870";
+    };
+    distance-horizon = fetchurl {
+      url = "https://cdn.modrinth.com/data/uCdwusMi/versions/gBf0SaV1/DistantHorizons-3.2.0-b-26.2-fabric-neoforge.jar";
+      sha512 = "c1b8857776a002c2232887d891bd49195f3c3127a7abe1242376ad20371e31554d8ba6c7c92a195b70782cad94fe970941487f2af530988d9b8819455c859e72";
     };
   };
 
