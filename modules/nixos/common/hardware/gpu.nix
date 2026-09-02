@@ -4,7 +4,16 @@
   pkgs,
   ...
 }: let
-  inherit (lib) mkIf mkMerge types mkOption mdDoc mkDefault mkForce;
+  inherit
+    (lib)
+    mkIf
+    mkMerge
+    types
+    mkOption
+    mdDoc
+    mkDefault
+    mkForce
+    ;
 
   mkPropOption = name:
     mkOption {
@@ -33,71 +42,73 @@ in {
     {
       assertions = [
         {
-          assertion = (graphicalProps.gaming || graphicalProps.desktop) -> (gpuProps.nvidia || gpuProps.amd.enable || steamdeck);
+          assertion =
+            (graphicalProps.gaming || graphicalProps.desktop)
+            -> (gpuProps.nvidia || gpuProps.amd.enable || steamdeck);
           message = "For graphical purposes, a graphics card must be available";
         }
       ];
     }
     (
-      mkIf ((graphicalProps.gaming || graphicalProps.desktop) && !config.dotfiles.shared.props.hardware.steamdeck) {
+      mkIf
+      (
+        (graphicalProps.gaming || graphicalProps.desktop)
+        && !config.dotfiles.shared.props.hardware.steamdeck
+      )
+      {
         hardware.graphics = {
           enable = true;
           enable32Bit = true;
         };
+        environment.systemPackages = [pkgs.libva-utils];
       }
     )
-    (
-      mkIf gpuProps.nvidia {
-        services.xserver.videoDrivers = [
-          "nvidia"
-        ];
-        hardware.nvidia = {
-          modesetting.enable = true;
-          nvidiaSettings = true;
-          package = mkDefault config.boot.kernelPackages.nvidiaPackages.beta;
-          dynamicBoost.enable = true;
+    (mkIf gpuProps.nvidia {
+      environment.variables = {
+        LIBVA_DRIVER_NAME = "nvidia";
+        MOZ_DISABLE_RDD_SANDBOX = "1";
+      };
+
+      services.xserver.videoDrivers = [
+        "nvidia"
+      ];
+      hardware.nvidia = {
+        modesetting.enable = true;
+        open = true;
+      };
+      hardware.graphics.extraPackages = with pkgs; [
+        libva-vdpau-driver
+      ];
+      environment.systemPackages = [pkgs.nvtopPackages.nvidia];
+      nixpkgs.config.allowUnfree = true;
+    })
+    (mkIf gpuProps.amd.enable (mkMerge [
+      {
+        hardware.amdgpu = {
+          initrd.enable = true;
+          opencl.enable = true;
+          overdrive.enable = mkDefault true;
         };
-        hardware.graphics.extraPackages = with pkgs; [
-          vaapiVdpau
-        ];
-        nixpkgs.config.allowUnfreePredicate = pkg: config.hardware.nvidia.package.name == lib.getName pkg;
+        # services.xserver.videoDrivers = mkDefault ["modesetting"];
       }
-    )
-    (
-      mkIf gpuProps.amd.enable (mkMerge [
-        {
-          hardware.amdgpu = {
-            initrd.enable = true;
-            opencl.enable = true;
-            overdrive.enable = mkDefault true;
-          };
-          # services.xserver.videoDrivers = mkDefault ["modesetting"];
-        }
-        (
-          mkIf gpuProps.amd.amdvlk.enable {
-            hardware.amdgpu.amdvlk = {
-              enable = true;
-              support32Bit.enable = true;
-            };
-          }
-        )
-        (
-          mkIf gpuProps.amd.integrated.raphael {
-            boot = {
-              kernelPackages = mkForce pkgs.linuxPackages_latest;
-              kernelParams = ["amdgpu.sg_display=0"];
-            };
-          }
-        )
-      ])
-    )
-    (
-      mkIf gpuProps.intel {
-        hardware.graphics.extraPackages = [
-          pkgs.vpl-gpu-rt
-          pkgs.intel-compute-runtime
-        ];
-      }
-    )
+      (mkIf gpuProps.amd.amdvlk.enable {
+        hardware.amdgpu.amdvlk = {
+          enable = true;
+          support32Bit.enable = true;
+        };
+      })
+      (mkIf gpuProps.amd.integrated.raphael {
+        boot = {
+          kernelPackages = mkForce pkgs.linuxPackages_latest;
+          kernelParams = ["amdgpu.sg_display=0"];
+        };
+      })
+    ]))
+    (mkIf gpuProps.intel {
+      hardware.graphics.extraPackages = [
+        pkgs.vpl-gpu-rt
+        pkgs.intel-compute-runtime
+      ];
+    })
   ];
 }

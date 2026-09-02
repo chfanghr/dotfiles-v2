@@ -34,6 +34,7 @@
           blueman = true;
         };
         cpu.amd = true;
+        gpu.nvidia = true;
         gpu.amd.enable = true;
         emulation = true;
         vmHost = true;
@@ -46,11 +47,11 @@
   networking = {
     vlans = {
       "vlan-main" = {
-        interface = "enp6s0f1np1";
+        interface = "enp5s0f1np1";
         id = 42;
       };
       "vlan-mgmt" = {
-        interface = "enp6s0f1np1";
+        interface = "enp5s0f1np1";
         id = 120;
       };
     };
@@ -90,28 +91,37 @@
         _props.cooldown-ms = 256;
         focus-column-right = {};
       };
+      "Mod+Shift+Right".move-window-to-monitor-right = {};
+      "Mod+Shift+Left".move-window-to-monitor-left = {};
     };
 
-    _children =
-      [
-        {
-          output = {
-            _args = ["DP-1"];
-            mode = "3840x2160@240.016";
-            variable-refresh-rate = {};
-          };
-        }
-      ]
-      ++ map (name: {
+    _children = [
+      {
         output = {
-          _args = [name];
-          variable-refresh-rate = {};
+          _args = ["DP-3"];
+          mode = "3840x2160@240.016";
+          transform = "90";
+          position._props = {
+            x = 0;
+            y = 0;
+          };
+          scale = 1.25;
         };
-      }) [
-        "DP-2"
-        "DP-3"
-        "HDMI-A-1"
-      ];
+      }
+      {
+        output = {
+          _args = ["DP-4"];
+          mode = "3840x2160@240.016";
+          focus-at-startup = {};
+          position._props = {
+            x = 1728;
+            y = 672;
+          };
+          scale = 1.25;
+          # variable-refresh-rate = {};
+        };
+      }
+    ];
   };
 
   systemd.tmpfiles.settings."10-game-backup"."/data/game-backup".d = {
