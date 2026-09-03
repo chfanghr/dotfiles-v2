@@ -170,7 +170,15 @@
 
   services.udev.packages = [pkgs.boxflat];
 
-  nix.settings.download-buffer-size = 524288000;
+  nix.settings = {
+    download-buffer-size = 524288000;
+    substituters = [
+      "https://cache.nixos-cuda.org"
+    ];
+    trusted-public-keys = [
+      "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
+    ];
+  };
 
   virtualisation.libvirtd.qemu.vhostUserPackages = [pkgs.virtiofsd];
 
