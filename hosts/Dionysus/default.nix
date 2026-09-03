@@ -3,7 +3,12 @@
   inputs,
   pkgs,
   ...
-}: {
+}: let
+  pkgsUnstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs.stdenv) system;
+    config.allowUnfree = true;
+  };
+in {
   imports = [
     ./boot.nix
     ./disko.nix
@@ -197,6 +202,10 @@
       };
 
       networking.interfaces."enp6s0f0np0".useDHCP = true;
+    };
+    nvidia-latest.configuration = {config, ...}: {
+      boot.kernelPackages = lib.mkForce pkgsUnstable.linuxPackages_latest;
+      hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
     };
   };
 }
