@@ -81,7 +81,7 @@ in {
   home-manager.users.fanghr.home.packages = [
     pkgs.handbrake
     pkgs.yacreader
-    pkgs.chromium
+    (pkgs.chromium.override {enableWideVine = true;})
   ];
 
   home-manager.users.fanghr.wayland.windowManager.niri.settings = {
