@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }:
 lib.mkMerge [
@@ -63,6 +64,9 @@ lib.mkMerge [
     lib.mkIf config.dotfiles.shared.props.purposes.graphical.gaming {
       home.packages = with pkgs; [
         moonlight-qt
+        (pkgs.writeShellScriptBin "wine-discord-rpc-bridge" ''
+          ${inputs.rpc-bridge.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/bridge.sh $@
+        '')
       ];
     }
   )
