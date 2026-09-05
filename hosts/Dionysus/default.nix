@@ -134,11 +134,6 @@ in {
     ];
   };
 
-  systemd.tmpfiles.settings."10-game-backup"."/data/game-backup".d = {
-    user = "fanghr";
-    mode = "0700";
-  };
-
   programs = {
     steam = {
       protontricks.enable = true;
