@@ -6,7 +6,7 @@
 }: {
   services.hercules-ci-agent = {
     enable = true;
-    package = inputs.hci-agent.packages.${pkgs.stdenv.system}.hercules-ci-agent;
+    package = inputs.hci-agent.packages.${pkgs.stdenv.hostPlatform.system}.hercules-ci-agent;
     settings = {
       clusterJoinTokenPath = config.age.secrets.hci-token.path;
       binaryCachesPath = config.age.secrets.hci-binary-caches.path;

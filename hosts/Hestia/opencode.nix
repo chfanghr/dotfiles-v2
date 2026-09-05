@@ -31,7 +31,7 @@
       mcp = {
         enable = true;
         servers = {
-          nixos.command = "${inputs.mcp-nixos.packages.${pkgs.stdenv.system}.default}/bin/mcp-nixos";
+          nixos.command = "${inputs.mcp-nixos.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/mcp-nixos";
         };
       };
 
