@@ -52,11 +52,11 @@ in {
   networking = {
     vlans = {
       "vlan-main" = {
-        interface = "enp5s0f1np1";
+        interface = "enp6s0f1np1";
         id = 42;
       };
       "vlan-mgmt" = {
-        interface = "enp5s0f1np1";
+        interface = "enp6s0f1np1";
         id = 120;
       };
     };
