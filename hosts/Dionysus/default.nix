@@ -3,15 +3,12 @@
   inputs,
   pkgs,
   ...
-}: let
-  pkgsUnstable = import inputs.nixpkgs-unstable {
-    inherit (pkgs.stdenv) system;
-    config.allowUnfree = true;
-  };
-in {
+}: {
   imports = [
     ./boot.nix
     ./disko.nix
+    ./desktop.nix
+    ./gaming.nix
     ../../modules/nixos/common
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.agenix.nixosModules.default
@@ -49,6 +46,8 @@ in {
     };
   };
 
+  users.users.fanghr.hashedPassword = "$y$j9T$SxmPzl.7ervjxa6Mzvq7p1$KLXfgvnEzCboA8TPWqGrEV/rn49v6uXiFSoIf7j5YGD";
+
   networking = {
     vlans = {
       "vlan-main" = {
@@ -76,103 +75,19 @@ in {
     firewall.trustedInterfaces = ["virbr0"];
   };
 
-  users.users.fanghr.hashedPassword = "$y$j9T$SxmPzl.7ervjxa6Mzvq7p1$KLXfgvnEzCboA8TPWqGrEV/rn49v6uXiFSoIf7j5YGD";
-
-  home-manager.users.fanghr.home.packages = [
-    pkgs.handbrake
-    pkgs.yacreader
-    (pkgs.chromium.override {enableWideVine = true;})
-  ];
-
-  home-manager.users.fanghr.wayland.windowManager.niri.settings = {
-    binds = {
-      "Mod+F".fullscreen-window = {};
-      "Mod+WheelScrollDown".focus-workspace-down = {};
-      "Mod+WheelScrollUp".focus-workspace-up = {};
-      "Mod+WheelScrollLeft" = {
-        _props.cooldown-ms = 256;
-        focus-column-left = {};
-      };
-      "Mod+WheelScrollRight" = {
-        _props.cooldown-ms = 256;
-        focus-column-right = {};
-      };
-      "Mod+Shift+Right".move-window-to-monitor-right = {};
-      "Mod+Shift+Left".move-window-to-monitor-left = {};
-      "Mod+Alt+Right".move-column-right-or-to-monitor-right = {};
-      "Mod+Alt+Left".move-column-left-or-to-monitor-left = {};
-      "Mod+Shift+M".maximize-window-to-edges = {};
-      "Mod+Shift+5".screenshot = {};
-    };
-
-    _children = [
-      {
-        output = {
-          _args = ["DP-3"];
-          mode = "3840x2160@240.016";
-          transform = "90";
-          position._props = {
-            x = 0;
-            y = 0;
-          };
-          scale = 1.25;
-        };
-      }
-      {
-        output = {
-          _args = ["DP-4"];
-          mode = "3840x2160@240.016";
-          focus-at-startup = {};
-          position._props = {
-            x = 1728;
-            y = 672;
-          };
-          scale = 1.25;
-          # variable-refresh-rate = {};
-        };
-      }
-    ];
-  };
-
-  programs = {
-    steam = {
-      protontricks.enable = true;
-    };
-
-    kdeconnect.enable = true;
-  };
-
   services = {
-    sunshine = {
-      enable = true;
-      capSysAdmin = true;
-      openFirewall = true;
-    };
-
-    xserver.displayManager.startx.enable = true;
-
     ucodenix.enable = true;
 
     iperf3 = {
       enable = true;
       openFirewall = true;
     };
-
-    avahi = {
-      enable = lib.mkForce true;
-      allowInterfaces = [
-        "vlan-main"
-      ];
-    };
   };
 
   environment.systemPackages = [
     pkgs.vulkan-tools
-    pkgs.nvtopPackages.amd
-    pkgs.boxflat
+    pkgs.nvtopPackages.full
   ];
-
-  services.udev.packages = [pkgs.boxflat];
 
   nix.settings = {
     download-buffer-size = 524288000;
@@ -185,8 +100,6 @@ in {
   };
 
   virtualisation.libvirtd.qemu.vhostUserPackages = [pkgs.virtiofsd];
-
-  services.desktopManager.gnome.enable = true;
 
   specialisation = {
     debug.configuration = {
@@ -201,10 +114,6 @@ in {
       };
 
       networking.interfaces."enp6s0f0np0".useDHCP = true;
-    };
-    nvidia-latest.configuration = {config, ...}: {
-      boot.kernelPackages = lib.mkForce pkgsUnstable.linuxPackages_latest;
-      hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
     };
   };
 }

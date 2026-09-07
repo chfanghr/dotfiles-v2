@@ -2,17 +2,25 @@
   pkgs,
   config,
   lib,
+  inputs,
   ...
-}: {
+}: let
+  pkgsUnstable = import inputs.nixpkgs-unstable {
+    inherit (pkgs.stdenv) system;
+    config.allowUnfree = true;
+  };
+
   # HACK: fix xhci_pci missing
-  system.modulesTree = let
+  modulesTree = let
     inherit (config.boot.kernelPackages) kernel;
   in [
     (lib.getOutput "modules" kernel)
   ];
+in {
+  system = {inherit modulesTree;};
 
   boot = {
-    kernelPackages = pkgs.linuxPackages_zen;
+    kernelPackages = lib.mkDefault pkgs.linuxPackages_zen;
 
     kernelParams = ["microcode.amd_sha_check=off"];
 
@@ -25,8 +33,6 @@
       systemd-boot.enable = false; # Handled by lanzaboote
       efi.canTouchEfiVariables = true;
     };
-
-    plymouth.enable = false;
 
     extraModulePackages = [
       config.boot.kernelPackages.zenergy
@@ -67,4 +73,9 @@
   environment.defaultPackages = [
     pkgs.sbctl
   ];
+
+  specialisation.nvidia-latest.configuration = {config, ...}: {
+    boot.kernelPackages = lib.mkForce pkgsUnstable.linuxPackages_latest;
+    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
+  };
 }
