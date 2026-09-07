@@ -7,8 +7,8 @@
   fastPool = "dionysus-fast";
   slowPool = "dionysus-slow";
 
-  fastMp = "/data/fast";
-  slowMp = "/data/slow";
+  mkFastMp = child: "/data/fast/${child}";
+  mkSlowMp = child: "/data/slow/${child}";
   mpRuleDefault = {
     d = {
       user = "fanghr";
@@ -169,31 +169,54 @@ in {
       ${fastPool} = {
         type = "zpool";
         rootFsOptions = {
-          mountpoint = fastMp;
+          mountpoint = "none";
           compression = "zstd";
         };
         options = {
           ashift = "12";
           autotrim = "on";
+        };
+        datasets = {
+          steam = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = mkFastMp "steam";
+          };
+
+          reserved = {
+            type = "zfs_volume";
+            size = "16G";
+          };
         };
       };
       ${slowPool} = {
         type = "zpool";
         rootFsOptions = {
-          mountpoint = slowMp;
+          mountpoint = "none";
           compression = "zstd";
         };
         options = {
           ashift = "12";
           autotrim = "on";
+        };
+        datasets = {
+          steam = {
+            type = "zfs_fs";
+            options.mountpoint = "legacy";
+            mountpoint = mkSlowMp "steam";
+          };
+          reserved = {
+            type = "zfs_volume";
+            size = "16G";
+          };
         };
       };
     };
   };
 
   systemd.tmpfiles.settings."10-mountpoints" = {
-    ${slowMp} = mpRuleDefault;
-    ${fastMp} = mpRuleDefault;
+    ${mkFastMp "steam"} = mpRuleDefault;
+    ${mkSlowMp "steam"} = mpRuleDefault;
   };
 
   boot.zfs = {
