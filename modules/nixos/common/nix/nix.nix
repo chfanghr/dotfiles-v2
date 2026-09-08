@@ -50,6 +50,7 @@ in {
             "https://nix-community.cachix.org?priority=2"
             # "https://om.cachix.org?priority=3"
             "https://devenv.cachix.org?priority=4"
+            "https://cache.nixos-cuda.org?priority=5"
           ];
           trusted-public-keys = [
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
@@ -58,6 +59,7 @@ in {
             "chfanghr.cachix.org-1:gt1W4ZP4F/kgsA2JtH+di/yBaUM2WPMqr0IrRyIIED0="
             "om.cachix.org-1:ifal/RLZJKN4sbpScyPGqJ2+appCslzu7ZZF/C01f2Q="
             "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+            "cache.nixos-cuda.org:74DUi4Ye579gUqzH4ziL9IyiJBlDpMRn9MBN8oNan9M="
           ];
         };
         gc.automatic = true;
