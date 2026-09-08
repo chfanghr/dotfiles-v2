@@ -1,10 +1,4 @@
-{
-  pkgs,
-  inputs,
-  ...
-}: let
-  pkgsUnstable = import inputs.nixpkgs-unstable {inherit (pkgs.stdenv) system;};
-in {
+{config, ...}: {
   programs = {
     zsh = {
       enable = true;
@@ -56,7 +50,7 @@ in {
     };
 
     zellij = {
-      package = pkgsUnstable.zellij;
+      package = config.dotfiles.shared.nixpkgs-unstable.pkgs.zellij;
       enable = true;
     };
   };

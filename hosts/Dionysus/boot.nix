@@ -2,14 +2,8 @@
   pkgs,
   config,
   lib,
-  inputs,
   ...
 }: let
-  pkgsUnstable = import inputs.nixpkgs-unstable {
-    inherit (pkgs.stdenv) system;
-    config.allowUnfree = true;
-  };
-
   # HACK: fix xhci_pci missing
   modulesTree = let
     inherit (config.boot.kernelPackages) kernel;
@@ -75,7 +69,7 @@ in {
   ];
 
   specialisation.nvidia-latest.configuration = {config, ...}: {
-    boot.kernelPackages = lib.mkForce pkgsUnstable.linuxPackages_latest;
+    boot.kernelPackages = config.dotfiles.shared.nixpkgs-unstable.pkgs.linuxPackages_latest;
     hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
   };
 }

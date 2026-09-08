@@ -4,5 +4,6 @@
     ./hardware.nix
     ./networking.nix
     ./purposes.nix
+    ./unstablePkgs.nix
   ];
 }

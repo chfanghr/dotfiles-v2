@@ -116,4 +116,6 @@
       networking.interfaces."enp6s0f0np0".useDHCP = true;
     };
   };
+
+  dotfiles.shared.nixpkgs-unstable.config.allowUnfree = true;
 }

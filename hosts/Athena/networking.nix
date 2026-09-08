@@ -2,15 +2,12 @@
   lib,
   config,
   pkgs,
-  inputs,
   ...
 }: let
   inherit (lib) types mkOption mkForce;
   inherit (builtins) toString;
 
   cfg = config.athena.networking;
-
-  pkgsUnstable = import inputs.nixpkgs-unstable {inherit (pkgs.stdenv) system;};
 in {
   options.athena.networking = {
     mlag = {
@@ -182,7 +179,7 @@ in {
 
     services = {
       tailscale = {
-        package = pkgsUnstable.tailscale;
+        package = config.dotfiles.shared.nixpkgs-unstable.pkgs.tailscale;
 
         useRoutingFeatures = lib.mkForce "both";
 
