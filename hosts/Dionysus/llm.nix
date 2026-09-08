@@ -4,6 +4,8 @@
   pool = pools.slow;
   dataset = "enc/ollama";
 in {
+  home-manager.users.fanghr.dotfiles.hm.opencode.enable = true;
+
   disko.devices.zpool = {
     ${pool}.datasets.${dataset} = {
       type = "zfs_fs";
