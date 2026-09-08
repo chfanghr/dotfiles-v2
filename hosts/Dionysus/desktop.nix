@@ -5,26 +5,6 @@
         NIXOS_OZONE_WL = "1";
       };
 
-      binds = {
-        "Mod+F".fullscreen-window = {};
-        "Mod+WheelScrollDown".focus-workspace-down = {};
-        "Mod+WheelScrollUp".focus-workspace-up = {};
-        "Mod+WheelScrollLeft" = {
-          _props.cooldown-ms = 256;
-          focus-column-left = {};
-        };
-        "Mod+WheelScrollRight" = {
-          _props.cooldown-ms = 256;
-          focus-column-right = {};
-        };
-        "Mod+Shift+Right".move-window-to-monitor-right = {};
-        "Mod+Shift+Left".move-window-to-monitor-left = {};
-        "Mod+Alt+Right".move-column-right-or-to-monitor-right = {};
-        "Mod+Alt+Left".move-column-left-or-to-monitor-left = {};
-        "Mod+Shift+M".maximize-window-to-edges = {};
-        "Mod+Shift+5".screenshot = {};
-      };
-
       _children = [
         {
           output = {
@@ -52,6 +32,32 @@
           };
         }
       ];
+    };
+
+    programs.noctalia.settings = {
+      shell.avatar_path = "/home/fanghr/.face";
+      location.auto_locate = true;
+
+      bar.default = {
+        background_opacity = 0.45;
+        end = [
+          "media"
+          "tray"
+          "notifications"
+          "clipboard"
+          "network"
+          "bluetooth"
+          "volume"
+          "brightness"
+          "battery"
+          "control-center"
+          "session"
+          "screenshot"
+        ];
+        margin_ends = 0;
+        scale = 1.2;
+        thickness = 35;
+      };
     };
 
     home.packages = [
