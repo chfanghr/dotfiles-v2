@@ -7,6 +7,8 @@
   fastPool = "dionysus-fast";
   slowPool = "dionysus-slow";
 
+  zfsKeysMp = "/run/zfs-keys";
+
   mkRootPoolDev = {
     isBootDrive ? false,
     id,
@@ -213,6 +215,15 @@ in {
             autotrim = "on";
           };
           datasets = {
+            enc = {
+              type = "zfs_fs";
+              options = {
+                mountpoint = "none";
+                encryption = "aes-256-gcm";
+                keyformat = "raw";
+                keylocation = "file://${zfsKeysMp}/dionysus-slow-enc";
+              };
+            };
             reserved = {
               type = "zfs_volume";
               size = "16G";
