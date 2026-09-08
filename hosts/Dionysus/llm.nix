@@ -3,8 +3,13 @@
 
   pool = pools.slow;
   dataset = "enc/ollama";
+
+  ollama = config.dotfiles.shared.nixpkgs-unstable.pkgs.ollama-cuda;
 in {
-  home-manager.users.fanghr.dotfiles.hm.opencode.enable = true;
+  home-manager.users.fanghr = {
+    dotfiles.hm.opencode.enable = true;
+    home.packages = [ollama];
+  };
 
   disko.devices.zpool = {
     ${pool}.datasets.${dataset} = {
@@ -25,7 +30,7 @@ in {
     enable = true;
     user = "ollama";
     group = "ollama";
-    package = config.dotfiles.shared.nixpkgs-unstable.pkgs.ollama-cuda;
+    package = ollama;
     home = config.disko.devices.zpool.${pool}.datasets.${dataset}.mountpoint;
     loadModels = [
       "llama3.2:3b"
