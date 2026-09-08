@@ -9,6 +9,7 @@
     ./disko.nix
     ./desktop.nix
     ./gaming.nix
+    ./llm.nix
     ../../modules/nixos/common
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.agenix.nixosModules.default
