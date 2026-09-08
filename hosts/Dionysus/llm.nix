@@ -26,17 +26,29 @@ in {
     };
   };
 
-  services.ollama = {
-    enable = true;
-    user = "ollama";
-    group = "ollama";
-    package = ollama;
-    home = config.disko.devices.zpool.${pool}.datasets.${dataset}.mountpoint;
-    loadModels = [
-      "llama3.2:3b"
-      "qwen3.8:27b"
-      "tinyrick/Qwen3.8-27B-Ultra-Uncensored-Heretic-Native-MTP-Preserved-GGUF:Q6_K"
-      "ornith-1.5:35b"
-    ];
+  services = {
+    ollama = {
+      enable = true;
+      user = "ollama";
+      group = "ollama";
+      package = ollama;
+      home = config.disko.devices.zpool.${pool}.datasets.${dataset}.mountpoint;
+      loadModels = [
+        "llama3.2:3b"
+        "qwen3.8:27b"
+        "tinyrick/Qwen3.8-27B-Ultra-Uncensored-Heretic-Native-MTP-Preserved-GGUF:Q6_K"
+        "ornith-1.5:35b"
+      ];
+    };
+
+    open-webui = {
+      enable = true;
+      package = config.dotfiles.shared.nixpkgs-unstable.pkgs.open-webui;
+      port = 8964;
+      environment = {
+        OLLAMA_API_BASE_URL = "http://127.0.0.1:${builtins.toString config.services.ollama.port}";
+        WEBUI_AUTH = "False";
+      };
+    };
   };
 }
