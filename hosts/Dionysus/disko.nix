@@ -164,6 +164,11 @@ in {
               options.mountpoint = "legacy";
               mountpoint = "/var/log";
             };
+            "enc/zfs-keys" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/run/zfs-keys";
+            };
 
             nix = {
               type = "zfs_fs";
@@ -233,6 +238,8 @@ in {
       };
       smartd.enable = true;
     };
+
+    fileSystems."/run/zfs-keys".neededForBoot = true;
 
     networking.hostId = "1c6dac63";
   };
