@@ -1,20 +1,11 @@
 {lib, ...}: let
-  inherit (lib) optionalAttrs;
+  inherit (lib) optionalAttrs mkOption types;
 
   mkDiskPathById = id: "/dev/disk/by-id/${id}";
 
   rootPool = "dionysus-root";
   fastPool = "dionysus-fast";
   slowPool = "dionysus-slow";
-
-  mkFastMp = child: "/data/fast/${child}";
-  mkSlowMp = child: "/data/slow/${child}";
-  mpRuleDefault = {
-    d = {
-      user = "fanghr";
-      mode = "0700";
-    };
-  };
 
   mkRootPoolDev = {
     isBootDrive ? false,
@@ -86,155 +77,163 @@
     };
   };
 in {
-  disko.devices = {
-    disk = {
-      ssd-1 = mkRootPoolDev {id = "nvme-KIOXIA-EXCERIA_PLUS_G2_SSD_72RB40WBKS92";};
-      ssd-2 = mkRootPoolDev {
-        id = "nvme-WDS100T3X0C-00SJG0_212201A00754";
-        isBootDrive = true;
-      };
-
-      ssd-3 = mkFastPoolDev {id = "nvme-CT2000T500SSD8_25285173D11B";};
-      ssd-4 = mkFastPoolDev {id = "nvme-CT2000T500SSD8_240346494D26";};
-
-      ssd-5 = mkSlowPoolDev {id = "ata-KIOXIA-EXCERIA_SATA_SSD_62EB81STK0Z5";};
-    };
-
-    zpool = {
-      ${rootPool} = {
-        type = "zpool";
-        mode = "mirror";
-        rootFsOptions = {
-          mountpoint = "none";
-          compression = "zstd";
-          acltype = "posixacl";
-          xattr = "sa";
+  options = {
+    apollo.zfs = {
+      pools = {
+        fast = mkOption {
+          type = types.str;
+          default = fastPool;
+          readOnly = true;
         };
-        options = {
-          ashift = "12";
-          autotrim = "on";
-        };
-        datasets = {
-          enc = {
-            type = "zfs_fs";
-            options = {
-              encryption = "aes-256-gcm";
-              keyformat = "passphrase";
-              keylocation = "prompt";
-              compression = "lz4";
-            };
-          };
-          "enc/root" = {
-            type = "zfs_fs";
-            mountpoint = "/";
-            options = {
-              canmount = "noauto";
-              mountpoint = "legacy";
-            };
-          };
-          "enc/home" = {
-            type = "zfs_fs";
-            options.mountpoint = "legacy";
-            mountpoint = "/home";
-          };
-          "enc/var" = {
-            type = "zfs_fs";
-          };
-          "enc/var/lib" = {
-            type = "zfs_fs";
-            options.mountpoint = "legacy";
-            mountpoint = "/var/lib";
-          };
-          "enc/var/log" = {
-            type = "zfs_fs";
-            options.mountpoint = "legacy";
-            mountpoint = "/var/log";
-          };
-
-          nix = {
-            type = "zfs_fs";
-            options = {
-              mountpoint = "legacy";
-              atime = "off";
-            };
-            mountpoint = "/nix";
-          };
-
-          reserved = {
-            type = "zfs_volume";
-            size = "16G";
-          };
+        slow = mkOption {
+          type = types.str;
+          default = slowPool;
+          readOnly = true;
         };
       };
-      ${fastPool} = {
-        type = "zpool";
-        rootFsOptions = {
-          mountpoint = "none";
-          compression = "zstd";
-        };
-        options = {
-          ashift = "12";
-          autotrim = "on";
-        };
-        datasets = {
-          steam = {
-            type = "zfs_fs";
-            options.mountpoint = "legacy";
-            mountpoint = mkFastMp "steam";
-          };
-
-          reserved = {
-            type = "zfs_volume";
-            size = "16G";
-          };
-        };
-      };
-      ${slowPool} = {
-        type = "zpool";
-        rootFsOptions = {
-          mountpoint = "none";
-          compression = "zstd";
-        };
-        options = {
-          ashift = "12";
-          autotrim = "on";
-        };
-        datasets = {
-          steam = {
-            type = "zfs_fs";
-            options.mountpoint = "legacy";
-            mountpoint = mkSlowMp "steam";
-          };
-          reserved = {
-            type = "zfs_volume";
-            size = "16G";
-          };
-        };
+      mkDatasetMountpoint = mkOption {
+        type = types.functionTo (types.functionTo types.str);
+        default = pool: dataset: "/data/${pool}/${dataset}";
+        readOnly = true;
       };
     };
   };
 
-  systemd.tmpfiles.settings."10-mountpoints" = {
-    ${mkFastMp "steam"} = mpRuleDefault;
-    ${mkSlowMp "steam"} = mpRuleDefault;
-  };
+  config = {
+    disko.devices = {
+      disk = {
+        ssd-1 = mkRootPoolDev {id = "nvme-KIOXIA-EXCERIA_PLUS_G2_SSD_72RB40WBKS92";};
+        ssd-2 = mkRootPoolDev {
+          id = "nvme-WDS100T3X0C-00SJG0_212201A00754";
+          isBootDrive = true;
+        };
 
-  boot.zfs = {
-    extraPools = [
-      fastPool
-      slowPool
-    ];
+        ssd-3 = mkFastPoolDev {id = "nvme-CT2000T500SSD8_25285173D11B";};
+        ssd-4 = mkFastPoolDev {id = "nvme-CT2000T500SSD8_240346494D26";};
 
-    requestEncryptionCredentials = ["${rootPool}/enc"];
-  };
+        ssd-5 = mkSlowPoolDev {id = "ata-KIOXIA-EXCERIA_SATA_SSD_62EB81STK0Z5";};
+      };
 
-  services = {
-    zfs = {
-      trim.enable = true;
-      autoScrub.enable = true;
+      zpool = {
+        ${rootPool} = {
+          type = "zpool";
+          mode = "mirror";
+          rootFsOptions = {
+            mountpoint = "none";
+            compression = "zstd";
+            acltype = "posixacl";
+            xattr = "sa";
+          };
+          options = {
+            ashift = "12";
+            autotrim = "on";
+          };
+          datasets = {
+            enc = {
+              type = "zfs_fs";
+              options = {
+                encryption = "aes-256-gcm";
+                keyformat = "passphrase";
+                keylocation = "prompt";
+                compression = "lz4";
+              };
+            };
+            "enc/root" = {
+              type = "zfs_fs";
+              mountpoint = "/";
+              options = {
+                canmount = "noauto";
+                mountpoint = "legacy";
+              };
+            };
+            "enc/home" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/home";
+            };
+            "enc/var" = {
+              type = "zfs_fs";
+            };
+            "enc/var/lib" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/var/lib";
+            };
+            "enc/var/log" = {
+              type = "zfs_fs";
+              options.mountpoint = "legacy";
+              mountpoint = "/var/log";
+            };
+
+            nix = {
+              type = "zfs_fs";
+              options = {
+                mountpoint = "legacy";
+                atime = "off";
+              };
+              mountpoint = "/nix";
+            };
+
+            reserved = {
+              type = "zfs_volume";
+              size = "16G";
+            };
+          };
+        };
+        ${fastPool} = {
+          type = "zpool";
+          rootFsOptions = {
+            mountpoint = "none";
+            compression = "zstd";
+          };
+          options = {
+            ashift = "12";
+            autotrim = "on";
+          };
+          datasets = {
+            reserved = {
+              type = "zfs_volume";
+              size = "16G";
+            };
+          };
+        };
+        ${slowPool} = {
+          type = "zpool";
+          rootFsOptions = {
+            mountpoint = "none";
+            compression = "zstd";
+          };
+          options = {
+            ashift = "12";
+            autotrim = "on";
+          };
+          datasets = {
+            reserved = {
+              type = "zfs_volume";
+              size = "16G";
+            };
+          };
+        };
+      };
     };
-    smartd.enable = true;
-  };
 
-  networking.hostId = "1c6dac63";
+    boot.zfs = {
+      extraPools = [
+        fastPool
+        slowPool
+      ];
+
+      requestEncryptionCredentials = ["${rootPool}/enc"];
+    };
+
+    services = {
+      zfs = {
+        trim.enable = true;
+        autoScrub.enable = true;
+      };
+      smartd.enable = true;
+    };
+
+    networking.hostId = "1c6dac63";
+  };
 }
