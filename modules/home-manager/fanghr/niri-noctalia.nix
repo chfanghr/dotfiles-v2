@@ -77,6 +77,24 @@ in
           "XF86AudioMute".spawn-sh = "noctalia msg volume-mute";
           "XF86MonBrightnessUp".spawn-sh = "noctalia msg brightness-up";
           "XF86MonBrightnessDown".spawn-sh = "noctalia msg brightness-down";
+
+          "Mod+F".fullscreen-window = {};
+          "Mod+WheelScrollDown".focus-workspace-down = {};
+          "Mod+WheelScrollUp".focus-workspace-up = {};
+          "Mod+WheelScrollLeft" = {
+            _props.cooldown-ms = 256;
+            focus-column-left = {};
+          };
+          "Mod+WheelScrollRight" = {
+            _props.cooldown-ms = 256;
+            focus-column-right = {};
+          };
+          "Mod+Shift+Right".move-window-to-monitor-right = {};
+          "Mod+Shift+Left".move-window-to-monitor-left = {};
+          "Mod+Alt+Right".move-column-right-or-to-monitor-right = {};
+          "Mod+Alt+Left".move-column-left-or-to-monitor-left = {};
+          "Mod+Shift+M".maximize-window-to-edges = {};
+          "Mod+Shift+5".screenshot = {};
         };
 
         blur = {
