@@ -239,7 +239,10 @@ in {
         slowPool
       ];
 
-      requestEncryptionCredentials = ["${rootPool}/enc"];
+      requestEncryptionCredentials = [
+        "${rootPool}/enc"
+        "${slowPool}/enc"
+      ];
     };
 
     services = {
