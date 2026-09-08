@@ -1,6 +1,10 @@
 {pkgs, ...}: {
   home-manager.users.fanghr = {
     wayland.windowManager.niri.settings = {
+      environment = {
+        NIXOS_OZONE_WL = "1";
+      };
+
       binds = {
         "Mod+F".fullscreen-window = {};
         "Mod+WheelScrollDown".focus-workspace-down = {};
