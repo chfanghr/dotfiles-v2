@@ -1,11 +1,17 @@
 {
   pkgs,
   inputs,
+  lib,
+  config,
   ...
-}: {
-  home-manager.users.fanghr = {
-    imports = [inputs.agent-skills.homeManagerModules.default];
+}: let
+  inherit (lib) mkEnableOption mkIf;
+in {
+  imports = [inputs.agent-skills.homeManagerModules.default];
 
+  options.dotfiles.hm.opencode.enable = mkEnableOption "opencode";
+
+  config = mkIf config.dotfiles.hm.opencode.enable {
     programs = {
       opencode = {
         enable = true;
@@ -31,7 +37,9 @@
       mcp = {
         enable = true;
         servers = {
-          nixos.command = "${inputs.mcp-nixos.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/mcp-nixos";
+          nixos.command = "${
+            inputs.mcp-nixos.packages.${pkgs.stdenv.hostPlatform.system}.default
+          }/bin/mcp-nixos";
         };
       };
 

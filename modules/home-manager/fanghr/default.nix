@@ -12,6 +12,7 @@
     ./niri-noctalia.nix
     ./nvim.nix
     ./obs.nix
+    ./opencode.nix
     ./packages.nix
     ./pueue.nix
     ./ssh.nix

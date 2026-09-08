@@ -16,7 +16,6 @@ in {
     ./minecraft.nix
     ./mode.nix
     ./networking.nix
-    ./opencode.nix
     ./qbittorrent.nix
     ./samba.nix
     ./stash.nix
@@ -50,6 +49,8 @@ in {
   time.timeZone = "Asia/Hong_Kong";
 
   users.users.fanghr.hashedPassword = "$y$j9T$JK4s34tHJmsXrZkf/VUXt.$rokP.46N.fjjjxBjD/sD9XUyFkF18PPChA4Yviq5uGB";
+
+  home-manager.users.fanghr.dotfiles.hm.opencode.enable = true;
 
   networking.hostName = "Hestia";
 
