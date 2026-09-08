@@ -18,6 +18,7 @@ in
           source = "builtin";
           builtin = "Noctalia";
           templates.builtin_ids = ["wezterm" "gtk3" "gtk4" "kcolorscheme" "niri" "qt"];
+          pure_black_dark = true;
         };
 
         wallpaper = {
@@ -29,6 +30,7 @@ in
           shell.font_family = "3270 Nerd Font Mono";
           launch_apps_as_systemd_services = true;
           niri_overview_type_to_launch_enabled = true;
+          screenshot.confirm_region = true;
         };
 
         backdrop.enabled = true;
@@ -40,6 +42,13 @@ in
             enabled = true;
             timeout = 600.0;
           };
+        };
+
+        dock = {
+          enable = true;
+          pinned = ["org.wezfurlong.wezterm" "chromium-browser" "org.gnome.Nautilus"];
+          reserve_space = false;
+          smart_auto_hide = true;
         };
       };
     };
