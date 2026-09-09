@@ -22,7 +22,7 @@ in {
     hostName = "Thaumas";
 
     useNetworkd = true;
-    interfaces.enp1s0u1u3.useDHCP = true;
+    useDHCP = true;
 
     wireless = {
       enable = true;
