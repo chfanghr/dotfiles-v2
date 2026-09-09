@@ -1,5 +1,10 @@
-{lib, ...}: let
+{
+  lib,
+  config,
+  ...
+}: let
   inherit (lib) mkOption types mdDoc;
+  inherit (config.dotfiles.shared.props) purposes;
   mkPropOption = name:
     mkOption {
       type = types.bool;
@@ -15,6 +20,11 @@ in {
         desktop = mkPropOption "runs desktop graphical sessions";
       };
       vps = mkPropOption "runs in cloud";
+      lightweight =
+        (mkPropOption "disable heavy weighted stuff")
+        // {
+          default = purposes.vps || !(purposes.work || purposes.graphical.gaming || purposes.graphical.desktop);
+        };
     };
   };
 }
