@@ -117,6 +117,10 @@
       hostname = "Dione";
       fqdn = "dione.snow-dace.ts.net";
     })
+    (mkNixosAndNode {
+      hostname = "Thaumas";
+      fqdn = "thaumas.snow-dace.ts.net";
+    })
   ];
 
   nixosConfigurations = listToAttrs (
