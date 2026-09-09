@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  config,
+  ...
+}: {
   imports = [
     inputs.nvf.homeManagerModules.default
   ];
@@ -7,6 +11,9 @@
     enable = true;
     enableManpages = true;
     defaultEditor = true;
-    settings = import ./nvf.nix;
+    settings = {
+      imports = [./nvf.nix];
+      custom = {inherit (config.dotfiles.shared.props.purposes) lightweight;};
+    };
   };
 }
