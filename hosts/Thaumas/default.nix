@@ -15,6 +15,7 @@ in {
     shared.props.locationName = "sg";
     nixos.props = {
       hardware.cpu.aarch64 = true;
+      nix.roles.consumer = true;
     };
   };
 
