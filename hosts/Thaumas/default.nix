@@ -64,4 +64,6 @@ in {
       file = "${secrets}/thaumas-wireless-conf.age";
     };
   };
+
+  services.smartd.enable = false;
 }
