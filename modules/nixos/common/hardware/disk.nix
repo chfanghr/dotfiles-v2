@@ -1,6 +1,6 @@
-{
+{lib, ...}: {
   services.smartd = {
-    enable = true;
+    enable = lib.mkDefault true;
     autodetect = true;
   };
 }
