@@ -53,7 +53,6 @@
           "bluetooth"
           "volume"
           "brightness"
-          "battery"
           "control-center"
           "session"
           "screenshot"
