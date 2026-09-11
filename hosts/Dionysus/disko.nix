@@ -1,5 +1,5 @@
 {lib, ...}: let
-  inherit (lib) optionalAttrs mkOption types;
+  inherit (lib) optionalAttrs mkOption types mkForce;
 
   mkDiskPathById = id: "/dev/disk/by-id/${id}";
 
@@ -243,6 +243,8 @@ in {
         "${rootPool}/enc"
         "${slowPool}/enc"
       ];
+
+      forceImportRoot = false;
     };
 
     services = {
@@ -256,5 +258,7 @@ in {
     fileSystems."/run/zfs-keys".neededForBoot = true;
 
     networking.hostId = "1c6dac63";
+
+    specialisation.nvidia-latest.configuration.boot.zfs.forceImportRoot = mkForce true;
   };
 }
