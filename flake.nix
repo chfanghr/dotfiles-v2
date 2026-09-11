@@ -19,7 +19,10 @@
       url = "github:cachix/pre-commit-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-hardware = {
+      url = "github:NixOS/nixos-hardware";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     cardano-nix.url = "github:mlabs-haskell/cardano.nix";
     jovian.url = "github:Jovian-Experiments/Jovian-NixOS/development";
     disko.url = "github:nix-community/disko";

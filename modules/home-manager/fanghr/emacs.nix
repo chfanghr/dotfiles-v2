@@ -1,3 +1,3 @@
-{
-  programs.emacs.enable = true;
+{config, ...}: {
+  programs.emacs.enable = !config.dotfiles.shared.props.purposes.lightweight;
 }
