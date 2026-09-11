@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   home-manager.users.fanghr = {
     wayland.windowManager.niri.settings = {
       environment = {
@@ -61,12 +65,16 @@
     };
 
     home.packages = [
+      pkgs.gcr
       pkgs.handbrake
       pkgs.yacreader
       (pkgs.chromium.override {enableWideVine = true;})
     ];
 
-    services.kdeconnect.enable = true;
+    services = {
+      kdeconnect.enable = true;
+      gpg-agent.pinentry.package = lib.mkForce pkgs.pinentry-gnome3;
+    };
   };
 
   services = {
