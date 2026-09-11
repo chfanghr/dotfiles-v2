@@ -94,7 +94,8 @@ in
           "Mod+Alt+Right".move-column-right-or-to-monitor-right = {};
           "Mod+Alt+Left".move-column-left-or-to-monitor-left = {};
           "Mod+Shift+M".maximize-window-to-edges = {};
-          "Mod+Shift+5".screenshot = {};
+          "Mod+Shift+4".spawn-sh = "noctalia msg screenshot-region";
+          "Mod+Shift+3".spawn-sh = "noctalia msg screenshot-fullscreen";
         };
 
         blur = {
