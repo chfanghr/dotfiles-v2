@@ -68,6 +68,7 @@
       pkgs.handbrake
       pkgs.yacreader
       (pkgs.chromium.override {enableWideVine = true;})
+      pkgs.thunderbird
     ];
 
     services = {
