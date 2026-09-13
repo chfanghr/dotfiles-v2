@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./boot.nix
+    ./ddc.nix
     ./disko.nix
     ./desktop.nix
     ./gaming.nix
