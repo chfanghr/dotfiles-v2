@@ -114,6 +114,8 @@ in {
         ssd-4 = mkFastPoolDev {id = "nvme-CT2000T500SSD8_240346494D26";};
 
         ssd-5 = mkSlowPoolDev {id = "ata-KIOXIA-EXCERIA_SATA_SSD_62EB81STK0Z5";};
+        ssd-6 = mkSlowPoolDev {id = "ata-CT2000BX500SSD1_2522E9C23BB7";};
+        ssd-7 = mkSlowPoolDev {id = "ata-CT2000BX500SSD1_2522E9C23E7D";};
       };
 
       zpool = {
