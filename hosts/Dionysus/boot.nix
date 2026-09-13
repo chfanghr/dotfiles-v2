@@ -33,6 +33,11 @@ in {
       config.boot.kernelPackages.universal-pidff
     ];
 
+    plymouth.extraConfig = ''
+      [Daemon]
+      DeviceScale=an-integer-scaling-factor
+    '';
+
     initrd = {
       availableKernelModules = [
         "xhci_pci"
