@@ -47,9 +47,9 @@ in {
             "root"
           ];
           substituters = [
-            "https://nix-community.cachix.org?priority=2"
+            # "https://nix-community.cachix.org?priority=2"
             # "https://om.cachix.org?priority=3"
-            "https://devenv.cachix.org?priority=4"
+            # "https://devenv.cachix.org?priority=4"
             "https://cache.nixos-cuda.org?priority=5"
           ];
           trusted-public-keys = [
