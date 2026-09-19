@@ -63,12 +63,21 @@
       };
     };
 
+    programs.chromium = {
+      enable = true;
+      package = pkgs.chromium.override {enableWideVine = true;};
+      extensions = [
+        {id = "bgnkhhnnamicmpeenaelnjfhikgbkllg";} # AdGuard
+        {id = "dhdgffkkebhmkfjojejmpbldmpobfkfo";} # Tempermonkey
+      ];
+    };
+
     home.packages = [
       pkgs.gcr
       pkgs.handbrake
       pkgs.yacreader
-      (pkgs.chromium.override {enableWideVine = true;})
       pkgs.thunderbird
+      pkgs.peazip
     ];
 
     services = {
@@ -85,5 +94,14 @@
     };
 
     desktopManager.gnome.enable = true;
+  };
+
+  programs.chromium = {
+    enable = true;
+    extraOpts = {
+      "BrowserSignin" = 0;
+      "SyncDisabled" = true;
+    };
+    enablePlasmaBrowserIntegration = true;
   };
 }
