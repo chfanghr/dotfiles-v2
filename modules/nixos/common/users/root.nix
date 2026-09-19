@@ -3,7 +3,7 @@
   lib,
   ...
 }: let
-  inherit (lib) mkOption types mkIf mkForce;
+  inherit (lib) mkOption types mkIf;
 
   inherit (config.dotfiles.nixos.props.users) rootAccess;
   inherit (config.users.users) root;
@@ -21,6 +21,6 @@ in {
       }
     ];
 
-    services.openssh.settings.PermitRootLogin = mkForce "prohibit-password";
+    services.openssh.settings.PermitRootLogin = "prohibit-password";
   };
 }
