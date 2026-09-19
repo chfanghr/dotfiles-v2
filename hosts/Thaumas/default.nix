@@ -15,7 +15,10 @@ in {
     shared.props.locationName = "sg";
     nixos = {
       props = {
-        hardware.cpu.aarch64 = true;
+        hardware = {
+          cpu.aarch64 = true;
+          audio = true;
+        };
         nix.roles.consumer = true;
         users.rootAccess = true;
       };
