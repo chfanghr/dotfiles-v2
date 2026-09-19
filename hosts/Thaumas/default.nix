@@ -13,10 +13,14 @@ in {
 
   dotfiles = {
     shared.props.locationName = "sg";
-    nixos.props = {
-      hardware.cpu.aarch64 = true;
-      nix.roles.consumer = true;
-      users.rootAccess = true;
+    nixos = {
+      props = {
+        hardware.cpu.aarch64 = true;
+        nix.roles.consumer = true;
+        users.rootAccess = true;
+      };
+      # avahi
+      networking.lanInterfaces = ["wlan0"];
     };
   };
 
