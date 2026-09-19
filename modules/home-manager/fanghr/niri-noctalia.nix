@@ -58,6 +58,9 @@ in
     wayland.windowManager.niri = {
       enable = true;
 
+      # https://github.com/Supreeeme/xwayland-satellite/issues/468
+      xwaylandSatellitePackage = config.dotfiles.shared.nixpkgs-multiverse.pkgs.versions.xwayland-satellite."0.8.1";
+
       settings = {
         spawn-at-startup = "noctalia";
 
