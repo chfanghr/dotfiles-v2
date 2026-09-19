@@ -10,6 +10,7 @@ let
   anemoi = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTLvGjDG+74nqTRi78udzpQbQR2oLJ6NsFpmTxW8hPe root@Anemoi";
   apollo = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPLEXMVtFzBPmUAsKcWBTd9DCO83LTJlySsOrx9OsqI0 root@Apollo";
   thaumas = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL12kvQBTY80tpyu3A3PgbPzuPlTbmGk/pfjN7xh9ibz root@Thaumas";
+  dionysus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIj5bF3fcmWzHfjbpSddW+E6vgWBBT84LrJpPsQYKEnW root@Dionysus";
 in {
   "athena-sing-box-default-out.age".publicKeys = [master athena];
   "oizys-sing-box-default-out.age".publicKeys = [master eros artemis];
@@ -41,4 +42,5 @@ in {
   "apollo-postfix-sasl-passwd.age".publicKeys = [master apollo];
   "apollo-postfix-smtp-generic-maps.age".publicKeys = [master apollo];
   "thaumas-wireless-conf.age".publicKeys = [master thaumas];
+  "dionysus-nix-cache-key.age".publicKeys = [master dionysus];
 }
