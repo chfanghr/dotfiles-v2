@@ -16,6 +16,7 @@ in {
     nixos.props = {
       hardware.cpu.aarch64 = true;
       nix.roles.consumer = true;
+      users.rootAccess = true;
     };
   };
 
@@ -35,7 +36,10 @@ in {
     };
   };
 
-  users.users.fanghr.hashedPassword = "$y$j9T$uVPyFPucql3Wsc0oeCT1d/$FEiyi5p3V0vJWh5dSgbYFrOcs2oEENSHqkIKBt09Wa5";
+  users.users = {
+    fanghr.hashedPassword = "$y$j9T$uVPyFPucql3Wsc0oeCT1d/$FEiyi5p3V0vJWh5dSgbYFrOcs2oEENSHqkIKBt09Wa5";
+    root.hashedPassword = "$y$j9T$GHyMPPPxtPp0bKMVzStS2/$nm.k/kZzZZZlkRpL.QSk8Fh7wVqa2cM3q/zudzUrpa3";
+  };
 
   hardware.raspberry-pi.firmware = {
     enable = true;
