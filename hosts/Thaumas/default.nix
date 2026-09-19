@@ -7,6 +7,7 @@
   wirelessPasswordSecret = "wirelessPassword";
 in {
   imports = [
+    ./turntable-relay.nix
     inputs.nixos-hardware.nixosModules.raspberry-pi-4
     ../../modules/nixos/common
   ];
