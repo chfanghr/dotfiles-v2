@@ -2,6 +2,7 @@
   lib,
   inputs,
   pkgs,
+  secrets,
   ...
 }: {
   imports = [
@@ -31,21 +32,27 @@
         };
       };
     };
-    nixos.props = {
-      hardware = {
-        audio = true;
-        bluetooth = {
-          enable = true;
-          blueman = true;
+    nixos = {
+      props = {
+        hardware = {
+          audio = true;
+          bluetooth = {
+            enable = true;
+            blueman = true;
+          };
+          cpu.amd = true;
+          gpu.nvidia = true;
+          gpu.amd.enable = true;
+          emulation = true;
+          vmHost = true;
         };
-        cpu.amd = true;
-        gpu.nvidia = true;
-        gpu.amd.enable = true;
-        emulation = true;
-        vmHost = true;
+        nix.roles = {
+          consumer = true;
+          builder = true;
+        };
+        ociHost = true;
       };
-      nix.roles.consumer = true;
-      ociHost = true;
+      nix.builderPrivateKeyAgeSecret = "${secrets}/dionysus-nix-cache-key.age";
     };
   };
 

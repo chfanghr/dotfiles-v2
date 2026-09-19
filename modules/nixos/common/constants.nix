@@ -6,6 +6,7 @@ in {
     "Persephone-1:SlL2/HsC5uw1FvL+sdl4zm1cYpeFFyQLXNh9aKvKFQY="
     "Hestia-1:paJxDGrmii5SP4/9AhYVXP4nFBNB/bz0Qc1YODDEf94="
     "Anemoi-1:bGv4AeeKuaVUjTWzPPzwXkOR4t8gG0qPdgwVbensIUs="
+    "Dionysus-1:MinSns4rsB8I5rN7JuUKjPQgms9x5fxAd+8WcoRDgag="
   ];
 
   users.users = {
