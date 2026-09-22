@@ -6,8 +6,14 @@
     extraGroups = ["audio" "pipewire"];
   };
 
-  hardware.raspberry-pi."4".i2c0.enable = true;
-
+  hardware = {
+    raspberry-pi."4" = {
+      i2c0.enable = true;
+      gpio.enable = true;
+      apply-overlays-dtmerge.enable = true;
+    };
+    deviceTree.filter = "bcm2711-rpi-4-b.dtb"; # TODO: improve and upstream this? i2c0if doesn't exist on CM4.
+  };
   environment.defaultPackages = [
     pkgs.cyme
     pkgs.i2c-tools
