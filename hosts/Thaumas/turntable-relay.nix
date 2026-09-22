@@ -1,9 +1,13 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   services.pipewire.systemWide = true;
   systemd.user.services.wireplumber.wantedBy = ["default.target"];
   users.users.fanghr = {
     linger = true;
-    extraGroups = ["audio" "pipewire"];
+    extraGroups = ["audio" "pipewire" config.hardware.i2c.group];
   };
 
   hardware = {
