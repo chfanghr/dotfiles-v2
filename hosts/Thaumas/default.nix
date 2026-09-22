@@ -52,6 +52,7 @@ in {
   hardware.raspberry-pi.firmware = {
     enable = true;
     uboot.enable = true;
+    useGenerationDeviceTree = true;
   };
 
   fileSystems = {
