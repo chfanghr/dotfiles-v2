@@ -6,7 +6,10 @@
     extraGroups = ["audio" "pipewire"];
   };
 
+  hardware.raspberry-pi."4".i2c0.enable = true;
+
   environment.defaultPackages = [
     pkgs.cyme
+    pkgs.i2c-tools
   ];
 }
