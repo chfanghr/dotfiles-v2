@@ -74,6 +74,7 @@
       url = "github:chfanghr/rpc-bridge?ref=feat/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    audio-relay.url = "github:chfanghr/audio-relay";
   };
 
   outputs = inputs @ {flake-parts, ...}:
