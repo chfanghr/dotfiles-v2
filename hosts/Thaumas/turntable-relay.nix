@@ -12,7 +12,7 @@
 
   hardware = {
     raspberry-pi."4" = {
-      i2c0.enable = true;
+      i2c1.enable = true;
       gpio.enable = true;
       apply-overlays-dtmerge.enable = true;
     };
