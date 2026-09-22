@@ -21,5 +21,6 @@
   environment.defaultPackages = [
     pkgs.cyme
     pkgs.i2c-tools
+    pkgs.lm_sensors
   ];
 }
