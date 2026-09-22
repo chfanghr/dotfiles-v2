@@ -75,6 +75,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
+    audio-relay.url = "github:chfanghr/audio-relay";
   };
 
   outputs = inputs @ {flake-parts, ...}:
