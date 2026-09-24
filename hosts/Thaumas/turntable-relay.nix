@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  inputs,
   ...
 }: {
   services.pipewire.systemWide = true;
@@ -16,5 +17,6 @@
     pkgs.cyme
     pkgs.i2c-tools
     pkgs.lm_sensors
+    inputs.audio-relay.packages.${pkgs.stdenv.hostPlatform.system}.audio-relay
   ];
 }
