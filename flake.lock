@@ -131,15 +131,16 @@
         "rust-flake": "rust-flake"
       },
       "locked": {
-        "lastModified": 1790077655,
-        "narHash": "sha256-V2X5M4WfJiPZydCAgY8GUQzVbcJQAUuVb48TMKqDbok=",
+        "lastModified": 1790084292,
+        "narHash": "sha256-6S1jt+bFrAkofz8ZMSKcuDjD9nK6v8213f8mwad0c1A=",
         "owner": "chfanghr",
         "repo": "audio-relay",
-        "rev": "40fcda51c27b58bdd46b7d66d55298d4b769095a",
+        "rev": "92e92fbd722e49162e044893d7280aa614fb5310",
         "type": "github"
       },
       "original": {
         "owner": "chfanghr",
+        "ref": "stupid",
         "repo": "audio-relay",
         "type": "github"
       }
