@@ -35,7 +35,8 @@ in
         prismlauncher
         protonup-qt
         steam-game-fullscreen
-        rare
+        # rare
+        heroic
       ];
 
       nixpkgs.config.allowUnfree = true;
