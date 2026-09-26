@@ -5,8 +5,9 @@
 }: let
   inherit (config.apollo.zfs) pools mkDatasetMountpoint;
 
-  dataset = "steam";
-  mkSteamDatasets = pool: {
+  steamDataset = "steam";
+  epicDataset = "epic";
+  mkGameDataset = dataset: pool: {
     ${dataset} = {
       type = "zfs_fs";
       options.mountpoint = "legacy";
@@ -28,12 +29,15 @@ in {
   services.udev.packages = [pkgs.boxflat];
 
   disko.devices.zpool = {
-    ${pools.fast}.datasets = mkSteamDatasets pools.fast;
-    ${pools.slow}.datasets = mkSteamDatasets pools.slow;
+    ${pools.fast}.datasets = mkGameDataset steamDataset pools.fast;
+    ${pools.slow}.datasets =
+      (mkGameDataset steamDataset pools.slow)
+      // (mkGameDataset epicDataset pools.slow);
   };
 
-  systemd.tmpfiles.settings."10-steam-dataset-mountpoints" = {
-    ${config.disko.devices.zpool.${pools.fast}.datasets.${dataset}.mountpoint} = mpRuleDefault;
-    ${config.disko.devices.zpool.${pools.slow}.datasets.${dataset}.mountpoint} = mpRuleDefault;
+  systemd.tmpfiles.settings."10-gaming-dataset-mountpoints" = {
+    ${config.disko.devices.zpool.${pools.fast}.datasets.${steamDataset}.mountpoint} = mpRuleDefault;
+    ${config.disko.devices.zpool.${pools.slow}.datasets.${steamDataset}.mountpoint} = mpRuleDefault;
+    ${config.disko.devices.zpool.${pools.slow}.datasets.${epicDataset}.mountpoint} = mpRuleDefault;
   };
 }
