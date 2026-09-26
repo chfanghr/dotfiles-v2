@@ -13,7 +13,10 @@
   networking.hostName = "Athena";
 
   dotfiles = {
-    shared.props.locationName = "cn-1";
+    shared.props = {
+      locationName = "cn-1";
+      purposes.lightweight = true;
+    };
     nixos.props = {
       nix.roles.consumer = true;
       users.rootAccess = true;
