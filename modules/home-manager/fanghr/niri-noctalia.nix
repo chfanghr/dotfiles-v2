@@ -55,6 +55,8 @@ in
 
     home.packages = [pkgs.qt6Packages.qt6ct];
 
+    services.mpris-proxy.enable = true;
+
     wayland.windowManager.niri = {
       enable = true;
 
