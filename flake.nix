@@ -74,6 +74,7 @@
       url = "github:chfanghr/rpc-bridge?ref=feat/nix-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixpkgs-xr.url = "github:nix-community/nixpkgs-xr";
   };
 
   outputs = inputs @ {flake-parts, ...}:
