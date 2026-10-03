@@ -14,7 +14,7 @@ in {
   system = {inherit modulesTree;};
 
   boot = {
-    kernelPackages = lib.mkDefault pkgs.linuxPackages_zen;
+    # kernelPackages = lib.mkDefault pkgs.linuxPackages_zen;
 
     kernelParams = ["microcode.amd_sha_check=off"];
 
@@ -73,8 +73,8 @@ in {
     pkgs.sbctl
   ];
 
-  specialisation.nvidia-latest.configuration = {config, ...}: {
-    boot.kernelPackages = config.dotfiles.shared.nixpkgs-unstable.pkgs.linuxPackages_latest;
-    hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
-  };
+  # specialisation.nvidia-latest.configuration = {config, ...}: {
+  boot.kernelPackages = config.dotfiles.shared.nixpkgs-unstable.pkgs.linuxPackages_latest;
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
+  # };
 }

@@ -17,6 +17,7 @@
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.agenix.nixosModules.default
     inputs.disko.nixosModules.default
+    inputs.nixpkgs-xr.nixosModules.nixpkgs-xr
   ];
 
   networking.hostName = "Dionysus";

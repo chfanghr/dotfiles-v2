@@ -26,7 +26,41 @@ in {
 
   home-manager.users.fanghr.home.packages = [pkgs.boxflat];
 
-  services.udev.packages = [pkgs.boxflat];
+  boot.kernelModules = ["uinput"];
+
+  users.users.fanghr.extraGroups = ["input" "plugdev" "adbusers"];
+
+  services = {
+    udev.packages = [pkgs.boxflat];
+
+    wivrn = {
+      enable = true;
+      package = pkgs.wivrn.override {cudaSupport = true;};
+
+      autoStart = true;
+      openFirewall = true;
+
+      highPriority = true;
+
+      steam = {
+        enable = true;
+        importOXRRuntimes = true;
+      };
+
+      config = {
+        enable = true;
+        json = {
+          application = [pkgs.wayvr];
+        };
+      };
+    };
+  };
+
+  environment.systemPackages = [
+    pkgs.wayvr
+    pkgs.opencomposite
+    pkgs.android-tools
+  ];
 
   disko.devices.zpool = {
     ${pools.fast}.datasets = mkGameDataset steamDataset pools.fast;
