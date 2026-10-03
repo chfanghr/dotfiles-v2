@@ -23,6 +23,11 @@
   };
 in {
   programs.steam.protontricks.enable = true;
+  programs.steam.package = pkgs.steam.override {
+    # Ensure Steam and its pressure-vessel game containers discover WiVRn
+    # even when Steam is started outside the login environment.
+    extraEnv.PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = "1";
+  };
 
   home-manager.users.fanghr.home.packages = [pkgs.boxflat];
 
@@ -35,30 +40,32 @@ in {
 
     wivrn = {
       enable = true;
-      package = pkgs.wivrn.override {cudaSupport = true;};
+      # package = wivrn;
 
       autoStart = true;
       openFirewall = true;
 
       highPriority = true;
 
+      # monadoEnvironment.XR_RUNTIME_JSON = "${wivrn}/share/openxr/1/openxr_wivrn.json";
+
       steam = {
         enable = true;
         importOXRRuntimes = true;
       };
 
-      config = {
-        enable = true;
-        json = {
-          application = [pkgs.wayvr];
-        };
-      };
+      # config = {
+      #   enable = true;
+      #   json = {
+      #     application = [pkgs.wayvr];
+      #   };
+      # };
     };
   };
 
   environment.systemPackages = [
     pkgs.wayvr
-    pkgs.opencomposite
+    pkgs.xrizer
     pkgs.android-tools
   ];
 
