@@ -6,7 +6,7 @@
 }: {
   services.pipewire.systemWide = true;
 
-  users.users.fanghr.extraGroups = ["audio" "pipewire" config.hardware.i2c.group];
+  users.users.fanghr.extraGroups = ["audio" "pipewire" config.hardware.i2c.group "gpio"];
 
   hardware.raspberry-pi."4" = {
     i2c1.enable = true;
