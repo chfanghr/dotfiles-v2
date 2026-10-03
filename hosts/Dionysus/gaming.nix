@@ -21,15 +21,31 @@
       mode = "0700";
     };
   };
+
+  wivrnRun = pkgs.writeShellScriptBin "wivrn-run" ''
+    env XR_RUNTIME_JSON=${pkgs.wivrn}/share/openxr/1/openxr_wivrn.json PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES=1 PRESSURE_VESSEL_FILESYSTEMS_RW=$XDG_RUNTIME_DIR/wivrn/comp_ipc "$@"
+  '';
 in {
-  programs.steam.protontricks.enable = true;
-  programs.steam.package = pkgs.steam.override {
-    # Ensure Steam and its pressure-vessel game containers discover WiVRn
-    # even when Steam is started outside the login environment.
-    extraEnv.PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = "1";
+  programs.steam = {
+    protontricks.enable = true;
+    package = pkgs.steam.override {
+      # Ensure Steam and its pressure-vessel game containers discover WiVRn
+      # even when Steam is started outside the login environment.
+      #
+      # TODO: is this really necessary?
+      extraEnv.PRESSURE_VESSEL_IMPORT_OPENXR_1_RUNTIMES = "1";
+    };
+    extraPackages = [
+      wivrnRun
+    ];
   };
 
-  home-manager.users.fanghr.home.packages = [pkgs.boxflat];
+  home-manager.users.fanghr.home.packages = [
+    pkgs.boxflat
+    pkgs.wayvr
+    pkgs.android-tools
+    wivrnRun
+  ];
 
   boot.kernelModules = ["uinput"];
 
@@ -40,33 +56,21 @@ in {
 
     wivrn = {
       enable = true;
-      # package = wivrn;
 
       autoStart = true;
       openFirewall = true;
 
       highPriority = true;
 
-      # monadoEnvironment.XR_RUNTIME_JSON = "${wivrn}/share/openxr/1/openxr_wivrn.json";
-
       steam = {
         enable = true;
         importOXRRuntimes = true;
       };
-
-      # config = {
-      #   enable = true;
-      #   json = {
-      #     application = [pkgs.wayvr];
-      #   };
-      # };
     };
   };
 
   environment.systemPackages = [
-    pkgs.wayvr
     pkgs.xrizer
-    pkgs.android-tools
   ];
 
   disko.devices.zpool = {
