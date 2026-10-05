@@ -94,6 +94,8 @@
     };
 
     desktopManager.gnome.enable = true;
+
+    tumbler.enable = true;
   };
 
   programs.chromium = {
