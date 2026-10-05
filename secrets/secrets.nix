@@ -43,4 +43,5 @@ in {
   "apollo-postfix-smtp-generic-maps.age".publicKeys = [master apollo];
   "thaumas-wireless-conf.age".publicKeys = [master thaumas];
   "dionysus-nix-cache-key.age".publicKeys = [master dionysus];
+  "dionysus-apollo-smb-credential.age".publicKeys = [master dionysus];
 }

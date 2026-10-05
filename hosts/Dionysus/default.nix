@@ -13,6 +13,7 @@
     ./gaming.nix
     ./llm.nix
     ./prometheus.nix
+    ./smb.nix
     ../../modules/nixos/common
     inputs.lanzaboote.nixosModules.lanzaboote
     inputs.agenix.nixosModules.default
