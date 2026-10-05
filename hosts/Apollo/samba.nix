@@ -33,7 +33,7 @@ in {
           "server role" = "standalone server";
           "server min protocol" = "SMB2_02";
           protocol = "SMB3";
-          "hosts allow" = "10.41.0. 127.0.0.1 100. apollo.snow-dace.ts.net";
+          "hosts allow" = "10.10.0. 127.0.0.1 100. apollo.snow-dace.ts.net";
           "hosts deny" = "0.0.0.0/0";
           "hide unreadable" = "yes";
           "guest account" = "nobody";
