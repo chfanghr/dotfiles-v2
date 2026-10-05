@@ -78,6 +78,7 @@
       pkgs.yacreader
       pkgs.thunderbird
       pkgs.peazip
+      pkgs.digikam
     ];
 
     services = {
