@@ -14,13 +14,12 @@ in {
   system = {inherit modulesTree;};
 
   boot = {
-    # kernelPackages = lib.mkDefault pkgs.linuxPackages_zen;
-
     kernelParams = ["microcode.amd_sha_check=off"];
 
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
+      settings.console-mode = "max";
     };
 
     loader = {
@@ -69,12 +68,12 @@ in {
     };
   };
 
+  console.earlySetup = true;
+
   environment.defaultPackages = [
     pkgs.sbctl
   ];
 
-  # specialisation.nvidia-latest.configuration = {config, ...}: {
   boot.kernelPackages = config.dotfiles.shared.nixpkgs-unstable.pkgs.linuxPackages_latest;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
-  # };
 }
