@@ -74,6 +74,6 @@ in {
     pkgs.sbctl
   ];
 
-  boot.kernelPackages = config.dotfiles.shared.nixpkgs-unstable.pkgs.linuxPackages_latest;
+  boot.kernelPackages = config.dotfiles.shared.nixpkgs-unstable.pkgs.linuxPackages_zen;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.latest;
 }
