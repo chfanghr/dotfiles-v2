@@ -56,11 +56,21 @@ in {
           security = "user";
         };
 
-        qbittorrent.path = "${config.apollo.mountpoints.qbittorrent}/downloads";
+        qbittorrent = {
+          path = "${config.apollo.mountpoints.qbittorrent}/downloads";
+          browseable = "no";
+        };
+
+        anime = {
+          path = "${config.apollo.mountpoints.qbittorrent}/downloads/Anime";
+          "guest ok" = "yes";
+          "read list" = "nobody guest";
+        };
 
         slow-stash = {
           path = config.apollo.mountpoints.slow-stash;
           "writeable" = "yes";
+          browseable = "no";
         };
       };
     };
