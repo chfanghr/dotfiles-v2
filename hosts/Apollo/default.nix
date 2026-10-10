@@ -19,6 +19,7 @@
     ./qbittorrent.nix
     ./reverse-proxy.nix
     ./samba.nix
+    ./vector.nix
     ./yac.nix
     ../../modules/nixos/common
     inputs.disko.nixosModules.default
