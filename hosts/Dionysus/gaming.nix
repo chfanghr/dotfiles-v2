@@ -45,6 +45,7 @@ in {
     pkgs.wayvr
     pkgs.android-tools
     wivrnRun
+    config.dotfiles.shared.nixpkgs-unstable.pkgs.protonup-rs
   ];
 
   boot.kernelModules = ["uinput"];
