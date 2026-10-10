@@ -62,7 +62,7 @@ in {
     grafana.provision.datasources.settings.datasources = [
       {
         name = "Loki";
-        url = lokiAddr;
+        url = "http://${lokiAddr}";
         type = "loki";
       }
     ];
