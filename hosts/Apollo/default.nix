@@ -10,6 +10,7 @@
     ./disko-config.nix
     ./grafana.nix
     ./influxdb.nix
+    ./loki.nix
     ./minecraft.nix
     ./impermanence.nix
     ./networking.nix
