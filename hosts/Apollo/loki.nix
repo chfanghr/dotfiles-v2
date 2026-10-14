@@ -19,6 +19,7 @@ in {
       configuration = {
         auth_enabled = false;
         server = {
+          http_listen_address = "127.0.0.1";
           http_listen_port = 3100;
           grpc_listen_port = 9096;
         };
@@ -57,6 +58,18 @@ in {
           metric_aggregation.loki_address = lokiAddr;
         };
       };
+    };
+
+    traefik.dynamicConfigOptions.http = {
+      routers.lokiPush = {
+        service = "lokiPush";
+        rule = "Path(`/loki/push`)";
+        middlewares = ["setLokiPushApiPath"];
+      };
+      middlewares.setLokiPushApiPath.replacePath.path = "/loki/api/v1/push";
+      services.lokiPush.loadBalancer.servers = [
+        {url = "http://${lokiAddr}/";}
+      ];
     };
 
     grafana.provision.datasources.settings.datasources = [
