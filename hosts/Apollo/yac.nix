@@ -16,6 +16,7 @@ in {
   config = {
     services.yac-reader-library = {
       enable = true;
+      package = config.dotfiles.shared.nixpkgs-unstable.pkgs.yacreader;
       port = 8080;
       libs = [
         {
