@@ -42,7 +42,7 @@ in {
     };
 
     open-webui = {
-      enable = true;
+      # enable = true;
       package = config.dotfiles.shared.nixpkgs-unstable.pkgs.open-webui;
       port = 8964;
       environment = {
