@@ -8,6 +8,7 @@
   imports = [
     ./boot.nix
     ./ddc.nix
+    ./comics.nix
     ./disko.nix
     ./desktop.nix
     ./gaming.nix
