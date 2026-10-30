@@ -16,6 +16,10 @@ in {
   boot = {
     kernelParams = ["microcode.amd_sha_check=off"];
 
+    extraModprobeConfig = ''
+      options btusb enable_autosuspend=0
+    '';
+
     lanzaboote = {
       enable = true;
       pkiBundle = "/var/lib/sbctl";
