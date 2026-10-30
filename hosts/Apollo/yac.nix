@@ -20,15 +20,20 @@ in {
       port = 8080;
       libs = [
         {
-          name = "Comics - Manual";
-          root = mp;
+          name = "Manual";
+          root = "${mp}/manual";
         }
         {
-          name = "Comics - Weebcentral";
-          root = "${mp}/dl";
+          name = "Weebcentral";
+          root = "${mp}/weebcentral";
+        }
+        {
+          name = "Comix";
+          root = "${mp}/comix";
         }
       ];
       settings.libraryConfig = {
+        IMPORT_COMIC_INFO_XML_METADATA = true;
         UPDATE_LIBRARIES_AT_STARTUP = true;
       };
       openFirewall = true;
