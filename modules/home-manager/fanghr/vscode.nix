@@ -1,10 +1,11 @@
 {
   inputs,
-  pkgs,
   config,
   lib,
   ...
-}: {
+}: let
+  unstablePkgs = config.dotfiles.shared.nixpkgs-unstable.pkgs;
+in {
   imports = [
     inputs.vscode-server.homeModules.default
 
@@ -12,14 +13,17 @@
       services.vscode-server.enable = true;
 
       nixpkgs.config.allowUnfree = true;
+
+      dotfiles.shared.nixpkgs-unstable.config.allowUnfree = true;
     }
 
     (
       lib.mkIf config.dotfiles.shared.props.purposes.graphical.desktop {
         programs.vscode = {
           enable = true;
+          package = unstablePkgs.vscode;
           profiles.default = {
-            extensions = with pkgs.vscode-extensions; [
+            extensions = with unstablePkgs.vscode-extensions; [
               ms-vscode.cpptools
               llvm-vs-code-extensions.vscode-clangd
               ms-vscode.cmake-tools
