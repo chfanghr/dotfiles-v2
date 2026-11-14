@@ -54,11 +54,12 @@ in {
           "read only" = "yes";
           "guest ok" = "no";
           security = "user";
+          "access based share enum" = "yes";
         };
 
         qbittorrent = {
           path = "${config.apollo.mountpoints.qbittorrent}/downloads";
-          browseable = "no";
+          "valid users" = "fanghr";
         };
 
         anime = {
@@ -70,7 +71,7 @@ in {
         slow-stash = {
           path = config.apollo.mountpoints.slow-stash;
           "writeable" = "yes";
-          browseable = "no";
+          "valid users" = "fanghr";
         };
       };
     };
