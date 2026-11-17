@@ -30,7 +30,10 @@
     nix-minecraft.url = "github:Infinidoge/nix-minecraft";
     agenix.url = "github:ryantm/agenix";
     hci-effects.url = "github:hercules-ci/hercules-ci-effects";
-    hci-agent.url = "github:hercules-ci/hercules-ci-agent";
+    hci-agent = {
+      url = "github:hercules-ci/hercules-ci-agent";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
     microvm = {
       url = "github:astro/microvm.nix";
       inputs.nixpkgs.follows = "nixpkgs";
