@@ -10,7 +10,7 @@ in {
   options.dotfiles.shared = {
     nixpkgs-unstable = {
       config = mkOption {
-        type = types.attrs;
+        type = types.attrsOf types.unspecified;
         default = {};
       };
       pkgs = mkOption {
@@ -23,7 +23,7 @@ in {
     };
     nixpkgs-multiverse = {
       config = mkOption {
-        type = types.attrs;
+        type = types.attrsOf types.unspecified;
         default = {};
       };
       pkgs = mkOption {

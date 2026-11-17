@@ -48,7 +48,15 @@ in {
         home-manager.users.${props.superUser} = {
           imports = [(import ../../../home-manager/${props.superUser})];
 
-          dotfiles.shared = config.dotfiles.shared;
+          dotfiles.shared =
+            (removeAttrs config.dotfiles.shared [
+              "nixpkgs-unstable"
+              "nixpkgs-multiverse"
+            ])
+            // {
+              nixpkgs-unstable.config = config.dotfiles.shared.nixpkgs-unstable.config;
+              nixpkgs-multiverse.config = config.dotfiles.shared.nixpkgs-multiverse.config;
+            };
         };
       }
     )
