@@ -52,7 +52,7 @@ in {
   environment.systemPackages = [
     apply_thp_tweaks
     undo_thp_tweaks
-    pkgs.steamdeck-firmware
+    pkgs.jovianPackages.steamdeck-firmware
   ];
 
   boot.initrd.availableKernelModules = [
